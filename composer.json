@@ -1,0 +1,25 @@
+{
+    "name": "Sheer/knowlegebase",
+    "type": "phpbb-extension",
+    "description": "Description",
+    "homepage": "http://phpbbguru.net",
+    "version": "0.0.1",
+    "time": "2014-05-11",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Sheer",
+            "homepage": "http://phpbbguru.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "Knowlege base",
+        "soft-require": {
+            "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}
