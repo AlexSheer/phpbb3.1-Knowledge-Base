@@ -21,7 +21,6 @@ class search_module
 	{
 		global $user, $phpbb_root_path, $phpEx;
 
-		//$user->add_lang('acp/search');
 		// For some this may be of help...
 		@ini_set('memory_limit', '128M');
 		$this->settings($id, $mode);
@@ -542,7 +541,7 @@ class search_module
 	{
 		global $db, $table_prefix;
 
-		define('ARTICLES_TABLE', $table_prefix.'kb_articles');
+		if (!defined('ARTICLES_TABLE')) define('ARTICLES_TABLE', $table_prefix.'kb_articles');
 
 		$sql = 'SELECT MAX(article_id) as max_article_id
 			FROM '. ARTICLES_TABLE;
