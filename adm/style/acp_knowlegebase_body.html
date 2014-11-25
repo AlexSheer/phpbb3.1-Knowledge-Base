@@ -1,0 +1,162 @@
+<!-- INCLUDE overall_header.html -->
+<a name="maincontent"></a>
+<form action="{S_ACTION}" method="post">
+<!-- IF S_CONFIGURE -->
+	<h1>{L_ACP_KNOWLEGE_BASE_CONFIGURE}</h1>
+	<p>{L_KB_CONFIG_EXPLAIN}</p>
+	<table width="100%" cellpadding="4" cellspacing="1" border="0" class="forumline">
+		<tr>
+			<th class="thHead" colspan="2">{L_ACP_KNOWLEGE_BASE_CONFIGURE}</th>
+		</tr>
+		<tr>
+			<td class="row1" width="45%"><span class="genmed"><b>{L_FORUM}</b></span><br />{L_KB_FORUM_EXPLAIN}</td>
+			<td class="row2"><select name="forum_id">{S_FORUM_POST}</select></td>
+		</tr>
+		<tr>
+			<td class="row1"><span class="genmed"><b>{L_PER_PAGE}</b></span><br />{L_PER_PAGE_EXPLAIN}</td>
+			<td class="row2"><input class="post" type="text" maxlength="12" size="12" name="articles_per_page" value="{PER_PAGE}" /></td>
+		</tr>
+	</table>
+	<br />
+	<fieldset class="submit-buttons">
+		<legend>{L_SUBMIT}</legend>
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		{S_FORM_TOKEN}
+	</fieldset>
+<!-- ENDIF -->
+<!-- IF S_EDIT -->
+	<a href="{U_BACK}" style="float: {S_CONTENT_FLOW_END};">&laquo; {L_BACK}</a>
+	<h1>{L_TITLE} <!-- IF CATEGORY_NAME -->:: {CATEGORY_NAME}<!-- ENDIF --></h1>
+	<p><!-- IF CATEGORY_NAME -->{L_LIBRARY_EDIT_CAT_EXPLAIN}<!-- ELSE -->{L_ADD_CATEGORY}<!-- ENDIF --></p>
+	<!-- IF S_ERROR -->
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{ERROR_MSG}</p>
+	</div>
+	<!-- ENDIF -->
+	<fieldset>
+		<dl>
+			<dt><label for="parent">{L_CAT_PARENT}:</label></dt>
+			<dd><select id="parent" name="parent_id"><option value="0"<!-- IF not S_CATEGORY_PARENT_ID --> selected="selected"<!-- ENDIF -->>{L_NO_PARENT}</option>{S_PARENT_OPTIONS}</select></dd>
+		</dl>
+		<dl>
+			<dt><label for="category_name">{L_CAT_NAME}:</label></dt>
+			<dd><input class="text medium" type="text" id="category_name" name="category_name" value="{CATEGORY_NAME}" maxlength="255" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="category_details">{L_CAT_DESCR}:</label></dt>
+			<dd><textarea id="category_details" name="category_details" rows="2" cols="40">{CATEGORY_DESCR}</textarea></dd>
+		</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		<legend>{L_SUBMIT}</legend>
+		<input class="button1" type="submit" id="submit" name="update" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		{S_FORM_TOKEN}
+	</fieldset>
+<!-- ELSEIF S_DELETE_CATEGORY -->
+	<a href="{U_BACK}" style="float: {S_CONTENT_FLOW_END};">&laquo; {L_BACK}</a>
+	<h1>{L_DEL_CATEGORY}</h1>
+	<p>{L_DEL_CATEGORY_EXPLAIN}</p>
+	<!-- IF S_ERROR -->
+		<div class="errorbox">
+			<h3>{L_WARNING}</h3>
+			<p>{ERROR_MSG}</p>
+		</div>
+	<!-- ENDIF -->
+	<fieldset>
+		<dl>
+			<dt><label>{L_CAT_NAME}:</label></dt>
+			<dd><strong>{CATEGORY_NAME}</strong></dd>
+		</dl>
+		<dl>
+			<dt><label for="delete_action">{L_ACTION}:</label></dt>
+			<dd><label><input type="radio" class="radio" id="delete_action" name="action_posts" value="delete" checked="checked" /> {L_DELETE_ALL_ARTICLES}</label></dd>
+			<!-- IF S_MOVE_CATEGORY_OPTIONS -->
+				<dd><label><input type="radio" class="radio" name="action_posts" value="move" /> {L_MOVE_ARTICLES_TO}</label><select name="posts_to_id">{S_MOVE_CATEGORY_OPTIONS}</select></dd>
+			<!-- ENDIF -->
+		</dl>
+		<!-- IF S_HAS_SUBCATS -->
+		<dl>
+			<dt><label for="sub_delete_action">{L_ACTION}:</label></dt>
+			<dd><label><input type="radio" class="radio" id="sub_delete_action" name="action_sub_cats" value="delete" checked="checked" /> {L_DELETE_SUBCATS}</label></dd>
+			<!-- IF S_CATS_LIST -->
+				<dd><label><input type="radio" class="radio" name="action_sub_cats" value="move" /> {L_MOVE_SUBCATS_TO}</label><select name="sub_cats_to_id">{S_CATS_LIST}</select></dd>
+			<!-- ENDIF -->
+		</dl>
+		<!-- ENDIF -->
+		<p class="quick"><input class="button1" type="submit" name="update" value="{L_SUBMIT}" /></p>
+		{S_FORM_TOKEN}
+	</fieldset>
+<!-- ELSE IF S_MANAGE -->
+	<h1>{L_ACP_LIBRARY_MANAGE}</h1>
+	<p>{L_ACP_LIBRARY_MANAGE_EXPLAIN}</p>
+	<!-- IF ERROR_MSG -->
+		<div class="errorbox">
+			<h3>{L_WARNING}</h3>
+			<p>{ERROR_MSG}</p>
+		</div>
+	<!-- ENDIF -->
+	<table class="table1">
+	<tbody>
+		<tr>
+			<td class="row3"><b>{NAVIGATION}</b></td>
+		</tr>
+	</tbody>
+	</table>
+	<!-- IF .categories -->
+		<table class="table1">
+			<col class="row1" /><col class="row1" /><col class="row2" />
+		<tbody>
+		<!-- BEGIN categories -->
+			<tr>
+				<td style="width: 5%; text-align: center;">{categories.ID}</td>
+				<td>
+					<strong><a href="{categories.U_CATEGORY}">{categories.CATEGORY_NAME}</a></strong>
+					<!-- IF categories.CATEGORY_DESCR --><br /><span>{categories.CATEGORY_DESCR}</span><!-- ENDIF -->
+					<br /><span>{L_ARTICLES}: <strong>{categories.ARTICLES}</strong></span>
+					<!-- IF not categories.S_LAST_ROW --><hr /><!-- ENDIF -->
+				</td>
+				<td class="actions">
+					<!-- IF categories.S_FIRST_ROW && not categories.S_LAST_ROW -->
+						{ICON_MOVE_UP_DISABLED}
+						<a href="{categories.U_MOVE_DOWN}">{ICON_MOVE_DOWN}</a>
+					<!-- ELSEIF not categories.S_FIRST_ROW && not categories.S_LAST_ROW -->
+						<a href="{categories.U_MOVE_UP}">{ICON_MOVE_UP}</a>
+						<a href="{categories.U_MOVE_DOWN}">{ICON_MOVE_DOWN}</a>
+					<!-- ELSEIF categories.S_LAST_ROW && not categories.S_FIRST_ROW -->
+						<a href="{categories.U_MOVE_UP}">{ICON_MOVE_UP}</a>
+						{ICON_MOVE_DOWN_DISABLED}
+					<!-- ELSE -->
+						{ICON_MOVE_UP_DISABLED}
+						{ICON_MOVE_DOWN_DISABLED}
+					<!-- ENDIF -->
+					<a href="{categories.U_EDIT}">{ICON_EDIT}</a>
+					<a href="{categories.U_DELETE}">{ICON_DELETE}</a>
+					<a href="{categories.U_SYNC}">{ICON_SYNC}</a>
+				</td>
+			</tr>
+		<!-- END categories -->
+		</tbody>
+		</table>
+		<!-- ENDIF -->
+		<!-- IF CATS_BOX -->
+		<fieldset class="quick">
+			{L_SELECT_CAT}: <select name="parent_id" onchange="if(this.options[this.selectedIndex].value != -1){ this.form.submit(); }">{CATS_BOX}</select>
+			<input class="button2" type="submit" value="{L_GO}" />
+			{S_FORM_TOKEN}
+		</fieldset>
+		<!-- ELSE -->
+		<div class="errorbox"><p>{L_NO_CATS_IN_KB}</p></div>
+		<!-- ENDIF -->
+		<fieldset class="quick">
+			<input type="hidden" name="action" value="add" />
+			<input type="text" name="category_name" value="" maxlength="255" />
+			<input class="button2" name="addcat" type="submit" value="{L_ADD_CATEGORY}" />
+			{S_FORM_TOKEN}
+		</fieldset>
+<!-- ENDIF -->
+</form>
+<!-- INCLUDE overall_footer.html -->
