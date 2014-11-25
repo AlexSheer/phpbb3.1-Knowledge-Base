@@ -16,6 +16,7 @@ namespace Sheer\knowlegebase\search;
 * optional base class for search plugins providing simple caching based on ACM
 * and functions to retrieve ignore_words and synonyms
 */
+
 class kb_base
 {
 	var $ignore_words = array();
@@ -169,7 +170,9 @@ class kb_base
 	*/
 	function save_ids($search_key, $keywords, $author_ary, $result_count, &$id_ary, $start, $sort_dir)
 	{
-		global $cache, $config, $db, $user;
+		global $cache, $config, $db, $user, $table_prefix;
+
+		if (!defined('KB_SEARCH_RESULTS_TABLE')) define('KB_SEARCH_RESULTS_TABLE', $table_prefix.'kb_search_results');
 
 		$length = min(sizeof($id_ary), $config['search_block_size']);
 
@@ -189,7 +192,7 @@ class kb_base
 			if (!empty($keywords) || sizeof($author_ary))
 			{
 				$sql = 'SELECT search_time
-					FROM ' . SEARCH_RESULTS_TABLE . '
+					FROM ' . KB_SEARCH_RESULTS_TABLE . '
 					WHERE search_key = \'' . $db->sql_escape($search_key) . '\'';
 				$result = $db->sql_query($sql);
 
@@ -202,7 +205,7 @@ class kb_base
 						'search_authors'	=> ' ' . implode(' ', $author_ary) . ' '
 					);
 
-					$sql = 'INSERT INTO ' . SEARCH_RESULTS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
+					$sql = 'INSERT INTO ' . KB_SEARCH_RESULTS_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
 					$db->sql_query($sql);
 				}
 				$db->sql_freeresult($result);
@@ -262,7 +265,7 @@ class kb_base
 			}
 			$cache->put('_search_results_' . $search_key, $store, $config['search_store_results']);
 
-			$sql = 'UPDATE ' . SEARCH_RESULTS_TABLE . '
+			$sql = 'UPDATE ' . KB_SEARCH_RESULTS_TABLE . '
 				SET search_time = ' . time() . '
 				WHERE search_key = \'' . $db->sql_escape($search_key) . '\'';
 			$db->sql_query($sql);
@@ -278,7 +281,9 @@ class kb_base
 	*/
 	function destroy_cache($words, $authors = false)
 	{
-		global $db, $cache, $config;
+		global $db, $cache, $config, $table_prefix;
+
+		if (!defined('KB_SEARCH_RESULTS_TABLE')) define('KB_SEARCH_RESULTS_TABLE', $table_prefix.'kb_search_results');
 
 		// clear all searches that searched for the specified words
 		if (sizeof($words))
@@ -290,7 +295,7 @@ class kb_base
 			}
 
 			$sql = 'SELECT search_key
-				FROM ' . SEARCH_RESULTS_TABLE . "
+				FROM ' . KB_SEARCH_RESULTS_TABLE . "
 				WHERE search_keywords LIKE '%*%' $sql_where";
 			$result = $db->sql_query($sql);
 
@@ -311,7 +316,7 @@ class kb_base
 			}
 
 			$sql = 'SELECT search_key
-				FROM ' . SEARCH_RESULTS_TABLE . "
+				FROM ' . KB_SEARCH_RESULTS_TABLE . "
 				WHERE $sql_where";
 			$result = $db->sql_query($sql);
 
@@ -323,7 +328,7 @@ class kb_base
 		}
 
 		$sql = 'DELETE
-			FROM ' . SEARCH_RESULTS_TABLE . '
+			FROM ' . KB_SEARCH_RESULTS_TABLE . '
 			WHERE search_time < ' . (time() - $config['search_store_results']);
 		$db->sql_query($sql);
 	}
