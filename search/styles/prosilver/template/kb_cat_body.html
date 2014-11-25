@@ -1,0 +1,126 @@
+<!-- INCLUDE overall_header.html -->
+
+<div id="page-body">
+	<h2>
+		<a href="{U_LIBRARY}" class="nav">{L_LIBRARY}</a>
+	</h2>
+	<!-- IF .cat_row -->
+	<div class="forabg" style="margin-top: 5px">
+		<div class="inner">
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="icon">
+						<dt>{L_CATEGORY}</dt>
+						<dd class="icons">{L_ARTICLES}</dd>
+					</dl>
+				</li>
+			</ul>
+			<ul class="topiclist forums">
+				<!-- BEGIN cat_row -->
+				<li class="row">
+					<dl>
+						<dt style="padding-left: 5px;">
+							<a href="{cat_row.U_CAT}" class="forumtitle">{cat_row.CAT_NAME}</a>
+							<!-- IF cat_row.CAT_DESCRIPTION --><br />{cat_row.CAT_DESCRIPTION}<!-- ENDIF -->
+							<!-- IF cat_row.SUBCATS --><br /><span>{cat_row.SUBCATS}</span><!-- ENDIF -->
+						</dt>
+							<dd class="topics">{cat_row.ARTICLES}</dd>
+					</dl>
+				</li>
+				<!-- END cat_row -->
+			</ul>
+		</div>
+	</div>
+	<!-- ENDIF -->
+
+	<div class="pagination">
+		{TOTAL_ITEMS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<div class="action-bar top">
+	<!-- IF S_CAN_ADD -->
+		<div class="buttons">
+				<a href="{U_ADD_ARTICLE}" class="button icon-button post-icon" title="{L_ADD_ARTICLE}">{L_ADD_ARTICLE}</a>
+		</div>
+		<!-- ENDIF -->
+		<!-- IF S_IS_SEARCH -->
+		<div class="search-box">
+			<form method="get" id="forum-search" action="{S_KB_SEARCH_ACTION}">
+				<fieldset>
+					<input class="inputbox search tiny" name="keywords" id="search_keywords" size="20" placeholder="{L_SEARCH_IN_CAT}" type="search">
+					<button class="button icon-button search-icon" type="submit" title="{L_SEARCH}">{L_SEARCH}</button>
+					<a href="{U_KB_SEARCH}" class="button icon-button search-adv-icon" title="{L_SEARCH_ADV}">{L_SEARCH_ADV}</a>
+					<input type="hidden" name="sf" value="articles">
+					<input type="hidden" name="cid" value="{CATEGORY_ID}">
+				</fieldset>
+			</form>
+		</div>
+		<!-- ENDIF -->
+	</div>
+	<div class="forumbg forumbg-table">
+		<div class="inner">
+			<table class="table1" cellspacing="1" id="memberlist">
+				<thead>
+				<tr>
+					<th class="name">{L_ARTICLE}</th>
+					<th class="posts">{L_ARTICLE_AUTHOR}</th>
+					<th class="joned">{L_ARTICLE_DATE}</th>
+					<th class="wievs">{L_VIEWS}</th>
+					<!-- IF S_USER_LOGGED_IN and not S_IS_BOT -->
+					<th class="posts">{L_EDIT}</th>
+					<th class="posts">{L_DELETE}</th>
+					<!-- ENDIF -->
+				</tr>
+				</thead>
+				<tbody>
+				<!-- BEGIN art_row -->
+				<tr class="bg1">
+					<td class="name">{art_row.ARTICLE}<!-- IF not art_row.S_APPROVED --><ul class="post-buttons" style="float: left; margin-top: -4px; margin-right: 4px;"><li><span style="cursor:default" title="{L_NEED_APPROOVE}" class="button icon-button info-icon"><span>{L_NEED_APPROOVE}</span></span></li></ul>
+					</a><!-- ENDIF --></td>
+					<td class="wievs">{art_row.ARTICLE_AUTHOR}</td>
+					<td class="joned">{art_row.ARTICLE_DATE}</td>
+					<td class="posts">{art_row.ART_VIEWS}</td>
+					<!-- IF S_USER_LOGGED_IN and not S_IS_BOT -->
+					<td class="posts"><!-- IF art_row.S_CAN_EDIT --><ul class="post-buttons"><li><a href="{art_row.U_EDIT_ART}" title="{L_EDIT}" class="button icon-button edit-icon"><span>{L_EDIT}</span></a></li></ul><!-- ENDIF --></td>
+					<td class="posts"><!-- IF art_row.S_CAN_DELETE --><ul class="post-buttons"><li><a href="{art_row.U_DELETE}" title="{L_DELETE}" class="button icon-button delete-icon"><span>{L_DELETE}</span></a></li></ul><!-- ENDIF --></td>
+					<!-- ENDIF -->
+				</tr>
+				<!-- END art_row -->
+				<!-- BEGIN no_articles -->
+				<tr class="bg1">
+					<td colspan="6">{no_articles.COMMENT}</td>
+				</tr>
+				<!-- END no_articles -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="pagination">
+		{TOTAL_ITEMS}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<br clear="all" />
+	<div class="dropdown-container dropdown-container-right dropdown-up dropdown-left dropdown-button-control" id="jumpbox">
+		<span title="{L_GO}" class="dropdown-trigger button dropdown-select dropdown-toggle">{L_GO}</span>
+		<div class="dropdown hidden">
+			<div class="pointer"><div class="pointer-inner"></div></div>
+			<ul class="dropdown-contents">
+				{CATS_DROPBOX}
+			</ul>
+		</div>
+	</div>
+	<div class="stat-block permissions">
+		<h3>{L_KB_PERMISSIONS}</h3>
+		<p><!-- BEGIN rules -->{rules.RULE}<br /><!-- END rules --></p>
+	</div>
+</div>
+
+<!-- INCLUDE overall_footer.html -->
