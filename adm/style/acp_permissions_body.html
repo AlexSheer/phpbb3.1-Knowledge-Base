@@ -1,0 +1,176 @@
+<!-- INCLUDE overall_header.html -->
+<script type="text/javascript">
+// <![CDATA[
+	var active_pmask = '0';
+	var active_fmask = '0';
+	var active_cat = '0';
+
+	var id = '00';
+
+	var role_options = new Array();
+
+	<!-- IF S_ROLE_JS_ARRAY -->
+		{S_ROLE_JS_ARRAY}
+	<!-- ENDIF -->
+// ]]>
+</script>
+<a name="maincontent"></a>
+
+<h1>{L_ACP_LIBRARY_PERMISSIONS}</h1>
+<p>{L_ACP_LIBRARY_PERMISSIONS_EXPLAIN}</p>
+
+<!-- IF S_SELECT_CATEGORY -->
+<!-- IF CATS_BOX -->
+<form id="select_victim" method="post" action="{S_KB_PERMISSIONS_ACTION}">
+	<fieldset>
+		<legend>{L_SELECT_CATEGORY}</legend>
+		<!-- IF S_FORUM_MULTIPLE --><p>{L_LOOK_UP_FORUMS_EXPLAIN}</p><!-- ENDIF -->
+		<dl>
+			<dt><label for="forum">{L_SELECT_CATEGORY}:</label></dt>
+			<dd><select id="forum" name="category_id[]" multiple="multiple" size="10">{CATS_BOX}</select></dd>
+			<dd><label><input type="checkbox" class="radio" name="all_cats" value="1" /> {L_ALL_CATS}</label></dd>
+		</dl>
+		<p class="quick">
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+			<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+		</p>
+	</fieldset>
+</form>
+<!-- ELSE -->
+<div class="errorbox"><p>{L_NO_CATS_IN_KB}<br />{L_ACP_LIBRARY_PERMISSIONS_NO_CATS}</p></div>
+<!-- ENDIF -->
+<!-- ELSEIF S_SELECT -->
+
+<!-- IF S_CAN_SELECT_USER -->
+<div style="float: {S_CONTENT_FLOW_BEGIN}; width: 48%;">
+	<h1>{L_USERS}</h1>
+	<form id="users" method="post" action="{S_KB_PERMISSIONS_ACTION}">
+		<fieldset>
+			<legend>{L_MANAGE_USERS}</legend>
+			<dl>
+				<dd class="full"><select style="width: 100%;" name="user_id[]" multiple="multiple" size="5">{S_DEFINED_USER_OPTIONS}</select></dd>
+				<!-- IF S_ALLOW_ALL_SELECT --><dd class="full" style="text-align: right;"><label><input type="checkbox" class="radio" name="all_users" value="1" /> {L_ALL_USERS}</label></dd><!-- ENDIF -->
+			</dl>
+		</fieldset>
+
+		<fieldset class="quick">
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+			<input type="submit" class="button2" name="delete" value="{L_REMOVE_PERMISSIONS}" style="width: 46% !important;" /> &nbsp; <input class="button1" type="submit" name="submit_edit_options" value="{L_EDIT_PERMISSIONS}" style="width: 46% !important;" />
+		</fieldset>
+	</form>
+	<form id="add_user" method="post" action="{S_KB_PERMISSIONS_ACTION}">
+		<fieldset>
+			<legend>{L_ADD_USERS}</legend>
+			<p>{L_USERNAMES_EXPLAIN}</p>
+			<dl>
+				<dd class="full"><textarea id="username" name="usernames" rows="5" cols="5" style="width: 100%; height: 60px;"></textarea></dd>
+				<dd class="full" style="text-align: left;"><div style="float: {S_CONTENT_FLOW_END};">[ <a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a> ]</div><label><input type="checkbox" class="radio" id="anonymous" name="user_id[]" value="{ANONYMOUS_USER_ID}" /> {L_SELECT_ANONYMOUS}</label></dd>
+			</dl>
+		</fieldset>
+		<fieldset class="quick">
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+			<input class="button1" type="submit" name="submit_add_options" value="{L_ADD_PERMISSIONS}" />
+		</fieldset>
+	</form>
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_CAN_SELECT_GROUP -->
+<div style="float: {S_CONTENT_FLOW_END}; width: 48%">
+	<h1>{L_USERGROUPS}</h1>
+	<form id="groups" method="post" action="{S_KB_PERMISSIONS_ACTION}">
+		<fieldset>
+			<legend>{L_MANAGE_GROUPS}</legend>
+			<dl>
+				<dd class="full"><select style="width: 100%;" name="group_id[]" multiple="multiple" size="5">{S_DEFINED_GROUP_OPTIONS}</select></dd>
+				<!-- IF S_ALLOW_ALL_SELECT --><dd class="full" style="text-align: right;"><label><input type="checkbox" class="radio" name="all_groups" value="1" /> {L_ALL_GROUPS}</label></dd><!-- ENDIF -->
+			</dl>
+		</fieldset>
+		<fieldset class="quick">
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+			<input class="button2" type="submit" name="delete" value="{L_REMOVE_PERMISSIONS}" style="width: 46% !important;" /> &nbsp; <input class="button1" type="submit" name="submit_edit_options" value="{L_EDIT_PERMISSIONS}" style="width: 46% !important;" />
+		</fieldset>
+	</form>
+	<form id="add_groups" method="post" action="{S_KB_PERMISSIONS_ACTION}">
+		<fieldset>
+			<legend>{L_ADD_GROUPS}</legend>
+			<dl>
+				<dd class="full"><select name="group_id[]" style="width: 100%; height: 107px;" multiple="multiple">{S_ADD_GROUP_OPTIONS}</select></dd>
+			</dl>
+		</fieldset>
+		<fieldset class="quick">
+			{S_HIDDEN_FIELDS}
+			{S_FORM_TOKEN}
+			<input type="submit" class="button1" name="submit_add_options" value="{L_ADD_PERMISSIONS}" />
+		</fieldset>
+	</form>
+</div>
+<!-- ENDIF -->
+
+<!-- ELSEIF S_VIEWING_PERMISSIONS -->
+<script type="text/javascript" src="style/permissions.js"></script>
+<form id="set-permissions" method="post" action="{S_ACTION}">
+	<fieldset class="quick" style="float: left;">
+		{L_SELECT_TYPE}: <select name="type">{S_TYPE}</select>
+		<input class="button2" type="submit" name="submit" value="{L_GO}">
+	</fieldset><br />
+	{S_HIDDEN_FIELDS}
+
+<!-- BEGIN p_mask -->
+	<div class="clearfix"></div>
+	<h3>{p_mask.CATEGORY_NAME}<!-- IF p_mask.S_LOCAL --> <span class="small"> [{p_mask.L_ACL_TYPE}]</span><!-- ENDIF --></h3>
+	<!-- BEGIN g_mask -->
+	<fieldset class="permissions" id="perm{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}" style="opacity: 1; ">
+		<legend id="legend{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}">
+			<input type="checkbox" class="permissions-checkbox" name="inherit[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}]" id="checkbox{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}" value="1" onclick="toggle_opacity('{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}')">
+			{p_mask.g_mask.GROUP_NAME}
+		</legend>
+		<div class="permissions-panel" id="options{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}" style="display: block; ">
+			<div class="tablewrap">
+				<table id="table{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}" cellspacing="1">
+					<colgroup>
+						<col class="permissions-name">
+						<col class="permissions-yes">
+						<col class="permissions-no">
+						<col class="permissions-never">
+					</colgroup>
+					<thead>
+					<tr>
+						<th class="name" scope="col"><strong>{L_ACL_SETTING}</strong></th>
+						<th class="value permissions-yes" scope="col"><a href="#" onclick="mark_options('options{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}', 'y'); reset_role('role{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}');">{L_YES}</a></th>
+						<th class="value permissions-no" scope="col"><a href="#" onclick="mark_options('options{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}', 'u'); reset_role('role{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}');">{L_NO}</a></th>
+						<th class="value permissions-never" scope="col"><a href="#" onclick="mark_options('options{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}', 'n'); reset_role('role{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}');">{L_NEVER}</a></th>
+					</tr>
+					</thead>
+					<!-- BEGIN o_mask -->
+					<tr>
+					<!-- IF p_mask.g_mask.o_mask.S_ROW_COUNT is even --><tr class="row4"><!-- ELSE --><tr class="row3"><!-- ENDIF -->
+						<th class="permissions-name<!-- IF p_mask.g_mask.o_mask.S_ROW_COUNT is even --> row4<!-- ELSE --> row3<!-- ENDIF -->">{o_mask.L_FIELD_NAME}</th>
+						<td class="permissions-yes">  <label for="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]_y"><input onclick="reset_role('role00');" id="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]_y" name="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]" class="radio" type="radio" <!-- IF o_mask.S_YES --> checked="checked"<!-- ENDIF --> value="1"></label></td>
+						<td class="permissions-no">   <label for="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]_u"><input onclick="reset_role('role00');" id="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]_u" name="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]" class="radio" type="radio" <!-- IF o_mask.S_NO --> checked="checked"<!-- ENDIF --> value="-1"></label></td>
+						<td class="permissions-never"><label for="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]_n"><input onclick="reset_role('role00');" id="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]_n" name="setting[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}][{p_mask.g_mask.o_mask.S_FIELD_NAME}]" class="radio" type="radio" <!-- IF o_mask.S_NEVER --> checked="checked"<!-- ENDIF --> value="0"></label></td>
+					</tr>
+					<!-- END o_mask -->
+				</table>
+			</div>
+			<fieldset class="quick" style="margin-right: 11px;">
+				<p class="small">{L_APPLY_PERMISSIONS_EXPLAIN}</p>
+				<input class="button1" type="submit" name="submit[{p_mask.CATEGORY_ID}][{p_mask.g_mask.GROUP_ID}]" value="{L_APPLY_PERMISSIONS}">
+			</fieldset>
+		</div>
+	</fieldset>
+	<p class="small"><a href="#" onclick="reset_opacity(0, '{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}'); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="reset_opacity(1, '{p_mask.S_ROW_COUNT}{p_mask.g_mask.S_ROW_COUNT}'); return false;">{L_UNMARK_ALL}</a></p>
+	<!-- END g_mask -->
+<!-- END p_mask -->
+	<fieldset class="quick" style="float: {S_CONTENT_FLOW_END};">
+		<input class="button1" type="submit" name="apply_all_permissions" value="{L_APPLY_ALL_PERMISSIONS}" />
+		<input class="button2" type="button" name="cancel" value="{L_RESET}" onclick="document.forms['set-permissions'].reset(); init_colours(active_pmask + active_fmask);" />
+		{S_FORM_TOKEN}
+	</fieldset>
+</form>
+<!-- ENDIF -->
+<!-- INCLUDE overall_footer.html -->
