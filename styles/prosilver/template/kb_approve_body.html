@@ -1,0 +1,36 @@
+<!-- INCLUDE overall_header.html -->
+
+<div id="page-body">
+	<h2>
+		<a href="{U_LIBRARY}" class="nav">{L_LIBRARY}</a>
+	</h2>
+	<div class="navbar" style="margin: 20px 0px 10px; background: #E8E8E8">
+	<fieldset>
+		<legend style="font-family: Tahoma,arial,Verdana,sans-serif; font-size: 1.39em; font-weight: bold; color: #115098; position: relative; text-transform: none; line-height: 1.2em; top: -0.8em; vertical-align: middle; padding: 1px 0px;">{L_ARTICLE}</legend>
+		<dl>
+			<dt><label><span>{L_ARTICLE_TITLE}</span></label></dt>
+			<dd><label><b>{ARTICLE_TITLE}</b></label>
+		</dl>
+		<dl>
+			<dt><label><span>{L_DESCR}</span></label></dt>
+			<dd><label>{ARTICLE_DESCRIPTION}</label>
+		</dl>
+		<dl>
+			<dt><label><span>{L_ARTICLE_AUTHOR}</span></label></dt>
+			<dd><label><b>{ARTICLE_AUTHOR}</b></label>
+		</dl>
+	</fieldset>
+	</div>
+	<div class="panel bg2">
+		<div class="inner">
+			<form method="post" action="{S_ACTION}">
+				<fieldset class="submit-buttons">
+					<input class="button1" type="submit" id="continue" name="approve" value="{L_APPROVE}" />&nbsp;
+					<input class="button2" type="submit" id="cancel" name="disapprove" value="{L_DISAPPROVE}" />
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- INCLUDE overall_footer.html -->
