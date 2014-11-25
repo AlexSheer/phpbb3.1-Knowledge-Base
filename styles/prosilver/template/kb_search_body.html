@@ -1,0 +1,72 @@
+<!-- INCLUDE overall_header.html -->
+
+<script type="text/javascript">
+// <![CDATA[
+	onload_functions.push('document.getElementById("keywords").focus();');
+// ]]>
+</script>
+
+<h2 class="solo">{L_SEARCH}</h2>
+<!-- IF ERROR -->
+	<div class="error">{ERROR}</div><br />
+<!-- ENDIF -->
+<form method="get" action="{S_SEARCH_ACTION}">
+	<div class="panel">
+		<div class="inner">
+			<h3>{L_SEARCH_QUERY}</h3>
+			<fieldset>
+				<dl>
+					<dt><label for="keywords">{L_SEARCH_KEYWORDS}:</label><br /><span>{L_SEARCH_KEYWORDS_EXPLAIN}</span></dt>
+					<dd><input type="text" class="inputbox" name="keywords" id="keywords" size="40" title="{L_SEARCH_KEYWORDS}" /></dd>
+					<dd><label for="terms1"><input type="radio" name="terms" id="terms1" value="all" checked="checked" /> {L_SEARCH_ALL_TERMS}</label></dd>
+					<dd><label for="terms2"><input type="radio" name="terms" id="terms2" value="any" /> {L_SEARCH_ANY_TERMS}</label></dd>
+				</dl>
+				<dl>
+					<dt><label for="author">{L_SEARCH_AUTHOR}:</label><br /><span>{L_SEARCH_AUTHOR_EXPLAIN}</span></dt>
+					<dd><input type="text" class="inputbox" name="author" id="author" size="40" title="{L_SEARCH_AUTHOR}" /></dd>
+				</dl>
+			</fieldset>
+		</div>
+	</div>
+	<div class="panel bg2">
+		<div class="inner">
+			<h3>{L_SEARCH_OPTIONS}</h3>
+			<fieldset>
+				<!--//<dl>
+					<dt><label for="show_results1">{L_DISPLAY_RESULTS}:</label></dt>
+					<dd>
+						<label for="show_results1"><input type="radio" name="sr" id="show_results1" value="posts" checked="checked" /> {L_SEARCH_ARTICLES_ONLY}</label>
+						<label for="show_results2"><input type="radio" name="sr" id="show_results2" value="topics" /> {L_SEARCH_ARTICLES_TITLE_ONLY}</label>
+					</dd>
+				</dl>//-->
+				<dl>
+					<dt><label for="search_cat">{L_SEARCH_CAT}:</label><br><span>{L_SEARCH_CAT_EXPLAIN}</span></dt>
+					<dd><select name="cat_ids[]" id="search_cat" multiple="multiple" size="8" title="{L_SEARCH_CAT}">
+							{CATS_BOX}
+						</select>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="sd">{L_RESULT_SORT}:</label></dt>
+					<dd>{S_SELECT_SORT_KEY}&nbsp;
+						<label for="sa"><input type="radio" name="sd" id="sa" value="a"> {L_SORT_ASCENDING}</label>
+						<label for="sd"><input type="radio" name="sd" id="sd" value="d" checked="checked"> {L_SORT_DESCENDING}</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label>{L_RETURN_FIRST}:</label></dt>
+					<dd><select name="ch" title="{L_RETURN_FIRST}"></option><option value="0">0</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="300" selected="selected">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option><option value="1000">1000</option></select> {L_POST_CHARACTERS}</dd>
+				</dl>
+			</fieldset>
+		</div>
+	</div>
+	<div class="panel bg3">
+		<div class="inner">
+			<fieldset class="submit-buttons">
+				{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+				<input type="submit" name="submit" value="{L_SEARCH}" class="button1" />
+			</fieldset>
+		</div>
+	</div>
+</form>
+<!-- INCLUDE overall_footer.html -->
