@@ -537,7 +537,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 		// try reading the results from cache
 		$total_results = 0;
-		if ($this->obtain_ids($search_key, $total_results, $id_ary, $start, $per_page, $sort_dir) == SEARCH_RESULT_IN_CACHE)
+		if ($this->obtain_ids($search_key, $total_results, $id_ary, $start, $per_page, $sort_dir) == 1)
 		{
 			return $total_results;
 		}
@@ -910,7 +910,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 		// try reading the results from cache
 		$total_results = 0;
-		if ($this->obtain_ids($search_key, $total_results, $id_ary, $start, $per_page, $sort_dir) == SEARCH_RESULT_IN_CACHE)
+		if ($this->obtain_ids($search_key, $total_results, $id_ary, $start, $per_page, $sort_dir) == 1)
 		{
 			return $total_results;
 		}
