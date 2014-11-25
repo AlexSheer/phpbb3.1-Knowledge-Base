@@ -1,0 +1,64 @@
+<!-- INCLUDE overall_header.html -->
+<a name="maincontent"></a>
+<form action="{S_ACTION}" method="post">
+<!-- IF S_MOVE_ART -->
+	<h1>{L_MOVE}</h1>
+	<p>{L_ARTICLE_MOVE_EXPLAIN}</p>
+	<form id="fselect" method="post" action="{U_MOVE_ACTION}">
+		<fieldset>
+			{L_SELECT_CAT}: <select name="to_id">{S_MOVE_CATEGORY_OPTIONS}</select>&nbsp;<input class="button1" type="submit" id="submit" name="submit" value="{L_GO}">
+			{S_FORM_TOKEN}
+		</fieldset>
+	</form>
+<!-- ELSEIF S_ARTICLES -->
+	<h1>{L_ACP_LIBRARY_ARTICLES}</h1>
+	<p>{L_ARTICLE_MANAGE_EXPLAIN}</p>
+	<!-- IF ERROR_MSG -->
+		<div class="errorbox">
+			<h3>{L_WARNING}</h3>
+			<p>{ERROR_MSG}</p>
+		</div>
+	<!-- ENDIF -->
+	<!-- IF .articles -->
+	<form id="list" method="post" action="{U_SORT_ACTION}">
+		<table cellspacing="1">
+		<col class="row1" /><col class="row1" /><col class="row1" /><col class="row1" /><col class="row1" /><col class="row1" /><col class="row2" />
+		<tbody>
+			<tr>
+				<th>ID</th><th>{L_ARTICLE}</th><th>{L_CATEGORY}</th><th>{L_ARTICLE_AUTHOR}</th><th>{L_ARTICLE_DATE}</th><th>{L_EDIT_DATE}</th><th>&nbsp;</th>
+			</tr>
+		<!-- BEGIN articles -->
+			<tr>
+				<td>{articles.ID}</td>
+				<td><a href="{articles.U_ARTICLE}" onclick="find_username(this.href); return false;"><b>{articles.ARTICLE_TITLE}</b></a></td>
+				<td><a href="{articles.U_CATEGORY}"><b>{articles.CATEGORY}</b></a></td>
+				<td>{articles.AUTHOR}</td>
+				<td>{articles.TIME}</td>
+				<td><!-- IF articles.EDIT_TIME -->{articles.EDIT_TIME}<!-- ENDIF --></td>
+				<td style="vertical-align: top; width: 70px; text-align: center; white-space: nowrap;">
+					<a href="{articles.U_MOVE}">{ICON_MOVE}</a> <a href="{articles.U_DELETE}">{ICON_DELETE}</a> <a href="{articles.U_ARTICLE_EDIT}" onclick="find_username(this.href); return false;">{ICON_EDIT}</a>
+				</td>
+			</tr>
+		<!-- END articles -->
+		</tbody>
+		</table>
+		<div class="pagination">
+			{TOTAL_ITEMS}
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE -->
+				 &bull; {PAGE_NUMBER}
+			<!-- ENDIF -->
+		</div>
+		<fieldset class="display-options">{L_SORT_BY}: {S_SORT_KEY} {S_SORT_DIR}
+			<input class="button2" type="submit" value="{L_GO}" name="sort">
+		</fieldset>
+	</form>
+	<!-- ELSE -->
+	<div class="errorbox">
+		<p>{L_NO_ARTICLES_IN_KB}</p>
+	</div>
+	<!-- ENDIF -->
+<!-- ENDIF -->
+</form>
+<!-- INCLUDE overall_footer.html -->
