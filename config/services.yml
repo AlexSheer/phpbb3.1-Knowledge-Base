@@ -1,0 +1,128 @@
+services:
+    Sheer.knowlegebase.controller.index:
+        class: Sheer\knowlegebase\controller\index
+        arguments:
+            - @config
+            - @request
+            - @pagination
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.controller.category:
+        class: Sheer\knowlegebase\controller\category
+        arguments:
+            - @config
+            - @request
+            - @pagination
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.controller.article:
+        class: Sheer\knowlegebase\controller\article
+        arguments:
+            - @config
+            - @request
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.controller.edit:
+        class: Sheer\knowlegebase\controller\edit
+        arguments:
+            - @config
+            - @request
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.controller.post:
+        class: Sheer\knowlegebase\controller\post
+        arguments:
+            - @config
+            - @request
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.controller.library_search:
+        class: Sheer\knowlegebase\controller\library_search
+        arguments:
+            - @config
+            - @request
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache
+            - @pagination
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.controller.approve:
+        class: Sheer\knowlegebase\controller\approve
+        arguments:
+            - @config
+            - @request
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @Sheer.knowlegebase.inc
+
+    Sheer.knowlegebase.listener:
+        class: Sheer\knowlegebase\event\listener
+        arguments:
+            - @template
+            - %core.root_path%
+        tags:
+            - { name: event.listener }
+
+    Sheer.knowlegebase.inc:
+        class: Sheer\knowlegebase\inc\functions_kb
+        arguments:
+            - @config
+            - @dbal.conn
+            - @cache
+            - @user
+            - @template
+            - @auth
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
