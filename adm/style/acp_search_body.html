@@ -1,0 +1,105 @@
+<!-- INCLUDE overall_header.html -->
+<a name="maincontent"></a>
+
+<h1>{L_ACP_LIBRARY_SEARCH}</h1>
+<p>{L_ACP_SEARCH_SETTINGS_EXPLAIN}</p>
+
+<form id="acp_search" method="post" action="{U_ACTION}">
+	<fieldset>
+		<legend>{L_GENERAL_SEARCH_SETTINGS}</legend>
+		<dl>
+			<dt><label for="load_search">{L_YES_SEARCH}:</label><br /><span>{L_YES_SEARCH_EXPLAIN}</span></dt>
+			<dd><label><input type="radio" class="radio" id="kb_search" name="config[kb_search]" value="1"<!-- IF S_YES_SEARCH --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+			<label><input type="radio" class="radio" name="config[kb_search]" value="0"<!-- IF not S_YES_SEARCH --> checked="checked"<!-- ENDIF --> /> {L_NO}</label></dd>
+		</dl>
+		<dl>
+			<dt><label for="kb_per_page_search">{L_PER_PAGE_SEARCH}:</label><br /><span>{L_PER_PAGE_SEARCH_EXPLAIN}</span></dt>
+			<label><input id="kb_per_page_search" maxlength="4" min="1" max="9999" name="config[kb_per_page_search]" value="{PER_PAGE_KB_SEARCH}" type="number"></label>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<legend>{L_SEARCH_TYPE}</legend>
+		<dl>
+			<dt><label for="search_type">{L_SEARCH_TYPE}:</label><br /><span>{L_SEARCH_TYPE_EXPLAIN}</span></dt>
+			<dd><select id="search_type" name="config[kb_search_type]">{S_SEARCH_TYPES}</select></dd>
+		</dl>
+	</fieldset>
+	<fieldset class="submit-buttons">
+		<legend>{L_SUBMIT}</legend>
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</fieldset>
+	{S_FORM_TOKEN}
+</form>
+
+<h1>{L_ACP_SEARCH_INDEX}</h1>
+<!-- IF S_CONTINUE_INDEXING -->
+<p>{L_CONTINUE_EXPLAIN}</p>
+	<form id="acp_search_continue" method="post" action="{U_CONTINUE_INDEXING}">
+		<fieldset class="submit-buttons">
+			<legend>{L_SUBMIT}</legend>
+			<input class="button1" type="submit" id="continue" name="continue" value="{L_CONTINUE}" />&nbsp;
+			<input class="button2" type="submit" id="cancel" name="cancel" value="{L_CANCEL}" />
+		</fieldset>
+	{S_FORM_TOKEN}
+	</form>
+<!-- ELSE -->
+	<script type="text/javascript">
+	// <![CDATA[
+		/**
+		* Popup search progress bar
+		*/
+		function popup_progress_bar(progress_type)
+		{
+			close_waitscreen = 0;
+			// no scrollbars
+			popup('{UA_PROGRESS_BAR}&amp;type=' + progress_type, 400, 240, '_index');
+		}
+	// ]]>
+	</script>
+
+<p>{L_ACP_SEARCH_INDEX_EXPLAIN}</p>
+	<!-- BEGIN backend -->
+	<!-- IF backend.S_STATS -->
+<form id="acp_search_index_{backend.NAME}" method="post" action="{U_ACTION}">
+	<fieldset class="tabulated">
+		{backend.S_HIDDEN_FIELDS}
+		<legend>{L_INDEX_STATS}: {backend.L_NAME} <!-- IF backend.S_ACTIVE -->({L_ACTIVE}) <!-- ENDIF --></legend>
+		<table cellspacing="1">
+		<caption>{backend.L_NAME} <!-- IF backend.S_ACTIVE -->({L_ACTIVE}) <!-- ENDIF --></caption>
+		<col class="col1" /><col class="col2" /><col class="col1" /><col class="col2" />
+			<thead>
+			<tr>
+				<th>{L_STATISTIC}</th>
+				<th>{L_VALUE}</th>
+				<th>{L_STATISTIC}</th>
+				<th>{L_VALUE}</th>
+			</tr>
+			</thead>
+			<tbody>
+			<!-- BEGIN data -->
+			<tr>
+				<td>{backend.data.STATISTIC_1}:</td>
+				<td>{backend.data.VALUE_1}</td>
+				<td>{backend.data.STATISTIC_2}<!-- IF backend.data.STATISTIC_2 -->:<!-- ENDIF --></td>
+				<td>{backend.data.VALUE_2}</td>
+			</tr>
+			<!-- END data -->
+			</tbody>
+		</table>
+			<p class="quick">
+			<!-- IF backend.S_INDEXED -->
+				<input type="hidden" name="action" value="delete" />
+				<input class="button2" type="submit" value="{L_DELETE_INDEX}" onclick="popup_progress_bar('delete');" />
+			<!-- ELSE -->
+				<input type="hidden" name="action" value="create" />
+				<input class="button2" type="submit" value="{L_CREATE_INDEX}" onclick="popup_progress_bar('create');" />
+			<!-- ENDIF -->
+			</p>
+		<!-- ENDIF -->
+	</fieldset>
+	{S_FORM_TOKEN}
+</form>
+	<!-- END backend -->
+	<!-- ENDIF -->
+<!-- INCLUDE overall_footer.html -->
