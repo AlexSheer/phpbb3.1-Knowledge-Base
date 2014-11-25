@@ -124,7 +124,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 						'group_id'		=> array('UINT', 0),
 						'category_id'	=> array('UINT', 0),
 						'auth_option_id'=> array('UINT', 0),
-						'auth_setting'	=> array('TINT:2'),
+						'auth_setting'	=> array('TINT:2', 0),
 					),
 						'KEYS'	=> array(
 							'group_id'		=> array('INDEX', 'group_id'),
@@ -137,7 +137,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 						'user_id'		=> array('UINT', 0),
 						'category_id'	=> array('UINT', 0),
 						'auth_option_id'=> array('UINT', 0),
-						'auth_setting'	=> array('TINT:2'),
+						'auth_setting'	=> array('TINT:2', 0),
 					),
 						'KEYS'	=> array(
 							'user_id'		=> array('INDEX', 'user_id'),
