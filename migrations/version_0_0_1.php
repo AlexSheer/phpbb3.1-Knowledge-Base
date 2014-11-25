@@ -32,12 +32,12 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 						'approved'				=> array('BOOL', 0),
 						'article_title'			=> array('VCHAR:255', ''),
 						'article_description'	=> array('VCHAR:255', ''),
-						'article_date'			=> array('VCHAR:255', 0),
-						'edit_date'				=> array('VCHAR:255', 0),
+						'article_date'			=> array('UINT:11', 0),
+						'edit_date'				=> array('UINT:11', 0),
 						'author_id'				=> array('UINT', 0),
 						'author'				=> array('VCHAR:255', ''),
 						'bbcode_uid'			=> array('VCHAR:10', ''),
-						'bbcode_bitfield'		=> array('VCHAR:255', ''),
+						'bbcode_bitfield'		=> array('VCHAR:32', ''),
 						'article_body'			=> array('MTEXT_UNI', ''),
 						'topic_id'				=> array('UINT', 0),
 						'views'					=> array('BINT', 0),
@@ -144,6 +144,17 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 							'auth_option_id'=> array('INDEX', 'auth_option_id'),
 						),
 				),
+
+				$this->table_prefix . 'kb_search_results'	=> array(
+					'COLUMNS'	=> array(
+						'search_key'		=> array('VCHAR:32', 0),
+						'search_time'		=> array('UINT:11', 0),
+						'search_keywords'	=> array('MTEXT_UNI', ''),
+						'search_authors'	=> array('MTEXT_UNI', ''),
+					),
+					'PRIMARY_KEY'	=> 'search_key',
+				),
+
 			),
 		);
 	}
@@ -160,6 +171,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 				$this->table_prefix . 'kb_src_wrdmtch',
 				$this->table_prefix . 'kb_groups',
 				$this->table_prefix . 'kb_users',
+				$this->table_prefix . 'kb_search_results',
 			),
 		);
 	}
@@ -169,6 +181,12 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 		return array(
 			// Current version
 			array('config.add', array('knowlege_base_version', '0.0.1')),
+
+			// Search in Knowlege Base
+			array('config.add', array('kb_search', '1')),
+			array('config.add', array('kb_search_type', 'kb_fulltext_native')),
+			array('config.add', array('kb_per_page_search', '10')),
+
 			// Add permossions
 			array('permission.add', array('a_manage_kb', true, 'a_board')),
 			// Update kb_options table
@@ -215,7 +233,17 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 		{
 			define('KB_OPTIONS_TABLE', $this->table_prefix . 'kb_options');
 		}
-		$options = array(1 => 'kb_u_add', 2 => 'kb_u_edit', 3 => 'kb_u_delete', 4 = > 'kb_u_add_noapprove', 5 => 'kb_m_edit', 6 => 'kb_m_delete', 7 => 'kb_m_approve');
+
+		$options = array(
+			1 => 'kb_u_add',
+			2 => 'kb_u_edit',
+			3 => 'kb_u_delete',
+			4 => 'kb_u_add_noapprove',
+			5 => 'kb_m_edit',
+			6 => 'kb_m_delete',
+			7 => 'kb_m_approve'
+		);
+
 		foreach ($options as $key => $value)
 		{
 			$sql_ary[] = array(
