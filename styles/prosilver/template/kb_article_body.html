@@ -1,0 +1,66 @@
+<!-- INCLUDE overall_header.html -->
+
+<div style="float:right; padding:5px; margin-bottom:5px"><a href="{U_PRINT}"><b>{L_PRINT}</b></a></div>
+
+<div id="page-body">
+	<div class="clear"></div>
+	<div class="post bg2">
+		<div class="inner">
+			<div class="postbody" style="width: 100%;">
+				<ul class="post-buttons">
+					<!-- IF not S_APPROVED and S_CAN_APPROOVE -->
+					<li>
+						<a href="{U_APPROVE_ART}" title="{L_NEED_APPROOVE}" class="button icon-button info-icon"><span>{L_NEED_APPROOVE}</span></a>
+					</li>
+					<!-- ENDIF -->
+					<!-- IF S_CAN_DELETE -->
+					<li>
+						<a href="{U_DELETE_ART}" title="{L_DELETE}" class="button icon-button delete-icon"><span>{L_DELETE}</span></a>
+					</li>
+					<!-- ENDIF -->
+					<!-- IF S_CAN_EDIT -->
+					<li>
+						<a href="{U_EDIT_ART}" title="{L_EDIT}" class="button icon-button edit-icon"><span>{L_EDIT}</span></a>
+					</li>
+					<!-- ENDIF -->
+				</ul>
+				<h3 class="first">{ARTICLE_TITLE}</h3>
+				<p class="author" style="line-height: 1.5em"><b>{L_ARTICLE_AUTHOR}:</b> {ARTICLE_AUTHOR}&nbsp;<b>{L_ARTICLE_DATE}:</b> {ARTICLE_DATE}&nbsp;<b>{L_VIEWS}:</b> {VIEWS}<br />
+				<b>{L_ARTICLE_DESCRIPTION}:</b> {ARTICLE_DESCRIPTION}<br /><b>{L_CATEGORY}:</b> {ARTICLE_CATEGORY}<br />
+				<!-- IF .postrow --><b>{COMMENTS}</b><!-- ENDIF --></p><hr />
+				<div class="content">{ARTICLE_TEXT}</div>
+			</div>
+		</div>
+	</div>
+
+	<form method="post" name="jumpbox" action="{S_ACTION}" onsubmit="if(document.jumpbox.id.value == -1){return false;}">
+		<fieldset style="float:right; margin: 5px 0px" class="jumpbox">
+			<label for="id" accesskey="j">{L_GO}:</label>
+			<select name="id" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
+			{CATS_BOX}</select>
+			<input type="submit" value="{L_GO}" class="button2">
+		</fieldset>
+	</form>
+
+<!-- IF .postrow -->
+	<table class="table1" cellspacing="1">
+		<tr>
+			<th><b>{L_COMMENTS}</b></th>
+		</tr>
+		<!-- BEGIN postrow -->
+		<tr class="bg2">
+			<td><b>{postrow.POSTER_NAME}</b>, {L_POSTED}: {postrow.POST_DATE}&nbsp;&nbsp;&nbsp;<b>{L_POST_SUBJECT}</b>: {postrow.POST_SUBJECT}</td>
+		</tr>
+		<tr>
+			<td><span class="postbody">{postrow.MESSAGE}</span></td>
+		</tr>
+		<!-- END postrow -->
+	</table>
+<!-- ENDIF -->
+	<hr />
+	<div style="margin-top:10px">
+		<!-- IF .postrow --><b>{COMMENTS}</b>&nbsp;<!-- ENDIF --><a href="{U_COMMENTS}"><b>{COUNT_COMMENTS}</b></a><br />
+	</div>
+</div>
+<br />
+<!-- INCLUDE overall_footer.html -->
