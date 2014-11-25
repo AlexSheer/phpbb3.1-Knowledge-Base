@@ -707,7 +707,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 		if ($category_id)
 		{
-			$sql_where[] = 'p.category_id = ' . $category_id;
+			$sql_where[] = 'p.article_category_id = ' . $category_id;
 		}
 
 		if (sizeof($author_ary))
@@ -766,7 +766,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 				case 'sqlite':
 				case 'sqlite3':
-					$sql_array_count['SELECT'] = ($type == 'posts') ? 'DISTINCT p.article_id' : 'DISTINCT p.category_id';
+					$sql_array_count['SELECT'] = ($type == 'posts') ? 'DISTINCT p.article_id' : 'DISTINCT p.article_category_id';
 					$sql = 'SELECT COUNT(' . (($type == 'posts') ? 'article_id' : 'category_id') . ') as total_results
 							FROM (' . $this->db->sql_build_query('SELECT', $sql_array_count) . ')';
 
@@ -981,7 +981,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 							WHERE $sql_author
 								$sql_category_id
 								$sql_fora
-								AND t.category_id = p.category_id
+								AND t.category_id = p.article_category_id
 								$sql_time" . (($this->db->get_sql_layer() == 'sqlite' || $this->db->get_sql_layer() == 'sqlite3') ? ')' : '');
 					}
 					$result = $this->db->sql_query($sql);
