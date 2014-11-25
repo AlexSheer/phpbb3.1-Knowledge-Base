@@ -70,7 +70,7 @@ class manage_module
 					if (!sizeof($errors))
 					{
 						$cache->destroy('sql', KB_CAT_TABLE);
-						$message = ($action == 'add') ? sprintf($user->lang['CATEGORY_ADDED'], '<a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=Sheer-knowlegebase-acp-permissions_module&mode=permissions&action=setting_group_local&category_id[]='. $category_data['category_id'] .'') . '">', '</a>') : $user->lang['CATEGORY_EDITED'];
+						$message = ($action == 'add') ? sprintf($user->lang['CATEGORY_ADDED'], '<a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=-Sheer-knowlegebase-acp-permissions_module&mode=permissions&action=setting_group_local&category_id[]='. $category_data['category_id'] .'') . '">', '</a>') : $user->lang['CATEGORY_EDITED'];
 						meta_refresh(3, $this->u_action . '&amp;parent_id=' . $this->parent_id);
 						trigger_error($message . adm_back_link($this->u_action . '&amp;parent_id=' . $this->parent_id));
 					}
