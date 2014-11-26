@@ -15,7 +15,7 @@ class manage_module
 
 	function main($id, $mode)
 	{
-		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb;
+		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_admin_path;
 
 		define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
