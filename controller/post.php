@@ -150,7 +150,7 @@ class post
 					if (isset($kb_search))
 					{
 						// Add search index
-						$kb_search->index('add', $new, $article_text, $article_title, $this->user->user_data['user_id']);
+						$kb_search->index('add', $new, $article_text, $article_title, $this->user->data['user_id']);
 					}
 
 					$this->kb->submit_article($cat_id, $fid, $article_title, $article_description, $category_name, $new);
