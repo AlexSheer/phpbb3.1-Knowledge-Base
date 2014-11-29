@@ -16,6 +16,7 @@ class manage_info
 		return array(
 			'filename'	=> '\Sheer\knowlegebase\acp\manage_module',
 			'version'	=> '1.0.0',
+			'title' => 'ACP_LIBRARY_MANAGE',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_MANAGE',
