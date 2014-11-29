@@ -16,6 +16,7 @@ class articles_info
 		return array(
 			'filename'	=> '\Sheer\knowlegebase\acp\articles_module',
 			'version'	=> '1.0.0',
+			'title' => 'ACP_LIBRARY_ARTICLES',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_ARTICLES',
