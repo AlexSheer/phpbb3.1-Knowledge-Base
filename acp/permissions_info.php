@@ -16,6 +16,7 @@ class permissions_info
 		return array(
 			'filename'	=> '\Sheer\knowlegebase\acp\permissions_module',
 			'version'	=> '1.0.0',
+			'title' => 'ACP_LIBRARY_PERMISSIONS',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_PERMISSIONS',
