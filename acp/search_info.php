@@ -16,6 +16,7 @@ class search_info
 		return array(
 			'filename'	=> '\Sheer\knowlegebase\acp\search_module',
 			'version'	=> '1.0.0',
+			'title' => 'ACP_LIBRARY_SEARCH',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_SEARCH',
