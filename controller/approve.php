@@ -23,7 +23,7 @@ class approve
 	protected $phpbb_root_path;
 	protected $php_ext;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -36,15 +36,27 @@ class approve
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 		$this->kb = $kb;
+		$this->helper = $helper;
 	}
 
 	public function approve_article()
 	{
+		// If not logged in
+		$dd = $this->user->data;
+		if ($this->user->data['user_id'] == ANONYMOUS)
+		{
+			$mode = '';
+			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)] : $this->user->lang['LOGIN_EXPLAIN_APPROVE']));
+		}
+
 		$art_id = $this->request->variable('id', 0);
 		$approve = $this->request->variable('approve', false);
 		$disapprove = $this->request->variable('disapprove', false);
 
 		$kb_article_info = $this->kb->get_kb_article_info($art_id);
+		$kb_category_info = $this->kb->get_cat_info($kb_article_info['article_category_id']);
+		$category_name = $kb_category_info['category_name'];
+
 		$redirect = append_sid("{$this->phpbb_root_path}knowlegebase/category",'id='. $kb_article_info['article_category_id'] .'');
 
 		if (!$this->kb->acl_kb_get($kb_article_info['article_category_id'], 'kb_m_approve') && !$this->auth->acl_get('a_manage_kb'))
@@ -59,7 +71,7 @@ class approve
 
 		if($approve)
 		{
-			include_once($phpbb_root_path . 'includes/functions_posting.' . $this->php_ext);
+			include_once($this->phpbb_root_path . 'includes/functions_posting.' . $this->php_ext);
 			$kb_data = $this->kb->obtain_kb_config();
 
 			if ($this->config['kb_search_type'])
@@ -90,8 +102,7 @@ class approve
 			$this->kb->submit_article($kb_article_info['article_category_id'], $kb_data['forum_id'], $kb_article_info['article_title'], $kb_article_info['article_description'], $category_name, $art_id);
 			// To do
 			// add_log
-			meta_refresh(3, $redirect);
-			trigger_error('ARTICLE_APPROVED_SUCESS');
+
 		}
 		else if ($disapprove)
 		{
@@ -99,10 +110,31 @@ class approve
 				FROM ' . ARTICLES_TABLE . '
 				WHERE article_id = '. $art_id;
 			$this->db->sql_query($sql);
+
 			// To do
 			// add_log
+		}
+
+		if ($approve || $disapprove)
+		{
+			$message = ($approve) ? 'ARTICLE_APPROVED_SUCESS' : 'ARTICLE_DISAPPROVED_SUCESS';
+			// Send notification
+			$kb_article_info['moderator_id'] = $this->user->data['user_id'];
+			$notification_type = ($approve) ? 'sheer.knowlegebase.notification.type.approve' : 'sheer.knowlegebase.notification.type.disapprove';
+			$this->helper->add_notification($kb_article_info, $notification_type);
+			$sql = 'SELECT notification_type_id
+				FROM ' . NOTIFICATION_TYPES_TABLE . '
+				WHERE notification_type_name LIKE \'sheer.knowlegebase.notification.type.need_approval\'';
+			$result = $this->db->sql_query($sql);
+			$row = $this->db->sql_fetchrow($result);
+			$this->db->sql_freeresult($result);
+
+			$sql = 'DELETE FROM ' . NOTIFICATIONS_TABLE . '
+				WHERE item_id = ' . $kb_article_info['article_id'] . '
+				AND notification_type_id = ' . $row['notification_type_id'] .' ';
+			$this->db->sql_query($sql);
 			meta_refresh(3, $redirect);
-			trigger_error('ARTICLE_DISAPPROVED_SUCESS');
+			trigger_error($message);
 		}
 
 		$this->template->assign_vars(array(
