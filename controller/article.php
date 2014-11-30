@@ -34,8 +34,6 @@ class article
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 		$this->kb = $kb;
-
-		define('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
 	}
 
 	public function show()
@@ -82,7 +80,7 @@ class article
 		$author_kb_art = '<a href="' . $temp_url . '" class="gensmall">' . $author . '</a></span>';
 		$comment_topic_id = $row['topic_id'];
 
-	// Получаем комментарии
+	// Get comments
 		$count = -1;
 		$sql = 'SELECT DISTINCT p.poster_id, p.post_time, p.post_subject, p.post_text, p.bbcode_uid, p.bbcode_bitfield, u.user_id, u.username
 			FROM '. POSTS_TABLE .' p, '. USERS_TABLE .' u
@@ -137,7 +135,7 @@ class article
 
 		if ($mode != 'print' && $row['approved'])
 		{
-		// Увеличиваем количество просмотров
+		// Increase the number of views
 			++$views;
 			$sql = 'UPDATE '. ARTICLES_TABLE .'
 				SET views = '.$views.'
