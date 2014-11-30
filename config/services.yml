@@ -70,10 +70,12 @@ services:
             - @template
             - @user
             - @cache
+            - @notification_manager
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
             - @Sheer.knowlegebase.inc
+            - @Sheer.knowlegebase.helper
 
     Sheer.knowlegebase.controller.library_search:
         class: Sheer\knowlegebase\controller\library_search
@@ -126,3 +128,72 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
+
+    Sheer.knowlegebase.helper:
+        class: Sheer\knowlegebase\core\helper
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache.driver
+            - @request
+            - @notification_manager
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+
+    Sheer.knowlegebase.notification.type.need_approval:
+        class: Sheer\knowlegebase\notification\need_approval
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }
+
+    Sheer.knowlegebase.notification.type.approve:
+        class: Sheer\knowlegebase\notification\approve
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }
+
+    Sheer.knowlegebase.notification.type.disapprove:
+        class: Sheer\knowlegebase\notification\disapprove
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }
