@@ -36,8 +36,6 @@ class category
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 		$this->kb = $kb;
-
-		define('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
 	}
 
 	public function cat()
