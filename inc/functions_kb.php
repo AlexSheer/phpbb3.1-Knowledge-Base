@@ -41,6 +41,7 @@ class functions_kb
 		if (!defined ('ARTICLES_TABLE')) define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		if (!defined ('FORUMS_TABLE')) define ('FORUMS_TABLE', $this->table_prefix.'forums');
 		if (!defined ('TOPICS_TABLE')) define ('TOPICS_TABLE', $this->table_prefix.'topics');
+		if (!defined ('TOPICS_TABLE')) define ('TOPICS_TABLE', $this->table_prefix.'topics');
 	}
 
 	public function get_category_branch($category_id, $type = 'all', $order = 'descending', $include_category = true)
@@ -289,21 +290,21 @@ class functions_kb
 
 	public function kb_move_article($k, $cat_id, $id)
 	{
-		// Заменяем id категории в таблице статей
+		// Change category id in the table of articles
 		$sql = 'UPDATE '. ARTICLES_TABLE .'
 			SET article_category_id = '. $id .'
 			WHERE article_id = '.$k.'';
 		$this->db->sql_query($sql);
 
-		// пересчитвываем количество статей в исходной категории
+		// recalculate the number of articles in source category
 		$cat_info = $this->get_cat_info($cat_id);
 		$articles_count = $cat_info['number_articles'];
 		$articles_count--;
-		// и в новой категории
+		// ... and a new category
 		$to_cat_info = $this->get_cat_info($id);
 		$to_articles_count = $to_cat_info['number_articles'];
 		$to_articles_count++;
-		// меняем в БД
+		// change in DB
 		$sql = 'UPDATE ' . KB_CAT_TABLE . '
 			SET number_articles = '. $articles_count .'
 			WHERE category_id = '.$cat_id.'';
