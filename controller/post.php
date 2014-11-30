@@ -23,7 +23,7 @@ class post
 	protected $phpbb_root_path;
 	protected $php_ext;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -32,11 +32,12 @@ class post
 		$this->template = $template;
 		$this->user = $user;
 		$this->phpbb_cache = $cache;
+		$this->notification_manager = $notification_manager;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
 		$this->kb = $kb;
-
+		$this->helper = $helper;
 		define('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
 	}
 
@@ -161,6 +162,9 @@ class post
 				else
 				{
 					$msg = $this->user->lang['ARTICLE_NEED_APPROVE'];
+					// Add notification
+					$sql_data['article_id'] = $new;
+					$this->helper->add_notification($sql_data, 'sheer.knowlegebase.notification.type.need_approval');
 				}
 
 				$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
