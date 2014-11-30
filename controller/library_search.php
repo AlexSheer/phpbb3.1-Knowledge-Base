@@ -211,7 +211,7 @@ class library_search
 					$article_info = $this->kb->get_kb_article_info ($article_id);
 					$category_id = $article_info['article_category_id'];
 					$message = $row['article_body'];
-					generate_text_for_display($message, $row['bbcode_uid'], $row['bbcode_bitfield'], 3, true);
+					$message = generate_text_for_display($message, $row['bbcode_uid'], $row['bbcode_bitfield'], 3, true);
 					$message = get_context($message, array_filter(explode('|', $hilit), 'strlen'), $return_chars);
 					$message =  strtr($message, array('&lt;' => '<', '&gt;' => '>'));
 
