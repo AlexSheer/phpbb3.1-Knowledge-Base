@@ -41,7 +41,7 @@ class functions_kb
 		if (!defined ('ARTICLES_TABLE')) define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		if (!defined ('FORUMS_TABLE')) define ('FORUMS_TABLE', $this->table_prefix.'forums');
 		if (!defined ('TOPICS_TABLE')) define ('TOPICS_TABLE', $this->table_prefix.'topics');
-		if (!defined ('TOPICS_TABLE')) define ('TOPICS_TABLE', $this->table_prefix.'topics');
+		if (!defined ('KB_CAT_TABLE')) define ('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
 	}
 
 	public function get_category_branch($category_id, $type = 'all', $order = 'descending', $include_category = true)
