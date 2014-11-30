@@ -107,6 +107,7 @@ services:
             - %core.php_ext%
             - %core.table_prefix%
             - @Sheer.knowlegebase.inc
+            - @Sheer.knowlegebase.helper
 
     Sheer.knowlegebase.listener:
         class: Sheer\knowlegebase\event\listener
