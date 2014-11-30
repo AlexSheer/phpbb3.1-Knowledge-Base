@@ -123,9 +123,9 @@ class articles_module
 		$article_id = $request->variable('aid', 0);
 		$submit		= (isset($_POST['submit'])) ? true : false;
 
-		// куда переносить
+		// move to
 		$to_id = request_var('to_id', 0);
-		// откуда переносить
+		// move from
 		$info = $phpbb_ext_kb->get_kb_article_info($article_id);
 
 		if ($submit)
