@@ -41,7 +41,7 @@ class ext extends \phpbb\extension\base
 				// Enable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
 				$phpbb_notifications->enable_notifications('sheer.knowlegebase.notification.type.need_approval');
-				$phpbb_notifications->enable_notifications('sheer.knowlegebase.notification.type.approvе');
+				$phpbb_notifications->enable_notifications('sheer.knowlegebase.notification.type.approve');
 				$phpbb_notifications->enable_notifications('sheer.knowlegebase.notification.type.disapprove');
 				return 'notifications';
 
@@ -72,7 +72,7 @@ class ext extends \phpbb\extension\base
 				// Disable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
 				$phpbb_notifications->disable_notifications('sheer.knowlegebase.notification.type.need_approval');
-				$phpbb_notifications->disable_notifications('sheer.knowlegebase.notification.type.approvе');
+				$phpbb_notifications->disable_notifications('sheer.knowlegebase.notification.type.approve');
 				$phpbb_notifications->disable_notifications('sheer.knowlegebase.notification.type.disapprove');
 				return 'notifications';
 
@@ -103,7 +103,7 @@ class ext extends \phpbb\extension\base
 				// Purge notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
 				$phpbb_notifications->purge_notifications('sheer.knowlegebase.notification.type.need_approval');
-				$phpbb_notifications->purge_notifications('sheer.knowlegebase.notification.type.approvе');
+				$phpbb_notifications->purge_notifications('sheer.knowlegebase.notification.type.approve');
 				$phpbb_notifications->purge_notifications('sheer.knowlegebase.notification.type.disapprove');
 				return 'notifications';
 
