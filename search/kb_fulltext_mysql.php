@@ -862,10 +862,7 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 				}
 			}
 		}
-
 		$this->db->sql_freeresult($result);
-
 		$this->stats['total_articles'] = empty($this->stats) ? 0 : $this->db->get_estimated_row_count(ARTICLES_TABLE);
 	}
 }
-?>
