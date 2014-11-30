@@ -462,7 +462,7 @@ class manage_module
 	{
 		global $db, $user;
 		$errors = array();
-		// подсчитываем количество статей в  отправителе
+		// count the number of articles in the sender
 		$sql = 'SELECT number_articles
 			FROM ' . KB_CAT_TABLE . '
 			WHERE category_id = '.$from_id.'';
@@ -475,7 +475,7 @@ class manage_module
 		}
 		$db->sql_freeresult($result);
 		$from_id_articles = $row['number_articles'];
-		// и получателе
+		// and recipient
 		$sql = 'SELECT number_articles FROM ' . KB_CAT_TABLE . '
 			WHERE category_id = '.$to_id.'';
 		$result = $db->sql_query($sql);
@@ -487,12 +487,12 @@ class manage_module
 		}
 		$db->sql_freeresult($result);
 		$to_id_articles = $row['number_articles'];
-		// меняем id статей
+		// change the id of articles
 		$sql = 'UPDATE '. ARTICLES_TABLE .'
 			SET article_category_id = '.$to_id.'
 			WHERE article_category_id = '.$from_id.'';
 		$db->sql_query($sql);
-		// меняем количество статей в получателе
+		// change the number of articles in the receiver
 		$to_id_articles = $to_id_articles + $from_id_articles;
 		$sql = 'UPDATE ' . KB_CAT_TABLE . '
 			SET number_articles = '.$to_id_articles.'
@@ -502,7 +502,7 @@ class manage_module
 		return array();
 	}
 
-	// Полное удаление категории
+	// Complete removal category
 	function delete_category($category_id, $action_posts = 'delete', $action_sub_cats = 'delete', $posts_to_id = 0, $sub_cats_to_id = 0)
 	{
 		global $db, $user, $cache, $phpbb_ext_kb;
@@ -799,7 +799,7 @@ class manage_module
 
 		include_once($phpbb_root_path . 'includes/functions_posting.' . $phpEx);
 
-		// удаляем топики
+		// remove topics
 		$topics = array();
 		$sql = 'SELECT topic_id, article_id
 			FROM '. ARTICLES_TABLE .'
@@ -813,7 +813,7 @@ class manage_module
 		}
 		delete_topics('topic_id', $topics, true, true, true);
 
-		// Удаляем статьи
+		// remove articles
 		$sql = 'DELETE
 			FROM '. ARTICLES_TABLE .'
 			WHERE article_category_id = '.$cat_id.'';
