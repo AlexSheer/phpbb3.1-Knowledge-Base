@@ -298,7 +298,7 @@ class permissions_module
 		$table = ($mode == 'user') ? KB_USERS_TABLE : KB_GROUPS_TABLE;
 		$id_field = $mode . '_id';
 
-		while ($row = $db->sql_fetchrow($result)) // категории
+		while ($row = $db->sql_fetchrow($result)) // categories
 		{
 			$cat_id = $row['category_id'];
 			$template->assign_block_vars('p_mask', array(
@@ -307,7 +307,7 @@ class permissions_module
 				)
 			);
 
-			foreach ($groups as $key => $group_id) // группы
+			foreach ($groups as $key => $group_id) // groups
 			{
 				$template->assign_block_vars('p_mask.g_mask', array(
 					'GROUP_ID'		=> $group_id,
@@ -357,7 +357,7 @@ class permissions_module
 
 					if (!isset($auth['auth_setting']))
 					{
-						$auth['auth_setting'] = -1; // право не установлено
+						$auth['auth_setting'] = -1; // permission not set
 					}
 
 					$_options[$name] = $auth['auth_setting'];
