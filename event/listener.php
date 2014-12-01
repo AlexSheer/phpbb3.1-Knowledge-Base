@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Knowleg ebase
+* @package Knowlege base
 * @copyright (c) 2014 Sheer
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -16,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 */
 class listener implements EventSubscriberInterface
 {
+	protected $user;
 /**
 * Assign functions defined in this class to event listeners in the core
 *
@@ -35,9 +36,10 @@ class listener implements EventSubscriberInterface
 	/**
 	* Constructor
 	*/
-	public function __construct(\phpbb\template\template $template, $phpbb_root_path)
+	public function __construct(\phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path)
 	{
 		$this->template = $template;
+		$this->user = $user;
 		$this->phpbb_root_path = $phpbb_root_path;
 	}
 
