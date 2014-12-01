@@ -73,7 +73,6 @@ class helper
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
-
 	}
 
 	// Add notifications
