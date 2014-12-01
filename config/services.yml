@@ -113,6 +113,7 @@ services:
         class: Sheer\knowlegebase\event\listener
         arguments:
             - @template
+            - @user
             - %core.root_path%
         tags:
             - { name: event.listener }
