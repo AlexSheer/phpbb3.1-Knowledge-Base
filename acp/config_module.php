@@ -20,7 +20,6 @@ class config_module
 
 		$this->tpl_name = 'acp_knowlegebase_body';
 		$this->page_title = $user->lang('ACP_KNOWLEGE_BASE_CONFIGURE');
-
 		$sql = 'SELECT *
 			FROM ' . KB_CONFIG_TABLE;
 		$result = $db->sql_query($sql);
@@ -32,6 +31,7 @@ class config_module
 			$new[$config_name] = $request->variable($config_name, $default_config[$config_name]);
 		}
 		$db->sql_freeresult($result);
+		$new['anounce'] = $request->variable('anounce', 0);
 		if (empty($new))
 		{
 			// To do
@@ -41,6 +41,9 @@ class config_module
 			$db->sql_query($sql);
 			$sql = 'INSERT INTO ' .KB_CONFIG_TABLE.' (config_name, config_value, is_dynamic)
 				VALUES (\'articles_per_page\', 10, 1)';
+			$db->sql_query($sql);
+			$sql = 'INSERT INTO ' .KB_CONFIG_TABLE.' (config_name, config_value, is_dynamic)
+				VALUES (\'anounce\', 1, 1)';
 			$db->sql_query($sql);
 		}
 		add_form_key('Sheer/knowlegebase');
@@ -64,10 +67,12 @@ class config_module
 		}
 
 		$template->assign_vars(array(
-			'S_CONFIGURE'	=> true,
-			'PER_PAGE'		=> (isset($new['articles_per_page'])) ? $new['articles_per_page'] : 10,
-			'S_FORUM_POST'	=> (isset($new['articles_per_page'])) ? make_forum_select($new['forum_id'], 0, true, true, false) : make_forum_select(0, false, true, true, false),
-			'S_ACTION'		=> $this->u_action,
+			'S_CONFIGURE'		=> true,
+			'ADVANCED_FORM_ON'	=> ($default_config['anounce']) ? 'checked="checked"' : '',
+			'ADVANCED_FORM'		=> ($default_config['anounce']) ? '' : 'none',
+			'PER_PAGE'			=> (isset($new['articles_per_page'])) ? $new['articles_per_page'] : 10,
+			'S_FORUM_POST'		=> (isset($new['articles_per_page'])) ? make_forum_select($new['forum_id'], 0, true, true, false) : make_forum_select(0, false, true, true, false),
+			'S_ACTION'			=> $this->u_action,
 		));
 	}
 }
