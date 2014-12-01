@@ -9,12 +9,16 @@
 			<th class="thHead" colspan="2">{L_ACP_KNOWLEGE_BASE_CONFIGURE}</th>
 		</tr>
 		<tr>
+			<td class="row1" width="45%"><span class="genmed"><b>{L_ANOUNCE}</b></span><br />{L_ANOUNCE_EXPLAIN}</td>
+			<td class="row2"><input type="checkbox" name="anounce" value="1" style="vertical-align: middle;" onClick="if (document.getElementById) { toggle_form_advanced = document.getElementById('form_advanced').style; } else { alert('Upgrade your browser!'); return; } if (toggle_form_advanced.display == 'none') { toggle_form_advanced.display = ''; } else { toggle_form_advanced.display = 'none'; }" {ADVANCED_FORM_ON}/></td>
+		</tr>
+		<tr id="form_advanced" style="display: {ADVANCED_FORM};">
 			<td class="row1" width="45%"><span class="genmed"><b>{L_FORUM}</b></span><br />{L_KB_FORUM_EXPLAIN}</td>
 			<td class="row2"><select name="forum_id">{S_FORUM_POST}</select></td>
 		</tr>
 		<tr>
 			<td class="row1"><span class="genmed"><b>{L_PER_PAGE}</b></span><br />{L_PER_PAGE_EXPLAIN}</td>
-			<td class="row2"><input class="post" type="text" maxlength="12" size="12" name="articles_per_page" value="{PER_PAGE}" /></td>
+			<td class="row2"><input class="post" type="number" max="20" min="5" maxlength="12" size="12" name="articles_per_page" value="{PER_PAGE}" /></td>
 		</tr>
 	</table>
 	<br />
