@@ -38,7 +38,6 @@ class post
 		$this->table_prefix = $table_prefix;
 		$this->kb = $kb;
 		$this->helper = $helper;
-		define('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
 	}
 
 	public function post_article()
@@ -154,8 +153,10 @@ class post
 						$kb_search->index('add', $new, $article_text, $article_title, $this->user->data['user_id']);
 					}
 
-					$this->kb->submit_article($cat_id, $fid, $article_title, $article_description, $category_name, $new);
-
+					if (!empty($kb_data['forum_id']) && $kb_data['anounce'])
+					{
+						$this->kb->submit_article($cat_id, $fid, $article_title, $article_description, $category_name, $new);
+					}
 					$msg = $this->user->lang['ARTICLE_SUBMITTED'];
 					$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_ARTICLE'], '<a href="' . $redirect . '">', '</a>');
 				}
