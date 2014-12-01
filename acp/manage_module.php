@@ -60,7 +60,6 @@ class manage_module
 				case 'add':
 					$category_data += array(
 						'parent_id'				=> request_var('parent_id', $this->parent_id),
-						'category_type'			=> request_var('category_type', 1),
 						'type_action'			=> request_var('type_action', ''),
 						'category_parents'		=> '',
 						'category_name'			=> utf8_normalize_nfc(request_var('category_name', '', true)),
@@ -143,7 +142,6 @@ class manage_module
 					{
 						$category_data = array(
 							'parent_id'				=> $this->parent_id,
-							'category_type'			=> 1,
 							'category_name'			=> utf8_normalize_nfc(request_var('category_name', '', true)),
 							'category_details'		=> '',
 						);
@@ -244,7 +242,7 @@ class manage_module
 		{
 			$navigation = $user->lang['CATEGOTY_LIST'];
 			$kb_config = $phpbb_ext_kb->obtain_kb_config();
-			if (empty($kb_config) || !$kb_config['forum_id'])
+			if (empty($kb_config) || (!$kb_config['forum_id'] && $kb_config['anounce']))
 			$errors[] = $user->lang['WARNING_DEFAULT_CONFIG'];
 		}
 		else
@@ -355,7 +353,7 @@ class manage_module
 
 			if ($category_data_sql['parent_id'])
 			{
-				$sql = 'SELECT left_id, right_id, category_type
+				$sql = 'SELECT left_id, right_id
 					FROM ' . KB_CAT_TABLE . '
 					WHERE category_id = ' . $category_data_sql['parent_id'];
 				$result = $db->sql_query($sql);
