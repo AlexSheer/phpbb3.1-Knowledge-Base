@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package phpBB Extension - My test
+* @package phpBB Extension - Knowlege Base
 * @copyright (c) 2013 phpBB Group
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
