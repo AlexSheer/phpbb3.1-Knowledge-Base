@@ -99,7 +99,10 @@ class approve
 				$kb_search->index('add', $art_id, $kb_article_info['article_body'], $kb_article_info['article_title'], $kb_article_info['author']);
 			}
 
-			$this->kb->submit_article($kb_article_info['article_category_id'], $kb_data['forum_id'], $kb_article_info['article_title'], $kb_article_info['article_description'], $category_name, $art_id);
+			if (!empty($kb_data['forum_id']) && $kb_data['anounce'])
+			{
+				$this->kb->submit_article($kb_article_info['article_category_id'], $kb_data['forum_id'], $kb_article_info['article_title'], $kb_article_info['article_description'], $category_name, $art_id);
+			}
 			// To do
 			// add_log
 
