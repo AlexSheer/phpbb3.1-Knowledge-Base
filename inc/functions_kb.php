@@ -88,7 +88,7 @@ class functions_kb
 		$padding_store = array('0' => '');
 		$padding = $cat_list = '';
 
-		$sql = 'SELECT category_id, category_name, parent_id, category_type, left_id, right_id, number_articles
+		$sql = 'SELECT category_id, category_name, parent_id, left_id, right_id, number_articles
 			FROM ' . KB_CAT_TABLE . '
 			ORDER BY left_id ASC';
 		$result = $this->db->sql_query($sql, 600);
