@@ -47,7 +47,7 @@ class post
 		$kb_data = $this->kb->obtain_kb_config();
 		$fid = $kb_data['forum_id'];
 
-		if (empty($kb_data['forum_id']))
+		if (empty($kb_data['forum_id']) && $kb_data['anounce'])
 		{
 			trigger_error('WARNING_DEFAULT_CONFIG');
 		}
@@ -157,6 +157,7 @@ class post
 					{
 						$this->kb->submit_article($cat_id, $fid, $article_title, $article_description, $category_name, $new);
 					}
+
 					$msg = $this->user->lang['ARTICLE_SUBMITTED'];
 					$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_ARTICLE'], '<a href="' . $redirect . '">', '</a>');
 				}
