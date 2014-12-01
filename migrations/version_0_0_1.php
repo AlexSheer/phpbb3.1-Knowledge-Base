@@ -68,7 +68,6 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 						'category_parents'	=> array('MTEXT_UNI', ''),
 						'category_name'		=> array('VCHAR:255', ''),
 						'category_details'	=> array('VCHAR:255', ''),
-						'category_type'		=> array('BOOL', 0),
 						'number_articles'	=> array('USINT', 0),
 					),
 					'PRIMARY_KEY'	=> 'category_id',
