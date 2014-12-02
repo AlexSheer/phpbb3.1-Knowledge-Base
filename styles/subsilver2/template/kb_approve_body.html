@@ -1,0 +1,26 @@
+<!-- INCLUDE overall_header.html -->
+
+<form method="post" action="{S_ACTION}">
+	<table class="tablebg" width="100%" cellspacing="1">
+		<tr>
+			<th colspan="2">{L_APPROVE}</th>
+		</tr>
+		<tr class="row1">
+			<td class="genmed"><b>{L_ARTICLE_TITLE}</b></td><td>{ARTICLE_TITLE}</td>
+		</tr>
+		<tr class="row1">
+			<td class="genmed"><b>{L_DESCR}</b></td><td>{ARTICLE_DESCRIPTION}</td>
+		</tr>
+		<tr class="row1">
+			<td class="genmed"><b>{L_ARTICLE_AUTHOR}</b></td><td>{ARTICLE_AUTHOR}</td>
+		</tr>
+		<tr class="cat" align="center">
+			<td colspan="2">
+				<input class="btnmain" type="submit" id="continue" name="approve" value="{L_APPROVE}" />&nbsp;
+				<input class="btnmain" type="submit" id="cancel" name="disapprove" value="{L_DISAPPROVE}" />
+			</td>
+		</tr>
+	</table>
+</form>
+
+<!-- INCLUDE overall_footer.html -->
