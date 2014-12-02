@@ -1,0 +1,48 @@
+<!-- INCLUDE overall_header.html -->
+
+<div id="pagecontent">
+	<form method="post" action="{S_SEARCH_ACTION}">
+		<table class="tablebg" width="100%" cellspacing="1">
+			<!-- IF ERROR -->
+				<tr>
+					<td class="row2" colspan="4" align="center"><span class="genmed error">{ERROR}</span></td>
+				</tr>
+			<!-- ENDIF -->
+			<tr>
+				<th colspan="4">{L_SEARCH_QUERY}</th>
+			</tr>
+			<tr>
+				<td class="row1" width="50%" colspan="2"><b class="genmed">{L_SEARCH_KEYWORDS}: </b><br /><span class="gensmall">{L_SEARCH_KEYWORDS_EXPLAIN}</span></td>
+				<td class="row2" width="50%" colspan="2"><input type="text" style="width: 300px" class="post" name="keywords" size="30" /><br /><input type="radio" class="radio" name="terms" value="all" checked="checked" /> <span class="genmed">{L_SEARCH_ALL_TERMS}</span><br /><input type="radio" class="radio" name="terms" value="any" /> <span class="genmed">{L_SEARCH_ANY_TERMS}</span></td>
+			</tr>
+			<tr>
+				<td class="row1" colspan="2"><b class="genmed">{L_SEARCH_AUTHOR}:</b><br /><span class="gensmall">{L_SEARCH_AUTHOR_EXPLAIN}</span></td>
+				<td class="row2" valign="middle" colspan="2"><input type="text" style="width: 300px" class="post" name="author" size="30" /></td>
+			</tr>
+			<tr>
+				<td class="row1" colspan="2"><b class="genmed">{L_SEARCH_CAT}:</b><br /><span class="gensmall">{L_SEARCH_CAT_EXPLAIN}</span></td>
+				<td class="row2" valign="middle" colspan="2"><select style="width: 304px;" name="cat_ids[]" multiple="multiple" size="8" title="{L_SEARCH_CAT}">{CATS_BOX}</select></td>
+			</tr>
+			<tr>
+				<th colspan="4">{L_SEARCH_OPTIONS}</th>
+			</tr>
+			<tr>
+				<td class="row1" width="50%" colspan="2"><b class="genmed">{L_RESULT_SORT}: </b></td>
+				<td class="row2" width="50%" colspan="2">{S_SELECT_SORT_KEY}<br /><input type="radio" class="radio" name="sd" value="a" /> <span class="genmed">{L_SORT_ASCENDING}</span><br /><input type="radio" class="radio" name="sd" value="d" checked="checked" /> <span class="genmed">{L_SORT_DESCENDING}</span></td>
+			</tr>
+			<tr>
+				<td class="row1" width="25%"><b class="genmed">{L_RESULT_DAYS}: </b></td>
+				<td class="row2" width="25%" nowrap="nowrap">{S_SELECT_SORT_DAYS}</td>
+				<td class="row1" width="25%"><b class="genmed">{L_RETURN_FIRST}:</b></td>
+				<td class="row2" width="25%"><select name="ch"><option value="-1">{L_ALL_AVAILABLE}</option><option value="0">0</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="300" selected="selected">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option><option value="1000">1000</option></select>
+				</td>
+			</tr>
+				<td class="cat" colspan="4" align="center">{S_HIDDEN_FIELDS}<input class="btnmain" name="submit" type="submit" value="{L_SEARCH}" />&nbsp;&nbsp;<input class="btnlite" type="reset" value="{L_RESET}" /></td>
+			</tr>
+		</table>
+	</form>
+	<br clear="all" />
+</div>
+	<!-- INCLUDE breadcrumbs.html -->
+	<br clear="all" />
+<!-- INCLUDE overall_footer.html -->
