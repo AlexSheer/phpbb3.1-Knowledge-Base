@@ -1,1 +1,10 @@
-Subject:
+Subject: Article in a queue for moderation - «{ARTICLE_TITLE}»
+
+Hello!
+
+You are receiving this notice because the article «{ARTICLE_TITLE}» at the conference «{SITENAME}» requires approval.
+
+If you want to view an article, click on the following link:
+{U_VIEW_ARTICLE}
+
+{EMAIL_SIG}
