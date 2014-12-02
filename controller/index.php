@@ -87,6 +87,7 @@ class index
 			'S_IS_SEARCH'			=> ($this->config['kb_search']) ? true : false,
 			'S_KB_SEARCH_ACTION'	=> append_sid("{$this->phpbb_root_path}knowlegebase/library_search"),
 			'CATS_DROPBOX'			=> $this->kb->make_category_dropbox(0, false, true, false, false),
+			'CATS_BOX'				=> $this->kb->make_category_select(0, false, true, false, false),
 			)
 		);
 
