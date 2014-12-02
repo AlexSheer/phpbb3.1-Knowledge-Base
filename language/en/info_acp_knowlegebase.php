@@ -86,7 +86,7 @@ $lang = array_merge($lang, array(
 	'KB_FORUM_EXPLAIN'						=> 'Select a forum in which to set up  announcements of articles.',
 	'PER_PAGE'								=> 'The number of articles on the page',
 	'PER_PAGE_EXPLAIN'						=> 'The number of articles on the management page articles and view page search.',
-	'ARTICLE_MOVE_EXPLAIN'					=> 'Select the category to which you want to transfer the article.',
+	'ARTICLE_MOVE_EXPLAIN'					=> 'Select category to which you want move article.',
 	'ANOUNCE'								=> 'Announce article at the conference',
 	'ANOUNCE_EXPLAIN'						=> 'If selected, after the addition of articles on the conference will be automatically created topic with a brief article description and link to this. <br />Choose forum, which will be created announcements, from the list below (will be available at activation options).',
 
