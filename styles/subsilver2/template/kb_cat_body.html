@@ -1,0 +1,117 @@
+<!-- INCLUDE overall_header.html -->
+
+<table width="100%" cellspacing="1">
+	<tr>
+		<td align="left" class="nav"><a href="{U_KB}" class="nav">{L_LIBRARY}</a> &raquo; {CATEGORY}</td>
+	</tr>
+</table>
+<!-- IF .cat_row -->
+<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<th colspan="2">{L_CATEGORIES}</th>
+	</tr>
+<!-- BEGIN cat_row -->
+	<tr>
+		<td class="row1" align="left" valign="middle"><b><a href="{cat_row.U_CAT}"/>{cat_row.CAT_NAME}</a></b><br />{cat_row.SUBCATS}</td>
+		<td class="row1" align="left" valign="middle">{cat_row.ARTICLES}</td>
+	</tr>
+	<!-- END cat_row -->
+</table><br />
+<!-- ENDIF -->
+
+<!-- IF S_ON_PAGE and .art_row -->
+<table width="100%" cellspacing="1">
+	<tr>
+		<td class="nav" valign="middle" nowrap="nowrap">&nbsp;{S_ON_PAGE}<br /></td>
+		<td class="gensmall" nowrap="nowrap">&nbsp;{L_ARTICLES}: [ {TOTAL_ARTICLES} ]&nbsp;</td>
+		<td class="gensmall" width="100%" align="{S_CONTENT_FLOW_END}" nowrap="nowrap"><!-- INCLUDE pagination.html --></td>
+	</tr>
+</table>
+<!-- ENDIF -->
+
+<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<th class="thCornerL" nowrap="nowrap">&nbsp;{L_ARTICLE}&nbsp;</th>
+		<th class="thTop" nowrap="nowrap">&nbsp;{L_ARTICLE_AUTHOR}&nbsp;</th>
+		<th class="thTop" nowrap="nowrap">&nbsp;{L_ARTICLE_DATE}&nbsp;</th>
+		<th class="thCornerR" nowrap="nowrap">&nbsp;{L_VIEWS}&nbsp;</th>
+		<th class="thCornerR" nowrap="nowrap">&nbsp;{L_EDIT}&nbsp;</th>
+		<th class="thCornerR" nowrap="nowrap">&nbsp;{L_DELETE}&nbsp;</th>
+	</tr>
+<!-- BEGIN art_row -->
+	<tr>
+		<td class="row2" align="left" valign="middle">{art_row.ARTICLE}<!-- IF not art_row.S_APPROVED -->&nbsp;<span class="imageset icon_post_info" title="{L_NEED_APPROOVE}">{L_NEED_APPROOVE}</span><!-- ENDIF --></td>
+		<td class="row2" align="center" valign="middle"><span class="genmed">{art_row.ARTICLE_AUTHOR}</span></td>
+		<td class="row2" align="center" valign="middle" nowrap="nowrap"><span class="gensmall">{art_row.ARTICLE_DATE}</span></td>
+		<td class="row2" align="center" valign="middle"><span class="genmed">{art_row.ART_VIEWS}</span></td>
+		<!-- IF S_USER_LOGGED_IN and not S_IS_BOT -->
+		<td class="row2" align="center" valign="middle"><!-- IF art_row.S_CAN_EDIT --><a href="{art_row.U_EDIT_ART}">{EDIT_IMG}</a><!-- ENDIF --></td>
+		<td class="row2" align="center" valign="middle"><!-- IF art_row.S_CAN_DELETE --><a href="{art_row.U_DELETE}">{DELETE_IMG}</a><!-- ENDIF --></td>
+		<!-- ENDIF -->
+	</tr>
+	<tr>
+		<td class="row1" align="left"  colspan="6"><span class="genmed">{art_row.ARTICLE_DESCRIPTION}</span></td>
+	</tr>
+<!-- END art_row -->
+
+<!-- BEGIN no_articles -->
+	<tr>
+		<td class="row1" align = "center" colspan="6" height="50"><span class="genmed">{no_articles.COMMENT}</span></td>
+	</tr>
+ <!-- END no_articles -->
+	<tr>
+		<td class="catBottom" colspan="6">&nbsp;</td>
+	</tr>
+</table>
+<table width="100%" cellspacing="1">
+	<tr>
+	<!-- IF S_ON_PAGE and .art_row -->
+		<td class="nav" valign="middle" nowrap="nowrap">&nbsp;{S_ON_PAGE}<br /></td>
+		<td class="gensmall" nowrap="nowrap">&nbsp;{L_ARTICLES}: [ {TOTAL_ARTICLES} ]&nbsp;</td>
+		<td class="gensmall" width="100%" align="{S_CONTENT_FLOW_END}" nowrap="nowrap"><!-- INCLUDE pagination.html --></td>
+	<!-- ENDIF -->
+	</tr>
+</table>
+<br />
+<!-- IF S_CAN_ADD -->
+<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<td class="row1"> <div align="center"><a href="{U_ADD_ARTICLE}">[ <strong>{L_ADD_ARTICLE}</strong> ]</a></div></td>
+	</tr>
+</table>
+<!-- ENDIF -->
+<br />
+<table>
+<tbody>
+	<tr>
+		<td>
+			<form method="post" name="jumpbox" action="{S_ACTION}" onsubmit="if(document.jumpbox.id.value == -1){return false;}">
+				<table cellspacing="0" cellpadding="0" border="0">
+				<tbody>
+				<tr>
+					<td nowrap="nowrap"><span class="gensmall">{L_GO}:</span>&nbsp;<select name="id" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
+				{CATS_BOX}</select>&nbsp;<input class="btnlite" type="submit" value="{L_GO}"></td>
+				</tr>
+				</tbody></table>
+			</form>
+		</td>
+		<!-- IF S_IS_SEARCH -->
+		<td>
+			<form method="get" name="search" action="{U_KB_SEARCH}"><span class="gensmall">{L_SEARCH}:</span> <input class="post" type="text" name="keywords" size="20"> <input class="btnlite" type="submit" value="{L_GO}"><input type="hidden">
+				<input type="hidden" name="sf" value="articles">
+			</form>
+		</td>
+		<td>&nbsp;&raquo; <a href="{U_KB_SEARCH}"><b>{L_SEARCH_ADV}</b></a></td>
+		<!-- ENDIF -->
+	</tr>
+</tbody>
+</table>
+<!-- IF .rules -->
+<table width="100%" cellspacing="1">
+	<tr>
+		<td align="{S_CONTENT_FLOW_END}" valign="top" nowrap="nowrap"><span class="gensmall"><!-- BEGIN rules -->{rules.RULE}<br /><!-- END rules --></span></td>
+	</tr>
+</table>
+<!-- ENDIF -->
+<br clear="all" />
+<!-- INCLUDE overall_footer.html -->
