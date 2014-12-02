@@ -1,0 +1,49 @@
+<!-- INCLUDE overall_header.html -->
+<table width="100%" cellspacing="1">
+	<tr>
+		<td align="left" class="nav"><a href="{U_KB}" class="nav">{L_LIBRARY}</a></td>
+	</tr>
+</table>
+<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<th class="thCornerL" nowrap="nowrap">{L_CATEGORY}</th>
+		<th><span class="thCornerR">{L_ARTICLES}</span></th>
+	</tr>
+	<!-- BEGIN catrow -->
+	<tr>
+		<td  height="30" class="row1">
+			<span class="genmed"><b><a href="{catrow.U_CATEGORY}"/>{catrow.CAT_NAME}</a></b></span><br /><span class="genmed">{catrow.CAT_DESCRIPTION}</span><br />{catrow.SUBCATS}
+		</td>
+		<td class="row2" align="center" valign="middle"><span class="genmed">{catrow.CAT_ARTICLES}</span></td>
+	</tr>
+	<!-- END catrow -->
+	<tr>
+		<td class="catBottom" colspan="2">&nbsp;</td>
+	</tr>
+</table>
+<br />
+<table><tbody>
+	<tr>
+		<td>
+			<form method="post" name="jumpbox" action="{S_ACTION}" onsubmit="if(document.jumpbox.id.value == -1){return false;}">
+				<table cellspacing="0" cellpadding="0" border="0">
+				<tbody>
+					<tr>
+						<td nowrap="nowrap"><span class="gensmall">{L_GO}:</span>&nbsp;<select name="id" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
+					{CATS_BOX}</select>&nbsp;<input class="btnlite" type="submit" value="{L_GO}"></td>
+					</tr>
+				</tbody></table>
+			</form>
+		</td>
+		<!-- IF S_IS_SEARCH -->
+		<td>
+			<form method="get" name="search" action="{U_KB_SEARCH}"><span class="gensmall">{L_SEARCH}:</span> <input class="post" type="text" name="keywords" size="20"> <input class="btnlite" type="submit" value="{L_GO}"><input type="hidden">
+			<input type="hidden" name="sf" value="articles">
+			</form>
+		</td>
+		<td>&nbsp;&raquo; <a href="{U_KB_SEARCH}"><b>{L_SEARCH_ADV}</b></a></td>
+		<!-- ENDIF -->
+	</tr>
+</tbody></table>
+<br />
+<!-- INCLUDE overall_footer.html -->
