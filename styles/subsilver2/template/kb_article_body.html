@@ -1,0 +1,76 @@
+<!-- INCLUDE overall_header.html -->
+<table width="100%" cellspacing="1">
+	<tr>
+		<td align="right" class="nav"><a href="{U_PRINT}" class="nav">{L_PRINT}</a></td>
+	</tr>
+</table>
+
+<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<th class="thHead" nowrap="nowrap">{ARTICLE_TITLE}</th>
+	</tr>
+	<tr>
+		<td class="row2"><hr>
+			<span class="gensmall"><b>{L_ARTICLE_AUTHOR}:</b> {ARTICLE_AUTHOR}</span>
+			<span class="gensmall"><b>{L_ARTICLE_DATE}:</b> {ARTICLE_DATE}</span>
+			<span class="gensmall"><b>{L_VIEWS}:</b> {VIEWS}<br /></span>
+			<span class="gensmall"><b>{L_ARTICLE_DESCRIPTION}:</b> {ARTICLE_DESCRIPTION}<br /></span>
+			<span class="gensmall"><b>{L_CATEGORY}:</b> {ARTICLE_CATEGORY}</span><hr>
+			<!-- IF .postrow -->
+				<span class="gensmall">{COMMENTS}<hr>
+			<!-- ENDIF -->
+		</td>
+	</tr>
+	<tr>
+		<td class="row1" wrap="wrap"><b>{ARTICLE_TITLE}</b></td>
+	</tr>
+	<tr>
+		<td class="row1" wrap="wrap"><span class="postbody">{ARTICLE_TEXT}</span></td>
+	</tr>
+	<tr>
+
+		<td class="row1">
+			<div class="gensmall" style="float: right;">
+				<!-- IF S_CAN_EDIT --><a href="{U_EDIT_ART}" class="imageset"><span class="imageset icon_post_edit" title="{L_EDIT}">{L_EDIT}</span></a>&nbsp;<!-- ENDIF -->
+				<!-- IF S_CAN_DELETE --><a href="{U_DELETE_ART}" class="imageset"><span class="imageset icon_post_delete" title="{L_DELETE}">{L_DELETE}</span></a>&nbsp;<!-- ENDIF -->
+				<!-- IF not S_APPROVED and S_CAN_APPROOVE --><a href="{U_APPROVE_ART}" class="imageset"><span class="imageset icon_post_info" title="{L_NEED_APPROOVE}">{L_NEED_APPROOVE}</span></a><!-- ENDIF -->
+			</div>
+		</td>
+	</tr>
+</table>
+<br />
+<form method="post" name="jumpbox" action="{S_ACTION}" onsubmit="if(document.jumpbox.id.value == -1){return false;}">
+	<table cellspacing="0" cellpadding="0" border="0">
+	<tbody>
+	<tr>
+		<td nowrap="nowrap"><span class="gensmall">{L_GO}:</span>&nbsp;<select name="id" onchange="if(this.options[this.selectedIndex].value != -1){ document.forms['jumpbox'].submit() }">
+		{CATS_BOX}</select>&nbsp;<input class="btnlite" type="submit" value="{L_GO}"></td>
+	</tr>
+	</tbody>
+	</table>
+</form>
+<br />
+<!-- IF .postrow -->
+<table width="100%" cellpadding="4" cellspacing="1" border="0" align="center" class="tablebg">
+	<tr>
+		<th>{L_COMMENTS}</th>
+	</tr>
+	<!-- BEGIN postrow -->
+	<tr class="row1">
+		<td><span class="genmed"><b>{postrow.POSTER_NAME}</b></span><span class="postdetails"> {L_POSTED}: {postrow.POST_DATE}<span class="gen">&nbsp;</span>&nbsp; &nbsp;{L_POST_SUBJECT}: {postrow.POST_SUBJECT}</span></td>
+	</tr>
+	<tr class="row1">
+		<td><span class="postbody">{postrow.MESSAGE}</span></td>
+	</tr>
+	<tr><td></td></tr>
+	<!-- END postrow -->
+</table>
+<!-- ENDIF -->
+<table width="100%" cellspacing="2" border="0" align="center">
+	<tr>
+		<td valign="top" align="left"><!-- IF .postrow --><span class="gensmall">{COMMENTS}&nbsp;<!-- ENDIF --><a href="{U_COMMENTS}"><b>{COUNT_COMMENTS}</b></a></span><br /></td>
+	</tr>
+</table>
+<br />
+
+<!-- INCLUDE overall_footer.html -->
