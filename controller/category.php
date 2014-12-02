@@ -155,6 +155,7 @@ class category
 			'DELETE_IMG' 			=> $this->user->img('icon_post_delete', 'DELETE'),
 			'EDIT_IMG'				=> $this->user->img('icon_post_edit', 'EDIT'),
 			'CATS_DROPBOX'			=> $this->kb->make_category_dropbox($cat_id, false, true, false, false),
+			'CATS_BOX'				=> $this->kb->make_category_select($cat_id, false, true, false, false),
 			'CATEGORY'				=> $row['category_name'],
 			'CATEGORY_ID'			=> $row['category_id'],
 			'TOTAL_ITEMS'			=> $this->user->lang('TOTAL_ITEMS', (int) $article_count),
