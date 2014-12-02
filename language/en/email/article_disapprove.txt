@@ -1,1 +1,7 @@
-Subject: 
+Subject: The moderator has approved your article «{ARTICLE_TITLE}»
+
+Hello, {USERNAME}!
+
+You are receiving this notice because the moderator {MODERATOR} rejected your article «{ARTICLE_TITLE}».
+
+{EMAIL_SIG}
