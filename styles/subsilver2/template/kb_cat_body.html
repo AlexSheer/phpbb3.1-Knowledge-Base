@@ -19,15 +19,12 @@
 </table><br />
 <!-- ENDIF -->
 
-<!-- IF S_ON_PAGE and .art_row -->
-<table width="100%" cellspacing="1">
-	<tr>
-		<td class="nav" valign="middle" nowrap="nowrap">&nbsp;{S_ON_PAGE}<br /></td>
-		<td class="gensmall" nowrap="nowrap">&nbsp;{L_ARTICLES}: [ {TOTAL_ARTICLES} ]&nbsp;</td>
-		<td class="gensmall" width="100%" align="{S_CONTENT_FLOW_END}" nowrap="nowrap"><!-- INCLUDE pagination.html --></td>
-	</tr>
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+	<td class="pagination">{PAGE_NUMBER} [ {TOTAL_ITEMS} ]</td>
+	<td align="{S_CONTENT_FLOW_END}"><span class="pagination"><!-- INCLUDE pagination.html --></span></td>
+</tr>
 </table>
-<!-- ENDIF -->
 
 <table class="tablebg" width="100%" cellspacing="1">
 	<tr>
