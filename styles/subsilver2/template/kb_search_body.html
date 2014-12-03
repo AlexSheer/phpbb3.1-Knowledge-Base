@@ -1,75 +1,48 @@
 <!-- INCLUDE overall_header.html -->
 
-<form method="post" action="{S_SEARCH_ACTION}">
-<table width="100%" cellspacing="1">
-<tr>
-	<td colspan="2"><span class="titles"><!-- IF SEARCH_TITLE -->{SEARCH_TITLE}<!-- ELSE -->{SEARCH_MATCHES}<!-- ENDIF --></span><br /></td>
-</tr>
-<tr>
-	<td class="genmed"><!-- IF SEARCH_TOPIC -->{L_SEARCHED_TOPIC}: <a href="{U_SEARCH_TOPIC}"><b>{SEARCH_TOPIC}</b></a><br /><!-- ENDIF --><!-- IF SEARCH_WORDS -->{L_SEARCHED_FOR}: <a href="{U_SEARCH_WORDS}"><b>{SEARCH_WORDS}</b></a><!-- ENDIF --><!-- IF IGNORED_WORDS --> {L_IGNORED_TERMS}: <b>{IGNORED_WORDS}</b><!-- ENDIF --></td>
-</tr>
-</table>
-
-<!-- IF TOTAL_MATCHES -->
-	<table width="100%" cellspacing="0" cellpadding="0">
-	<tr>
-		<td class="pagination">{PAGE_NUMBER} [{L_ARTICLES}: {TOTAL_MATCHES} ]</td>
-		<td align="{S_CONTENT_FLOW_END}"><span class="pagination"><!-- INCLUDE pagination.html --></span></td>
-	</tr>
-	</table>
-</form>
-<!-- ENDIF -->
-
-<!-- IF .searchrow -->
-<table class="tablebg" width="100%" cellspacing="1">
-	<tr>
-		<th width="10%" nowrap="nowrap">{L_AUTHOR}</th>
-		<th width="90%" nowrap="nowrap">{L_ARTICLE}</th>
-	</tr>
-	<!-- BEGIN searchrow -->
-	<a name="article#{searchrow.ID}"></a>
-	<tr class="row1">
-		<td class="genmed" rowspan="3" valign="top" style="padding:5px">{searchrow.USER_FULL}</td>
-		<td height="20" class="row2" valign="middle"><b>{L_CATEGORY}</b>: <a href="{searchrow.U_CAT}">{searchrow.CATEGORY}</a></td>
-	</tr>
-		<tr class="row1">
-		<td height="20" class="row2" valign="middle">
-			<div style="float: {S_CONTENT_FLOW_BEGIN};"><a href="{searchrow.U_VIEW}"><b>{searchrow.TITLE}</b></a></div><div style="float: {S_CONTENT_FLOW_END};"><b>{L_POSTED}:</b> {searchrow.DATE}&nbsp;</div>
-		</td>
-	</tr>
-	<tr class="row1">
-		<td>
-			<div class="postbody">{searchrow.MESSAGE}</div>
-		</td>
-	</tr>
-	<tr class="row1">
-		<td class="profile" colspan="2"><strong><a href="#wrapheader">{L_BACK_TO_TOP}</a></strong></td>
-	</tr>
-	<tr>
-		<td class="spacer" colspan="2">&nbsp;</td>
-	</tr>
-	<!-- END searchrow -->
-	<tr>
-		<td class="cat" colspan="2" align="center"><!-- IF S_SELECT_SORT_KEY --><span class="gensmall">{L_SORT_BY}:</span> {S_SELECT_SORT_KEY} {S_SELECT_SORT_DIR}&nbsp;<input class="btnlite" type="submit" name="sort" value="{L_GO}" /><!-- ENDIF --></td>
-	</tr>
-</table>
-<!-- ELSE -->
-	<table class="tablebg" width="100%" cellspacing="1">
-		<tr class="row1">
-			<td height="25">
-				<div class="genmed" style="text-align: center;"><b>{L_NO_SEARCH_RESULTS}</b></div>
-			</td>
-		</tr>
-	</table>
-<!-- ENDIF -->
-<!-- IF TOTAL_MATCHES -->
-	<table width="100%" cellspacing="0" cellpadding="0">
-	<tr>
-		<td class="pagination">{PAGE_NUMBER} [{L_ARTICLES}: {TOTAL_MATCHES} ]</td>
-		<td align="{S_CONTENT_FLOW_END}"><span class="pagination"><!-- INCLUDE pagination.html --></span></td>
-	</tr>
-	</table>
-</form>
-<!-- ENDIF -->
-<br clear="all" />
+<div id="pagecontent">
+	<form method="post" action="{S_SEARCH_ACTION}">
+		<table class="tablebg" width="100%" cellspacing="1">
+			<!-- IF ERROR -->
+				<tr>
+					<td class="row2" colspan="4" align="center"><span class="genmed error">{ERROR}</span></td>
+				</tr>
+			<!-- ENDIF -->
+			<tr>
+				<th colspan="4">{L_SEARCH_QUERY}</th>
+			</tr>
+			<tr>
+				<td class="row1" width="50%" colspan="2"><b class="genmed">{L_SEARCH_KEYWORDS}: </b><br /><span class="gensmall">{L_SEARCH_KEYWORDS_EXPLAIN}</span></td>
+				<td class="row2" width="50%" colspan="2"><input type="text" style="width: 300px" class="post" name="keywords" size="30" /><br /><input type="radio" class="radio" name="terms" value="all" checked="checked" /> <span class="genmed">{L_SEARCH_ALL_TERMS}</span><br /><input type="radio" class="radio" name="terms" value="any" /> <span class="genmed">{L_SEARCH_ANY_TERMS}</span></td>
+			</tr>
+			<tr>
+				<td class="row1" colspan="2"><b class="genmed">{L_SEARCH_AUTHOR}:</b><br /><span class="gensmall">{L_SEARCH_AUTHOR_EXPLAIN}</span></td>
+				<td class="row2" valign="middle" colspan="2"><input type="text" style="width: 300px" class="post" name="author" size="30" /></td>
+			</tr>
+			<tr>
+				<td class="row1" colspan="2"><b class="genmed">{L_SEARCH_CAT}:</b><br /><span class="gensmall">{L_SEARCH_CAT_EXPLAIN}</span></td>
+				<td class="row2" valign="middle" colspan="2"><select style="width: 304px;" name="cat_ids[]" multiple="multiple" size="8" title="{L_SEARCH_CAT}">{CATS_BOX}</select></td>
+			</tr>
+			<tr>
+				<th colspan="4">{L_SEARCH_OPTIONS}</th>
+			</tr>
+			<tr>
+				<td class="row1" width="50%" colspan="2"><b class="genmed">{L_RESULT_SORT}: </b></td>
+				<td class="row2" width="50%" colspan="2">{S_SELECT_SORT_KEY}<br /><input type="radio" class="radio" name="sd" value="a" /> <span class="genmed">{L_SORT_ASCENDING}</span><br /><input type="radio" class="radio" name="sd" value="d" checked="checked" /> <span class="genmed">{L_SORT_DESCENDING}</span></td>
+			</tr>
+			<tr>
+				<td class="row1" width="25%"><b class="genmed">{L_RESULT_DAYS}: </b></td>
+				<td class="row2" width="25%" nowrap="nowrap">{S_SELECT_SORT_DAYS}</td>
+				<td class="row1" width="25%"><b class="genmed">{L_RETURN_FIRST}:</b></td>
+				<td class="row2" width="25%"><select name="ch"><option value="-1">{L_ALL_AVAILABLE}</option><option value="0">0</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="300" selected="selected">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option><option value="1000">1000</option></select>
+				</td>
+			</tr>
+				<td class="cat" colspan="4" align="center">{S_HIDDEN_FIELDS}<input class="btnmain" name="submit" type="submit" value="{L_SEARCH}" />&nbsp;&nbsp;<input class="btnlite" type="reset" value="{L_RESET}" /></td>
+			</tr>
+		</table>
+	</form>
+	<br clear="all" />
+</div>
+	<!-- INCLUDE breadcrumbs.html -->
+	<br clear="all" />
 <!-- INCLUDE overall_footer.html -->
