@@ -17,6 +17,7 @@ class config_module
 	{
 		global $db, $template, $request, $table_prefix, $user;
 		if (!defined('KB_CONFIG_TABLE')) define ('KB_CONFIG_TABLE', $table_prefix.'kb_config');
+		$default_config = array();
 
 		$this->tpl_name = 'acp_knowlegebase_body';
 		$this->page_title = $user->lang('ACP_KNOWLEGE_BASE_CONFIGURE');
@@ -32,7 +33,7 @@ class config_module
 		}
 		$db->sql_freeresult($result);
 		$new['anounce'] = $request->variable('anounce', 0);
-		if (empty($new))
+		if (empty($new['articles_per_page']))
 		{
 			// To do
 			// Make is_dinamic 0 and purge the cache after change settings
@@ -68,8 +69,8 @@ class config_module
 
 		$template->assign_vars(array(
 			'S_CONFIGURE'		=> true,
-			'ADVANCED_FORM_ON'	=> ($default_config['anounce']) ? 'checked="checked"' : '',
-			'ADVANCED_FORM'		=> ($default_config['anounce']) ? '' : 'none',
+			'ADVANCED_FORM_ON'	=> (isset($default_config['anounce']) && $default_config['anounce']) ? 'checked="checked"' : '',
+			'ADVANCED_FORM'		=> (isset($default_config['anounce']) && $default_config['anounce']) ? '' : 'none',
 			'PER_PAGE'			=> (isset($new['articles_per_page'])) ? $new['articles_per_page'] : 10,
 			'S_FORUM_POST'		=> (isset($new['articles_per_page'])) ? make_forum_select($new['forum_id'], 0, true, true, false) : make_forum_select(0, false, true, true, false),
 			'S_ACTION'			=> $this->u_action,
