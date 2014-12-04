@@ -17,6 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 	protected $user;
+
 /**
 * Assign functions defined in this class to event listeners in the core
 *
@@ -56,8 +57,9 @@ class listener implements EventSubscriberInterface
 	public function add_page_header_link($event)
 	{
 		$this->template->assign_vars(array(
-			'U_LIBRARY' => append_sid("{$this->phpbb_root_path}knowlegebase"),
-			'STYLESHEET' => append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/kb.css"),
+			'U_LIBRARY'		=> append_sid("{$this->phpbb_root_path}knowlegebase"),
+			'KB_STYLESHEET'	=> append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme/kb.css"),
+			'KB_THEME_PATH'	=> append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme"),
 		));
 	}
 }
