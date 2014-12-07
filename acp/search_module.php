@@ -29,8 +29,11 @@ class search_module
 
 	function settings($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache;
-		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
+		global $db, $user, $auth, $template, $cache, $phpbb_log;
+		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx, $table_prefix;
+
+		define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		$phpbb_log->set_log_table(KB_LOG_TABLE);
 
 		$submit = (isset($_POST['submit'])) ? true : false;
 
@@ -205,8 +208,10 @@ class search_module
 
 	function index($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache;
+		global $db, $user, $auth, $template, $cache, $phpbb_log;;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
+
+		$phpbb_log->set_log_table(KB_LOG_TABLE);
 
 		$action = request_var('action', '');
 		$this->state = explode(',', $config['search_indexing_state']);
