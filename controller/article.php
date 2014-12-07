@@ -80,33 +80,35 @@ class article
 		$author_kb_art = '<a href="' . $temp_url . '" class="gensmall">' . $author . '</a></span>';
 		$comment_topic_id = $row['topic_id'];
 
-	// Get comments
-		$count = -1;
-		$sql = 'SELECT DISTINCT p.poster_id, p.post_time, p.post_subject, p.post_text, p.bbcode_uid, p.bbcode_bitfield, u.user_id, u.username
-			FROM '. POSTS_TABLE .' p, '. USERS_TABLE .' u
-			WHERE p.topic_id = '.$comment_topic_id.'
-			AND (p.poster_id = u.user_id)
-			ORDER BY p.post_time ASC';
-		$res = $this->db->sql_query($sql);
-		while($postrow = $this->db->sql_fetchrow($res))
+		// Get comments
+		if ($comment_topic_id)
 		{
-			$count++;
-			if ($count > 0)
+			$count = -1;
+			$sql = 'SELECT DISTINCT p.poster_id, p.post_time, p.post_subject, p.post_text, p.bbcode_uid, p.bbcode_bitfield, u.user_id, u.username
+				FROM '. POSTS_TABLE .' p, '. USERS_TABLE .' u
+				WHERE p.topic_id = '.$comment_topic_id.'
+				AND (p.poster_id = u.user_id)
+				ORDER BY p.post_time ASC';
+			$res = $this->db->sql_query($sql);
+			while($postrow = $this->db->sql_fetchrow($res))
 			{
-				$this->template->assign_block_vars('postrow', array(
-					'POSTER_NAME'	=> $postrow['username'],
-					'POST_DATE'		=> $this->user->format_date ($postrow['post_time']),
-					'POST_SUBJECT'	=> $postrow['post_subject'],
-					'MESSAGE'		=> generate_text_for_display($postrow['post_text'], $postrow['bbcode_uid'], $postrow['bbcode_bitfield'], 3, true),
-					)
-				);
+				$count++;
+				if ($count > 0)
+				{
+					$this->template->assign_block_vars('postrow', array(
+						'POSTER_NAME'	=> $postrow['username'],
+						'POST_DATE'		=> $this->user->format_date ($postrow['post_time']),
+						'POST_SUBJECT'	=> $postrow['post_subject'],
+						'MESSAGE'		=> generate_text_for_display($postrow['post_text'], $postrow['bbcode_uid'], $postrow['bbcode_bitfield'], 3, true),
+						)
+					);
+				}
 			}
+			$this->db->sql_freeresult($res);
+
+			$temp_url = append_sid("{$this->phpbb_root_path}viewtopic.".$this->php_ext."", 'f='.$fid.'&amp;t='.$row['topic_id']);
 		}
-		$this->db->sql_freeresult($res);
-
-		$temp_url = append_sid("{$this->phpbb_root_path}viewtopic.".$this->php_ext."", 'f='.$fid.'&amp;t='.$row['topic_id']);
 		$views = $row['views'];
-
 		$article = $row['article_id'];
 		$text = generate_text_for_display($row['article_body'], $row['bbcode_uid'], $row['bbcode_bitfield'], 3, true);
 
@@ -122,12 +124,12 @@ class article
 			'U_DELETE_ART'			=> append_sid("{$this->phpbb_root_path}knowlegebase/edit", "id=$cat_id&amp;k=$art_id&amp;mode=delete"),
 			'U_APPROVE_ART'			=> append_sid("{$this->phpbb_root_path}knowlegebase/approve", "id=$art_id"),
 			'U_PRINT'				=> append_sid("{$this->phpbb_root_path}knowlegebase/article", 'k=' . $row['article_id'] .'&amp;mode=print'),
-			'COMMENTS'				=> ''. $this->user->lang['COMMENTS'] .': '. $count . '',
+			'COMMENTS'				=> ($comment_topic_id) ? ''. $this->user->lang['COMMENTS'] .': '. $count . '' : '',
 			'U_COMMENTS'			=> $temp_url,
 			'S_CAN_EDIT'			=> ($this->kb->acl_kb_get($cat_id, 'kb_m_edit')   || ($this->user->data['user_id'] == $row['author_id'] && $this->kb->acl_kb_get($cat_id, 'kb_u_edit')   || $this->auth->acl_get('a_manage_kb'))) ? true : false,
 			'S_CAN_DELETE'			=> ($this->kb->acl_kb_get($cat_id, 'kb_m_delete') || ($this->user->data['user_id'] == $row['author_id'] && $this->kb->acl_kb_get($cat_id, 'kb_u_delete') || $this->auth->acl_get('a_manage_kb'))) ? true : false,
 			'S_CAN_APPROOVE'		=> ($this->auth->acl_get('a_manage_kb') || $this->kb->acl_kb_get($cat_id, 'kb_m_approve')) ? true : false,
-			'COUNT_COMMENTS'		=> '['. $this->user->lang['LEAVE_COMMENTS'] .']',
+			'COUNT_COMMENTS'		=> ($comment_topic_id) ? '['. $this->user->lang['LEAVE_COMMENTS'] .']' : '',
 			'U_FORUM'				=> generate_board_url() . '/',
 			'S_APPROVED'			=> $row['approved'],
 			)
