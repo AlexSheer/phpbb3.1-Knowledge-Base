@@ -15,12 +15,16 @@ class config_module
 
 	function main($id, $mode)
 	{
-		global $db, $template, $request, $table_prefix, $user;
+		global $db, $template, $request, $table_prefix, $user, $phpbb_log;
 		if (!defined('KB_CONFIG_TABLE')) define ('KB_CONFIG_TABLE', $table_prefix.'kb_config');
+		if (!defined('KB_LOG_TABLE')) define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+
 		$default_config = array();
 
 		$this->tpl_name = 'acp_knowlegebase_body';
 		$this->page_title = $user->lang('ACP_KNOWLEGE_BASE_CONFIGURE');
+		$phpbb_log->set_log_table(KB_LOG_TABLE);
+
 		$sql = 'SELECT *
 			FROM ' . KB_CONFIG_TABLE;
 		$result = $db->sql_query($sql);
@@ -64,6 +68,7 @@ class config_module
 					WHERE config_name = \''.$key.'\'';
 				$db->sql_query($sql);
 			}
+			add_log('admin', 'LOG_LIBRARY_CONFIG');
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
 		}
 
