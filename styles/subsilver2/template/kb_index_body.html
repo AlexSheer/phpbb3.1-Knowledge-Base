@@ -4,6 +4,7 @@
 		<td align="left" class="nav"><a href="{U_KB}" class="nav">{L_LIBRARY}</a></td>
 	</tr>
 </table>
+<!-- IF .catrow -->
 <table class="tablebg" width="100%" cellspacing="1">
 	<tr>
 		<th class="thCornerL" nowrap="nowrap">{L_CATEGORY}</th>
@@ -45,5 +46,8 @@
 		<!-- ENDIF -->
 	</tr>
 </tbody></table>
+<!-- ELSE -->
+<p class="error">{L_NO_CAT_YET}</p>
+<!-- ENDIF -->
 <br />
 <!-- INCLUDE overall_footer.html -->
