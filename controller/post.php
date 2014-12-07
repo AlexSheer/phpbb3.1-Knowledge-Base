@@ -22,8 +22,9 @@ class post
 	protected $phpbb_cache;
 	protected $phpbb_root_path;
 	protected $php_ext;
+	protected $log;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -32,6 +33,7 @@ class post
 		$this->template = $template;
 		$this->user = $user;
 		$this->phpbb_cache = $cache;
+		$this->phpbb_log = $log;
 		$this->notification_manager = $notification_manager;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
@@ -43,6 +45,7 @@ class post
 	public function post_article()
 	{
 		$this->user->add_lang('posting');
+		$this->phpbb_log->set_log_table(KB_LOG_TABLE);
 
 		$kb_data = $this->kb->obtain_kb_config();
 		$fid = $kb_data['forum_id'];
@@ -173,8 +176,7 @@ class post
 				$this->phpbb_cache->destroy('sql', ARTICLES_TABLE);
 
 				$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_CAT'], '<a href="' . $root . '">', '</a>');
-				// To do: ADD LOG
-				//add_log('kb', 'LOG_LIBRARY_ADD_ARTICLE', $category_name);
+				add_log('admin', 'LOG_LIBRARY_ADD_ARTICLE', $article_title, $category_name);
 				meta_refresh(3, $redirect);
 				trigger_error($msg);
 			}
