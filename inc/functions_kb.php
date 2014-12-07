@@ -321,8 +321,7 @@ class functions_kb
 
 		$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
 
-		// To do
-		//add_log('kb', 'LOG_LIBRARY_MOVED_ARTICLE', $cat_info['category_name'], $to_cat_info['category_name']);
+		add_log('kb', 'LOG_LIBRARY_MOVED_ARTICLE', $cat_info['category_name'], $to_cat_info['category_name']);
 
 		return;
 	}
