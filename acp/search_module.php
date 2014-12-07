@@ -208,7 +208,7 @@ class search_module
 
 	function index($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache, $phpbb_log;;
+		global $db, $user, $auth, $template, $cache, $phpbb_log;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
 
 		$phpbb_log->set_log_table(KB_LOG_TABLE);
