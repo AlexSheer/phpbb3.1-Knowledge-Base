@@ -167,7 +167,7 @@ class articles_module
 			if ($kb_search)
 			{
 				$author_ids[] = $article['author_id'];
-				$kb_search->index_remove($article_id, $author_ids)
+				$kb_search->index_remove($article_id, $author_ids);
 			}
 			meta_refresh(3, $this->u_action);
 			trigger_error($user->lang['ARTICLE_DELETED']);
