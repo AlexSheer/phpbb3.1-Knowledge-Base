@@ -15,13 +15,13 @@ class articles_module
 
 	function main($id, $mode)
 	{
-		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_container, $phpbb_ext_kb;
+		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_container, $phpbb_ext_kb, $phpbb_log;
 		$phpbb_admin_path = (defined('PHPBB_ADMIN_PATH')) ? PHPBB_ADMIN_PATH : './';
 
 		define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
 
-		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_root_path, $phpEx, $table_prefix);
+		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
 		$this->tpl_name = 'acp_articles_body';
 		$this->page_title = $user->lang('ACP_LIBRARY_ARTICLES');
@@ -150,6 +150,7 @@ class articles_module
 		$submit = $request->variable('submit', false);
 		$kb_search = false;
 		$kb_search = $phpbb_ext_kb->setup_kb_search();
+		$article = $phpbb_ext_kb->get_kb_article_info($article_id);
 
 		$template->assign_vars(array(
 			'S_ACTION'	=> ''.$this->u_action.'&amp;action=delete&amp;aid='.$article_id.'',
@@ -162,10 +163,11 @@ class articles_module
 		));
 		if (confirm_box(true))
 		{
-			$phpbb_ext_kb->kb_delete_article($article_id);
+			$phpbb_ext_kb->kb_delete_article($article_id, $article['article_title']);
 			if ($kb_search)
 			{
-				$kb_search->index_remove($article_id);
+				$author_ids[] = $article['author_id'];
+				$kb_search->index_remove($article_id, $author_ids)
 			}
 			meta_refresh(3, $this->u_action);
 			trigger_error($user->lang['ARTICLE_DELETED']);
