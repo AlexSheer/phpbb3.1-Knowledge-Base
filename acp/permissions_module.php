@@ -15,7 +15,7 @@ class permissions_module
 
 	function main($id, $mode)
 	{
-		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb;
+		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_log;
 		$user->add_lang('acp/permissions');
 
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
@@ -25,7 +25,7 @@ class permissions_module
 
 		include_once($phpbb_root_path . 'includes/functions_user.' . $phpEx);
 
-		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_root_path, $phpEx, $table_prefix);
+		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
 		$this->tpl_name = 'acp_permissions_body';
 		$this->page_title = $user->lang('ACP_LIBRARY_PERMISSIONS');
@@ -39,11 +39,13 @@ class permissions_module
 		$mode 			= $request->variable('p_mode', '');
 		$submit			= $request->variable('submit', false);
 		$action			= (isset($action)) ? $request->variable('action', $action) : $request->variable('action', '');
+		$delete			= $request->variable('delete', false);
 
 		if ($all_cats)
 		{
+			$category_id = array();
 			$sql = 'SELECT category_id
-				FROM '.KB_CAT_TABLE.'';
+				FROM '.KB_CAT_TABLE;
 			$result = $db->sql_query($sql);
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -70,16 +72,36 @@ class permissions_module
 		}
 		unset($username);
 
+		if ($delete)
+		{
+			$action = 'delete';
+		}
+
+		// Handle actions
 		switch ($action)
 		{
 			case 'settings':
 				$settings = $this->get_mask($group_id, $category_id, $user_id, $mode);
-				$delete_permissions	= $request->variable('delete', false);
-				if ($delete_permissions)
+			break;
+
+			case 'delete':
+				if (confirm_box(true))
 				{
 					$this->delete_permissions($group_id, $user_id, $category_id);
 				}
-
+				else
+				{
+					$s_hidden_fields = array(
+						'i'				=> $id,
+						'mode'			=> $mode,
+						'action'		=> array($action => 1),
+						'user_id'		=> $user_id,
+						'group_id'		=> $group_id,
+						'category_id'	=> $category_id,
+						'delete'		=> true,
+					);
+					confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields($s_hidden_fields));
+				}
 			break;
 
 			case 'setting_group_local':
@@ -92,10 +114,6 @@ class permissions_module
 
 			break;
 
-			case 'apply_permissions':
-				$this->apply_permissions();
-			break;
-
 			default:
 				$cats_box = $phpbb_ext_kb->make_category_select(0, false, false, false, false);
 				$template->assign_vars(array(
@@ -103,10 +121,31 @@ class permissions_module
 					'L_EXPLAIN'					=> $user->lang['ACP_LIBRARY_PERMISSIONS_EXPLAIN'],
 					'S_SELECT_CATEGORY'			=> true, //($cats_box) ? true : false,
 					'CATS_BOX'					=> $cats_box,
-					'S_KB_PERMISSIONS_ACTION' 	=> $this->u_action . '&amp;action=setting_group_local',
+					'S_KB_PERMISSIONS_ACTION' 	=> $this->u_action . '&amp;action=setting_group_local&amp;category_id[]=' . $category_id . '',
 					)
 				);
 			break;
+		}
+
+		if (sizeof($category_id))
+		{
+			$sql = 'SELECT category_name
+				FROM ' . KB_CAT_TABLE . '
+				WHERE ' . $db->sql_in_set('category_id', $category_id) . '
+				ORDER BY left_id ASC';
+			$result = $db->sql_query($sql);
+
+			$category_names = array();
+			while ($row = $db->sql_fetchrow($result))
+			{
+				$category_names[] = $row['category_name'];
+			}
+			$db->sql_freeresult($result);
+
+			$template->assign_vars(array(
+				'S_CATEGORY_NAMES'		=> (sizeof($category_names)) ? true : false,
+				'CATEGORY_NAMES'		=> implode($user->lang['COMMA_SEPARATOR'], $category_names))
+			);
 		}
 	}
 
@@ -114,7 +153,7 @@ class permissions_module
 	{
 		global $db, $user, $template, $phpbb_root_path, $phpEx;
 
-		$items = $this->retrieve_defined_user_groups('local', 0, 'b_');
+		$items = $this->retrieve_defined_user_groups('local', $category_id, 'kb_');
 
 		if (empty($category_id))
 		{
@@ -155,12 +194,12 @@ class permissions_module
 	/**
 	* Get already assigned users/groups
 	*/
-	function retrieve_defined_user_groups($permission_scope, $forum_id, $permission_type)
+	function retrieve_defined_user_groups($permission_scope, $category_id, $permission_type)
 	{
 		global $db, $user;
 		$sql_where = '';
 
-		$sql_forum_id = ($permission_scope == 'global') ? 'AND a.category_id = 0' : ((sizeof($forum_id)) ? 'AND ' . $db->sql_in_set('a.category_id', $forum_id) : 'AND a.category_id <> 0');
+		$sql_category_id = ($permission_scope == 'global') ? 'AND a.category_id = 0' : ((sizeof($category_id)) ? 'AND ' . $db->sql_in_set('a.category_id', $category_id) : 'AND a.category_id <> 0');
 
 		// Permission options are only able to be a permission set... therefore we will pre-fetch the possible options and also the possible roles
 		$option_ids = array();
@@ -186,6 +225,7 @@ class permissions_module
 			FROM ' . USERS_TABLE . ' u, ' . KB_USERS_TABLE . " a
 			WHERE u.user_id = a.user_id
 				$sql_where
+				$sql_category_id
 			ORDER BY u.username_clean, u.user_regdate ASC";
 		$result = $db->sql_query($sql);
 
@@ -202,6 +242,7 @@ class permissions_module
 			FROM ' . GROUPS_TABLE . ' g, ' . KB_GROUPS_TABLE . " a
 			WHERE g.group_id = a.group_id
 				$sql_where
+				$sql_category_id
 			ORDER BY g.group_type DESC, g.group_name ASC";
 		$result = $db->sql_query($sql);
 
@@ -421,7 +462,7 @@ class permissions_module
 
 	function apply_all_permissions($hold_ary, $mode)
 	{
-		global $db, $user;
+		global $db, $user, $phpbb_admin_path, $phpEx;
 
 		$sql = 'SELECT auth_option, auth_option_id
 			FROM '.KB_OPTIONS_TABLE.'';
@@ -434,11 +475,13 @@ class permissions_module
 
 		$table = ($mode == 'user') ? KB_USERS_TABLE : KB_GROUPS_TABLE;
 		$id_field = $mode . '_id';
+		$group_id = $user_id = $category_id = array();
 
 		foreach($hold_ary as $cat => $value)
 		{
 			foreach($value as $group => $settings)
 			{
+				$category_id[] = $cat;
 				foreach($settings as $opt_name => $option)
 				{
 					if ($option == -1)
@@ -474,21 +517,34 @@ class permissions_module
 							$db->sql_query($sql);
 						}
 					}
+
+					if ($mode == 'user')
+					{
+						$user_id[] = $group;
+					}
+					else
+					{
+						$group_id[] = $group;
+					}
 				}
 			}
 		}
-		trigger_error($user->lang['AUTH_UPDATED'] . adm_back_link($this->u_action));
+
+		$this->add_kb_log($group_id, $user_id, $category_id, 'LOG_LIBRARY_PERMISSION_ADD');
+		$url = ''.$this->u_action.'&amp;action=setting_group_local&amp;category_id[]='.implode('&amp;category_id[]=', $category_id).'';
+		trigger_error($user->lang['AUTH_UPDATED'] . adm_back_link($url));
 		return;
 	}
 
 	function delete_permissions($group_id, $user_id, $category_id)
 	{
-		global $db, $user;
+		global $db, $user, $phpbb_admin_path, $phpEx, $phpbb_log;
 
 		if (empty($group_id) && empty($user_id))
 		{
 			return;
 		}
+		$phpbb_log->set_log_table(KB_LOG_TABLE);
 		(empty($group_id)) ? $mode = 'user' : $mode = 'group';
 		$table = ($mode == 'user') ? KB_USERS_TABLE : KB_GROUPS_TABLE;
 		$id_field = $mode . '_id';
@@ -498,6 +554,61 @@ class permissions_module
 			WHERE '.$id_field.' IN ('.implode(',', $where).')
 				AND category_id IN ('.implode(',', $category_id).')';
 		$db->sql_query($sql);
-		trigger_error($user->lang['AUTH_UPDATED'] . adm_back_link($this->u_action));
+
+		$this->add_kb_log($group_id, $user_id, $category_id, 'LOG_LIBRARY_PERMISSION_DELETED');
+
+		$cat_list = implode('&amp;category_id[]=', $category_id);
+		$url = ''.$this->u_action.'&amp;action=setting_group_local&amp;category_id[]='.implode('&amp;category_id[]=', $category_id).'';
+		trigger_error($user->lang['AUTH_UPDATED'] . adm_back_link($url));
+	}
+
+	function add_kb_log($group_id, $user_id, $category_id, $log_type)
+	{
+		global $db, $user, $phpbb_log;
+		$phpbb_log->set_log_table(KB_LOG_TABLE);
+		(empty($group_id)) ? $mode = 'user' : $mode = 'group';
+		$sql = 'SELECT category_name
+			FROM ' . KB_CAT_TABLE . '
+			WHERE ' . $db->sql_in_set('category_id', $category_id) . '
+			ORDER BY left_id ASC';
+		$result = $db->sql_query($sql);
+
+		$category_names = array();
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$category_names[] = $row['category_name'];
+		}
+		$db->sql_freeresult($result);
+
+		if ($mode == 'user')
+		{
+			$gr_name =  'username';
+			$tbl = USERS_TABLE;
+			$where = $db->sql_in_set('user_id', $user_id);
+		}
+		else
+		{
+			$gr_name =  'group_name';
+			$tbl = GROUPS_TABLE;
+			$where = $db->sql_in_set('group_id', $group_id);
+		}
+
+		$sql = 'SELECT ' . $gr_name . ' FROM ' . $tbl . '
+				WHERE ' . $where;
+		$result = $db->sql_query($sql);
+		while($row = $db->sql_fetchrow($result))
+		{
+			$names[] = ($mode == 'user') ? $row['username'] :  $user->lang('G_' . $row['group_name'] . '');
+		}
+
+		$db->sql_freeresult($result);
+
+		foreach($names as $namekey => $name)
+		{
+			foreach($category_names as $key => $category_name)
+			{
+				add_log('admin', $log_type, $category_name, $name);
+			}
+		}
 	}
 }
