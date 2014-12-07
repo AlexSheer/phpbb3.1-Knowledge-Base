@@ -643,6 +643,7 @@ class manage_module
 		$db->sql_query($sql);
 
 		$log_action = implode('_', array($log_action_posts, $log_action_cats));
+
 		switch ($log_action)
 		{
 			case 'POSTS_MOVE_CATS':
@@ -666,7 +667,7 @@ class manage_module
 			break;
 
 			case 'POSTS_':
-				add_log('kb', 'LOG_CATS_DEL_ARTICLES', $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_ARTICLES', $category_data['category_name']);
 			break;
 
 			case 'MOVE_POSTS_MOVE_CATS':
