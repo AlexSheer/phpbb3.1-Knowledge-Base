@@ -22,8 +22,9 @@ class functions_kb
 	protected $template;
 	protected $auth;
 	protected $config;
+	protected $log;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\cache\service $cache, \phpbb\user $user, \phpbb\template\template $template, \phpbb\auth\auth $auth, $phpbb_root_path, $php_ext, $table_prefix)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\cache\service $cache, \phpbb\user $user, \phpbb\template\template $template, \phpbb\auth\auth $auth, \phpbb\log\log_interface $log, $phpbb_root_path, $php_ext, $table_prefix)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -31,6 +32,7 @@ class functions_kb
 		$this->user = $user;
 		$this->template = $template;
 		$this->auth = $auth;
+		$this->phpbb_log = $log;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -42,6 +44,9 @@ class functions_kb
 		if (!defined ('FORUMS_TABLE')) define ('FORUMS_TABLE', $this->table_prefix.'forums');
 		if (!defined ('TOPICS_TABLE')) define ('TOPICS_TABLE', $this->table_prefix.'topics');
 		if (!defined ('KB_CAT_TABLE')) define ('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
+		if (!defined('KB_LOG_TABLE')) define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+
+		$this->phpbb_log->set_log_table(KB_LOG_TABLE);
 	}
 
 	public function get_category_branch($category_id, $type = 'all', $order = 'descending', $include_category = true)
@@ -242,7 +247,7 @@ class functions_kb
 		return $row;
 	}
 
-	public function kb_delete_article($id)
+	public function kb_delete_article($id, $article_title)
 	{
 		include_once($this->phpbb_root_path . 'includes/functions_admin.' . $this->php_ext);
 
@@ -267,8 +272,7 @@ class functions_kb
 		$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
 
 		delete_topics('topic_id', array($info['topic_id']), true, true, true);
-		// To do
-		//add_log('kb', 'LOG_LIBRARY_DEL_ARTICLE', $cat_info['category_name']);
+		add_log('admin', 'LOG_LIBRARY_DEL_ARTICLE', $article_title, $cat_info['category_name']);
 
 		return;
 	}
