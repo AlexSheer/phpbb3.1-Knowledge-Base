@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Description",
     "homepage": "http://phpbbguru.net",
-    "version": "0.0.1",
-    "time": "2014-05-11",
+    "version": "0.0.2",
+    "time": "2014-05-12",
     "license": "GPL-2.0",
     "authors": [
         {
