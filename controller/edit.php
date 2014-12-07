@@ -21,8 +21,9 @@ class edit
 	protected $user;
 	protected $phpbb_root_path;
 	protected $php_ext;
+	protected $log;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -31,6 +32,7 @@ class edit
 		$this->template = $template;
 		$this->user = $user;
 		$this->phpbb_cache = $cache;
+		$this->phpbb_log = $log;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -51,6 +53,7 @@ class edit
 
 		// Setup search engine
 		$kb_search = $this->kb->setup_kb_search();
+		$this->phpbb_log->set_log_table(KB_LOG_TABLE);
 
 		$kb_data = $this->kb->obtain_kb_config();
 		$fid = $kb_data['forum_id'];
@@ -82,6 +85,11 @@ class edit
 				AND (c.category_id = a.article_category_id)';
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
+
+		if (empty($row))
+		{
+			trigger_error('ARTICLE_NO_EXISTS');
+		}
 
 		$author_id				= $row['author_id'];
 		$cat_id					= $row['article_category_id'];
@@ -145,7 +153,7 @@ class edit
 
 			if (confirm_box(true))
 			{
-				$this->kb->kb_delete_article($art_id);
+				$this->kb->kb_delete_article($art_id, $article_title);
 				if ($kb_search)
 				{
 					$author_ids[] = $author_id;
@@ -154,8 +162,6 @@ class edit
 				$msg = $this->user->lang['ARTICLE_DELETED'];
 				$root = append_sid("{$this->phpbb_root_path}knowlegebase/category",'id='. $cat_id .'');
 				$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_CAT'], '<a href="' . $root . '">', '</a>');
-				// To do
-				//add_log('kb', 'LOG_LIBRARY_DEL_ARTICLE', $category_name);
 				$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
 				$this->phpbb_cache->destroy('sql', ARTICLES_TABLE);
 				meta_refresh(3, $root);
@@ -201,6 +207,7 @@ class edit
 			$msg = $this->user->lang['ARTICLE_EDITED'];
 			$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_ARTICLE'], '<a href="' . $redirect . '">', '</a>');
 			$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_CAT'], '<a href="' . $root . '">', '</a>');
+			add_log('admin', 'LOG_LIBRARY_EDIT_ARTICLE', $article_title, $category_name);
 			meta_refresh(3, $redirect);
 			trigger_error($msg);
 		}
