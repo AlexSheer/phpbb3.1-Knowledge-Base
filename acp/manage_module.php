@@ -15,7 +15,7 @@ class manage_module
 
 	function main($id, $mode)
 	{
-		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_admin_path $phpbb_log;
+		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_admin_path, $phpbb_log;
 
 		define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
@@ -446,7 +446,7 @@ class manage_module
 
 			// Add it back
 			$category_data['category_id'] = $category_id;
-			add_log('kb', 'LOG_CATS_EDIT', $category_data['category_name']);
+			add_log('admin', 'LOG_CATS_EDIT', $category_data['category_name']);
 		}
 		return $errors;
 	}
@@ -646,23 +646,23 @@ class manage_module
 		switch ($log_action)
 		{
 			case 'POSTS_MOVE_CATS':
-				add_log('kb', 'LOG_CATS_DEL_POSTS_MOVE_CATS', $sub_cats_to_name, $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_POSTS_MOVE_CATS', $sub_cats_to_name, $category_data['category_name']);
 			break;
 
 			case '_MOVE_CATS':
-				add_log('kb', 'LOG_CATS_DEL_MOVE_CATS', $sub_cats_to_name, $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_MOVE_CATS', $sub_cats_to_name, $category_data['category_name']);
 			break;
 
 			case 'MOVE_POSTS_':
-				add_log('kb', 'LOG_CATS_DEL_MOVE_POSTS', $posts_to_name, $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_MOVE_POSTS', $posts_to_name, $category_data['category_name']);
 			break;
 
 			case 'POSTS_CATS':
-				add_log('kb', 'LOG_CATS_DEL_POSTS_CATS', $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_POSTS_CATS', $category_data['category_name']);
 			break;
 
 			case '_CATS':
-				add_log('kb', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
 			break;
 
 			case 'POSTS_':
@@ -670,15 +670,15 @@ class manage_module
 			break;
 
 			case 'MOVE_POSTS_MOVE_CATS':
-				add_log('kb', 'LOG_CATS_DEL_MOVE_POSTS_MOVE_CATS', $posts_to_name, $sub_cats_to_name, $category_data['category_name']);;
+				add_log('admin', 'LOG_CATS_DEL_MOVE_POSTS_MOVE_CATS', $posts_to_name, $sub_cats_to_name, $category_data['category_name']);;
 			break;
 
 			case 'MOVE_POSTS_CATS':
-				add_log('kb', 'LOG_CATS_DEL_MOVE_POSTS_CATS', $posts_to_name, $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_MOVE_POSTS_CATS', $posts_to_name, $category_data['category_name']);
 			break;
 
 			default:
-				add_log('kb', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
+				add_log('admin', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
 			break;
 		}
 
