@@ -15,14 +15,15 @@ class manage_module
 
 	function main($id, $mode)
 	{
-		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_admin_path;
+		global $config, $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_admin_path $phpbb_log;
 
 		define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
 		define ('KB_USERS_TABLE', $table_prefix.'kb_users');
 		define ('KB_GROUPS_TABLE', $table_prefix.'kb_groups');
+		if (!defined('KB_LOG_TABLE')) define ('KB_LOG_TABLE', $table_prefix.'kb_log');
 
-		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_root_path, $phpEx, $table_prefix);
+		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
 		$this->tpl_name = 'acp_knowlegebase_body';
 		$this->page_title = $user->lang('ACP_LIBRARY_MANAGE');
@@ -32,6 +33,8 @@ class manage_module
 		$update				= (isset($_POST['update'])) ? true : false;
 		$category_id		= $request->variable('f', '');
 		$this->parent_id	= $request->variable('parent_id', 0);
+
+		$phpbb_log->set_log_table(KB_LOG_TABLE);
 
 		if ($update)
 		{
@@ -98,8 +101,7 @@ class manage_module
 				$move_category_name = $this->move_category_by($row, $action, 1);
 				if ($move_category_name !== false)
 				{
-					// To do
-					//add_log('kb', 'LOG_CATS_' . strtoupper($action), $row['category_name'], $move_category_name);
+					add_log('admin', 'LOG_CATS_' . strtoupper($action), $row['category_name'], $move_category_name);
 					$cache->destroy('sql', KB_CAT_TABLE);
 				}
 			break;
@@ -228,8 +230,7 @@ class manage_module
 				$category_data = $phpbb_ext_kb->get_cat_info($category_id);
 				if (!sizeof($errors))
 				{
-					// To do
-					//add_log('kb', 'LOG_CATS_' . strtoupper($action), $category_data['category_name']);
+					add_log('admin', 'LOG_CATS_' . strtoupper($action), $category_data['category_name']);
 					$cache->destroy('sql', KB_CAT_TABLE);
 					meta_refresh(3, $this->u_action . '&amp;parent_id=' . $this->parent_id);
 					trigger_error('SYNC_OK');
@@ -393,8 +394,7 @@ class manage_module
 			$sql = 'INSERT INTO ' . KB_CAT_TABLE . ' ' . $db->sql_build_array('INSERT', $category_data_sql);
 			$db->sql_query($sql);
 			$category_data['category_id'] = $db->sql_nextid();
-			// To do
-			//add_log('kb', 'LOG_CATS_ADD', $category_data['category_name']);
+			add_log('admin', 'LOG_CATS_ADD', $category_data['category_name']);
 		}
 		else
 		{
@@ -417,8 +417,7 @@ class manage_module
 				}
 
 				($category_data_sql['parent_id']) ? $dest = $this->get_category_info($category_data_sql['parent_id']) : $dest['category_name'] = $user->lang['KB_ROOT'];
-				// To do
-				//add_log('kb', 'LOG_CATS_CAT_MOVED_TO', $category_data_sql['category_name'], $dest['category_name']);
+				add_log('admin', 'LOG_CATS_CAT_MOVED_TO', $category_data_sql['category_name'], $dest['category_name']);
 			}
 
 			if (sizeof($errors))
@@ -447,8 +446,7 @@ class manage_module
 
 			// Add it back
 			$category_data['category_id'] = $category_id;
-			// To do
-			//add_log('kb', 'LOG_CATS_EDIT', $category_data['category_name']);
+			add_log('kb', 'LOG_CATS_EDIT', $category_data['category_name']);
 		}
 		return $errors;
 	}
@@ -645,8 +643,6 @@ class manage_module
 		$db->sql_query($sql);
 
 		$log_action = implode('_', array($log_action_posts, $log_action_cats));
-		// To do
-		/*
 		switch ($log_action)
 		{
 			case 'POSTS_MOVE_CATS':
@@ -685,7 +681,7 @@ class manage_module
 				add_log('kb', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
 			break;
 		}
-		*/
+
 		// delete permissions
 		$sql = 'DELETE
 			FROM ' . KB_USERS_TABLE . '
