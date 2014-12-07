@@ -55,6 +55,7 @@ services:
             - @template
             - @user
             - @cache
+            - @log
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
@@ -70,6 +71,7 @@ services:
             - @template
             - @user
             - @cache
+            - @log
             - @notification_manager
             - %core.root_path%
             - %core.php_ext%
@@ -127,6 +129,7 @@ services:
             - @user
             - @template
             - @auth
+            - @log
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
