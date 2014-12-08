@@ -21,15 +21,15 @@ class kb_logs
 		define ('KB_LOG_TABLE', $table_prefix.'kb_log');
 		$phpbb_log->set_log_table(KB_LOG_TABLE);
 
-		$start		= request_var('start', 0);
-		$deletemark = $request->variable('delmarked', false, false, \phpbb\request\request_interface::POST);
+		$start		= $request->variable('start', 0);
+		$deletemark	= $request->variable('delmarked', false, false, \phpbb\request\request_interface::POST);
 		$deleteall	= $request->variable('delall', false, false, \phpbb\request\request_interface::POST);
-		$marked		= request_var('mark', array(0));
+		$marked		= $request->variable('mark', array(0));
 
 		// Sort keys
-		$sort_days	= request_var('st', 0);
-		$sort_key	= request_var('sk', 't');
-		$sort_dir	= request_var('sd', 'd');
+		$sort_days	= $request->variable('st', 0);
+		$sort_key	= $request->variable('sk', 't');
+		$sort_dir	= $request->variable('sd', 'd');
 
 		$pagination = $phpbb_container->get('pagination');
 
@@ -52,7 +52,7 @@ class kb_logs
 				}
 
 				$db->sql_query($sql);
-				add_log('admin', 'LOG_CLEAR_KB');
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CLEAR_KB', time());
 			}
 			else
 			{
