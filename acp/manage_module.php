@@ -62,11 +62,11 @@ class manage_module
 				// No break here
 				case 'add':
 					$category_data += array(
-						'parent_id'				=> request_var('parent_id', $this->parent_id),
-						'type_action'			=> request_var('type_action', ''),
+						'parent_id'				=> $request->variable('parent_id', $this->parent_id),
+						'type_action'			=> $request->variable('type_action', ''),
 						'category_parents'		=> '',
-						'category_name'			=> utf8_normalize_nfc(request_var('category_name', '', true)),
-						'category_details'		=> utf8_normalize_nfc(request_var('category_details', '', true)),
+						'category_name'			=> utf8_normalize_nfc($request->variable('category_name', '', true)),
+						'category_details'		=> utf8_normalize_nfc($request->variable('category_details', '', true)),
 					);
 					$errors = $this->update_category_data($category_data);
 					if (!sizeof($errors))
@@ -101,7 +101,7 @@ class manage_module
 				$move_category_name = $this->move_category_by($row, $action, 1);
 				if ($move_category_name !== false)
 				{
-					add_log('admin', 'LOG_CATS_' . strtoupper($action), $row['category_name'], $move_category_name);
+					$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'],'LOG_CATS_' . strtoupper($action), time(), array($row['category_name'], $move_category_name));
 					$cache->destroy('sql', KB_CAT_TABLE);
 				}
 			break;
@@ -144,7 +144,7 @@ class manage_module
 					{
 						$category_data = array(
 							'parent_id'				=> $this->parent_id,
-							'category_name'			=> utf8_normalize_nfc(request_var('category_name', '', true)),
+							'category_name'			=> utf8_normalize_nfc($request->variable('category_name', '', true)),
 							'category_details'		=> '',
 						);
 					}
@@ -230,7 +230,7 @@ class manage_module
 				$category_data = $phpbb_ext_kb->get_cat_info($category_id);
 				if (!sizeof($errors))
 				{
-					add_log('admin', 'LOG_CATS_' . strtoupper($action), $category_data['category_name']);
+					$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_' . strtoupper($action), time(), array($category_data['category_name']));
 					$cache->destroy('sql', KB_CAT_TABLE);
 					meta_refresh(3, $this->u_action . '&amp;parent_id=' . $this->parent_id);
 					trigger_error('SYNC_OK');
@@ -327,7 +327,7 @@ class manage_module
 	*/
 	function update_category_data(&$category_data)
 	{
-		global $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb;
+		global $db, $template, $request, $cache, $phpbb_root_path, $table_prefix, $phpEx, $auth, $user, $phpbb_ext_kb, $phpbb_log;
 		$errors = array();
 
 		if ($category_data['category_name'] == '')
@@ -394,7 +394,7 @@ class manage_module
 			$sql = 'INSERT INTO ' . KB_CAT_TABLE . ' ' . $db->sql_build_array('INSERT', $category_data_sql);
 			$db->sql_query($sql);
 			$category_data['category_id'] = $db->sql_nextid();
-			add_log('admin', 'LOG_CATS_ADD', $category_data['category_name']);
+			$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_ADD', time(), array($category_data['category_name']));
 		}
 		else
 		{
@@ -417,7 +417,7 @@ class manage_module
 				}
 
 				($category_data_sql['parent_id']) ? $dest = $this->get_category_info($category_data_sql['parent_id']) : $dest['category_name'] = $user->lang['KB_ROOT'];
-				add_log('admin', 'LOG_CATS_CAT_MOVED_TO', $category_data_sql['category_name'], $dest['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_CAT_MOVED_TO', time(), array($category_data_sql['category_name'], $dest['category_name']));
 			}
 
 			if (sizeof($errors))
@@ -446,7 +446,7 @@ class manage_module
 
 			// Add it back
 			$category_data['category_id'] = $category_id;
-			add_log('admin', 'LOG_CATS_EDIT', $category_data['category_name']);
+			$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_EDIT', time(), array($category_data['category_name']));
 		}
 		return $errors;
 	}
@@ -501,7 +501,8 @@ class manage_module
 	// Complete removal category
 	function delete_category($category_id, $action_posts = 'delete', $action_sub_cats = 'delete', $posts_to_id = 0, $sub_cats_to_id = 0)
 	{
-		global $db, $user, $cache, $phpbb_ext_kb;
+		global $db, $user, $cache, $phpbb_ext_kb, $phpbb_log;
+
 		$category_data = $phpbb_ext_kb->get_cat_info($category_id);
 		$errors = array();
 		$log_action_posts = $log_action_cats = $posts_to_name = $sub_cats_to_name = '';
@@ -647,39 +648,39 @@ class manage_module
 		switch ($log_action)
 		{
 			case 'POSTS_MOVE_CATS':
-				add_log('admin', 'LOG_CATS_DEL_POSTS_MOVE_CATS', $sub_cats_to_name, $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_POSTS_MOVE_CATS', time(), array($sub_cats_to_name, $category_data['category_name']));
 			break;
 
 			case '_MOVE_CATS':
-				add_log('admin', 'LOG_CATS_DEL_MOVE_CATS', $sub_cats_to_name, $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_MOVE_CATS', time(), array($sub_cats_to_name, $category_data['category_name']));
 			break;
 
 			case 'MOVE_POSTS_':
-				add_log('admin', 'LOG_CATS_DEL_MOVE_POSTS', $posts_to_name, $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_MOVE_POSTS', time(), array($posts_to_name, $category_data['category_name']));
 			break;
 
 			case 'POSTS_CATS':
-				add_log('admin', 'LOG_CATS_DEL_POSTS_CATS', $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_POSTS_CATS', time(), array($category_data['category_name']));
 			break;
 
 			case '_CATS':
-				add_log('admin', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_CAT', time(), array($category_data['category_name']));
 			break;
 
 			case 'POSTS_':
-				add_log('admin', 'LOG_CATS_DEL_ARTICLES', $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_ARTICLES', time(), array($category_data['category_name']));
 			break;
 
 			case 'MOVE_POSTS_MOVE_CATS':
-				add_log('admin', 'LOG_CATS_DEL_MOVE_POSTS_MOVE_CATS', $posts_to_name, $sub_cats_to_name, $category_data['category_name']);;
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_MOVE_POSTS_MOVE_CATS', time(), array($posts_to_name, $sub_cats_to_name, $category_data['category_name']));
 			break;
 
 			case 'MOVE_POSTS_CATS':
-				add_log('admin', 'LOG_CATS_DEL_MOVE_POSTS_CATS', $posts_to_name, $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_MOVE_POSTS_CATS', time(), array($posts_to_name, $category_data['category_name']));
 			break;
 
 			default:
-				add_log('admin', 'LOG_CATS_DEL_CAT', $category_data['category_name']);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_DEL_CAT', time(), array($category_data['category_name']));
 			break;
 		}
 
