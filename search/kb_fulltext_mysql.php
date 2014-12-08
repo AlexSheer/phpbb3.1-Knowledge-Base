@@ -149,6 +149,8 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 	*/
 	public function init()
 	{
+		global $config;
+
 		if ($this->db->get_sql_layer() != 'mysql4' && $this->db->get_sql_layer() != 'mysqli')
 		{
 			return $this->user->lang['FULLTEXT_MYSQL_INCOMPATIBLE_DATABASE'];
@@ -691,6 +693,8 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 	*/
 	public function tidy()
 	{
+		global $config;
+
 		// destroy too old cached search results
 		$this->destroy_cache(array());
 		$config->set('search_last_gc', time(), $cache = true);
@@ -703,8 +707,6 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 	*/
 	public function create_index($acp_module, $u_action)
 	{
-		//global $db;
-
 		// Make sure we can actually use MySQL with fulltext indexes
 		if ($error = $this->init())
 		{
