@@ -1,23 +1,23 @@
-knowlegebase_index:
+Sheer_knowlegebase_index:
     pattern: /knowlegebase
     defaults: { _controller: Sheer.knowlegebase.controller.index:main }
-knowlegebase_category:
+Sheer_knowlegebase_category:
     pattern: /knowlegebase/category
     defaults: { _controller: Sheer.knowlegebase.controller.category:cat }
-knowlegebase_article:
+Sheer_knowlegebase_article:
     pattern: /knowlegebase/article
     defaults: { _controller: Sheer.knowlegebase.controller.article:show }
-knowlegebase_edit:
+Sheer_knowlegebase_edit:
     pattern: /knowlegebase/edit
     defaults: { _controller: Sheer.knowlegebase.controller.edit:edit_article }
-knowlegebase_post:
+Sheer_knowlegebase_post:
     pattern: /knowlegebase/post
     defaults: { _controller: Sheer.knowlegebase.controller.post:post_article }
 
-knowlegebase_library_search:
+Sheer_knowlegebase_library_search:
     pattern: /knowlegebase/library_search
     defaults: { _controller: Sheer.knowlegebase.controller.library_search:main }
 
-knowlegebase_approve:
+Sheer_knowlegebase_approve:
     pattern: /knowlegebase/approve
     defaults: { _controller: Sheer.knowlegebase.controller.approve:approve_article }
