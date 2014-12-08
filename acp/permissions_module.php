@@ -274,7 +274,7 @@ class permissions_module
 			return;
 		}
 
-		(isset($type)) ? $type = request_var('type', $type) : $type = request_var('type', 'u_');
+		(isset($type)) ? $type = $request->variable('type', $type) : $type = $request->variable('type', 'u_');
 		$types = array('u_' => $user->lang['ACL_TYPE_U_'], 'm_' => $user->lang['ACL_TYPE_M_']);
 		$s_type = '';
 		foreach($types as $key => $value)
@@ -607,7 +607,7 @@ class permissions_module
 		{
 			foreach($category_names as $key => $category_name)
 			{
-				add_log('admin', $log_type, $category_name, $name);
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], $log_type, time());
 			}
 		}
 	}
