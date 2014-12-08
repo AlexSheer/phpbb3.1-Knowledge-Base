@@ -29,7 +29,7 @@ class search_module
 
 	function settings($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache, $phpbb_log;
+		global $db, $user, $auth, $template, $cache, $phpbb_log, $request;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx, $table_prefix;
 
 		define ('KB_LOG_TABLE', $table_prefix.'kb_log');
@@ -87,8 +87,8 @@ class search_module
 		unset($search);
 		unset($error);
 
-		$cfg_array = (isset($_REQUEST['config'])) ? request_var('config', array('' => ''), true) : array();
-		$updated = request_var('updated', false);
+		$cfg_array = (isset($_REQUEST['config'])) ? $request->variable('config', array('' => ''), true) : array();
+		$updated = $request->variable('updated', false);
 
 		foreach ($settings as $config_name => $var_type)
 		{
@@ -126,7 +126,7 @@ class search_module
 			$extra_message = '';
 			if ($updated)
 			{
-				add_log('admin', 'LOG_KB_CONFIG_SEARCH');
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_KB_CONFIG_SEARCH', time());
 			}
 
 			if (isset($cfg_array['search_type']) && in_array($cfg_array['search_type'], $search_types, true) && ($cfg_array['search_type'] != $config['search_type']))
@@ -144,7 +144,7 @@ class search_module
 
 							if (!$updated)
 							{
-								add_log('admin', 'LOG_KB_CONFIG_SEARCH');
+								$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_KB_CONFIG_SEARCH', time());
 							}
 							$extra_message = '<br />' . $user->lang['SWITCHED_SEARCH_BACKEND'] . '<br /><a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=search&amp;mode=index') . '">&raquo; ' . $user->lang['GO_TO_SEARCH_INDEX'] . '</a>';
 						}
@@ -208,12 +208,12 @@ class search_module
 
 	function index($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache, $phpbb_log;
+		global $db, $user, $auth, $template, $cache, $phpbb_log, $request;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
 
 		$phpbb_log->set_log_table(KB_LOG_TABLE);
 
-		$action = request_var('action', '');
+		$action = $request->variable('action', '');
 		$this->state = explode(',', $config['search_indexing_state']);
 
 		if (isset($_POST['cancel']))
@@ -228,7 +228,7 @@ class search_module
 			switch ($action)
 			{
 				case 'progress_bar':
-					$type = request_var('type', '');
+					$type = $request->variable('type', '');
 					$this->display_progress_bar($type);
 				break;
 				case 'delete':
@@ -245,7 +245,7 @@ class search_module
 
 			if (empty($this->state[0]))
 			{
-				$this->state[0] = request_var('search_type', '');
+				$this->state[0] = $request->variable('search_type', '');
 			}
 
 			$this->search = null;
@@ -323,12 +323,12 @@ class search_module
 					$this->state = array('');
 					$this->save_state();
 
-					add_log('admin', 'LOG_SEARCH_INDEX_REMOVED', $name);
+					$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_SEARCH_INDEX_REMOVED', time(), array($name));
 					trigger_error($user->lang['SEARCH_INDEX_REMOVED'] . adm_back_link($this->u_action) . $this->close_popup_js());
 				break;
 
 				case 'create':
-					$search_type	= request_var('search_type', '');
+					$search_type	= $request->variable('search_type', '');
 					if (method_exists($this->search, 'create_index'))
 					{
 						// pass a reference to acp_search so the $search object can make use of save_state() and attributes
@@ -402,7 +402,7 @@ class search_module
 					$this->state = array('');
 					$this->save_state();
 
-					add_log('admin', 'LOG_SEARCH_INDEX_CREATED', $name);
+					$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_SEARCH_INDEX_CREATED', time(), array($name));
 					trigger_error($user->lang['SEARCH_INDEX_CREATED'] . adm_back_link($this->u_action) . $this->close_popup_js());
 				break;
 			}
