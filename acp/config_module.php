@@ -68,7 +68,7 @@ class config_module
 					WHERE config_name = \''.$key.'\'';
 				$db->sql_query($sql);
 			}
-			add_log('admin', 'LOG_LIBRARY_CONFIG');
+			$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_LIBRARY_CONFIG', time());
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
 		}
 
