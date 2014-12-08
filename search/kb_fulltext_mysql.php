@@ -191,8 +191,8 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 		}
 		$this->db->sql_freeresult($result);
 
-		set_config('fulltext_mysql_max_word_len', $mysql_info['ft_max_word_len']);
-		set_config('fulltext_mysql_min_word_len', $mysql_info['ft_min_word_len']);
+		$config->set('fulltext_mysql_max_word_len', $mysql_info['ft_max_word_len'], $cache = true);
+		$config->set('fulltext_mysql_min_word_len', $mysql_info['ft_min_word_len'], $cache = true);
 
 		return false;
 	}
@@ -693,8 +693,7 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 	{
 		// destroy too old cached search results
 		$this->destroy_cache(array());
-
-		set_config('search_last_gc', time(), true);
+		$config->set('search_last_gc', time(), $cache = true);
 	}
 
 	/**
