@@ -1384,7 +1384,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		// carry on ... it's okay ... I know when I'm not wanted boo hoo
 		if (!$this->config['kb_search'])
 		{
-			set_config('search_last_gc', time(), true);
+			$config->set('search_last_gc', time(), $cache = true);
 			return;
 		}
 
@@ -1419,7 +1419,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 				// by setting search_last_gc to the new time here we make sure that if a user reloads because the
 				// following query takes too long, he won't run into it again
-				set_config('search_last_gc', time(), true);
+				$config->set('search_last_gc', time(), $cache = true);
 
 				// Delete the matches
 				$sql = 'DELETE FROM ' . KB_SEARCH_WORDMATCH_TABLE . '
@@ -1435,7 +1435,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 			$this->destroy_cache(array_unique($destroy_cache_words));
 		}
 
-		set_config('search_last_gc', time(), true);
+		$config->set('search_last_gc', time(), $cache = true);
 	}
 
 	/**
