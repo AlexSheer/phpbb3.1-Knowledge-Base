@@ -124,7 +124,7 @@ class articles_module
 		$submit		= (isset($_POST['submit'])) ? true : false;
 
 		// move to
-		$to_id = request_var('to_id', 0);
+		$to_id = $request->variable('to_id', 0);
 		// move from
 		$info = $phpbb_ext_kb->get_kb_article_info($article_id);
 
