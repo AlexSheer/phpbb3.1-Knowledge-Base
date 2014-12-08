@@ -1380,6 +1380,8 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 	*/
 	public function tidy()
 	{
+		global $config;
+
 		// Is the fulltext indexer disabled? If yes then we need not
 		// carry on ... it's okay ... I know when I'm not wanted boo hoo
 		if (!$this->config['kb_search'])
