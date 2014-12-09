@@ -140,7 +140,7 @@ class search_module
 					{
 						if (!method_exists($search, 'init') || !($error = $search->init()))
 						{
-							set_config('kb_search_type', $cfg_array['search_type']);
+							$config->set('kb_search_type', $cfg_array['search_type'], $cache = true);
 
 							if (!$updated)
 							{
