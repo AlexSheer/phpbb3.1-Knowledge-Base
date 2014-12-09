@@ -207,7 +207,8 @@ class edit
 			$msg = $this->user->lang['ARTICLE_EDITED'];
 			$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_ARTICLE'], '<a href="' . $redirect . '">', '</a>');
 			$msg .= '<br /><br />' . sprintf($this->user->lang['RETURN_CAT'], '<a href="' . $root . '">', '</a>');
-			add_log('admin', 'LOG_LIBRARY_EDIT_ARTICLE', $article_title, $category_name);
+			$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->data['user_ip'], 'LOG_LIBRARY_EDIT_ARTICLE', time(), array($article_title, $category_name));
+
 			meta_refresh(3, $redirect);
 			trigger_error($msg);
 		}
