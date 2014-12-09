@@ -22,8 +22,9 @@ class approve
 	protected $phpbb_cache;
 	protected $phpbb_root_path;
 	protected $php_ext;
+	protected $log;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -32,6 +33,7 @@ class approve
 		$this->template = $template;
 		$this->user = $user;
 		$this->phpbb_cache = $cache;
+		$this->phpbb_log = $log;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -103,9 +105,6 @@ class approve
 			{
 				$this->kb->submit_article($kb_article_info['article_category_id'], $kb_data['forum_id'], $kb_article_info['article_title'], $kb_article_info['article_description'], $category_name, $art_id);
 			}
-			// To do
-			// add_log
-
 		}
 		else if ($disapprove)
 		{
@@ -113,15 +112,15 @@ class approve
 				FROM ' . ARTICLES_TABLE . '
 				WHERE article_id = '. $art_id;
 			$this->db->sql_query($sql);
-
-			// To do
-			// add_log
 		}
 
 		if ($approve || $disapprove)
 		{
-			$message = ($approve) ? 'ARTICLE_APPROVED_SUCESS' : 'ARTICLE_DISAPPROVED_SUCESS';
+			// add log
+			$log_type = ($approve) ? 'LOG_LIBRARY_APPROVED_ARTICLE' : 'LOG_LIBRARY_REJECTED_ARTICLE';
+			$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->data['user_ip'], $log_type, time(), array($kb_article_info['article_title'], $kb_category_info['category_name'], $kb_article_info['author']));
 			// Send notification
+			$message = ($approve) ? 'ARTICLE_APPROVED_SUCESS' : 'ARTICLE_DISAPPROVED_SUCESS';
 			$kb_article_info['moderator_id'] = $this->user->data['user_id'];
 			$notification_type = ($approve) ? 'sheer.knowlegebase.notification.type.approve' : 'sheer.knowlegebase.notification.type.disapprove';
 			$this->helper->add_notification($kb_article_info, $notification_type);
@@ -132,10 +131,13 @@ class approve
 			$row = $this->db->sql_fetchrow($result);
 			$this->db->sql_freeresult($result);
 
-			$sql = 'DELETE FROM ' . NOTIFICATIONS_TABLE . '
-				WHERE item_id = ' . $kb_article_info['article_id'] . '
-				AND notification_type_id = ' . $row['notification_type_id'] .' ';
-			$this->db->sql_query($sql);
+			if ($row['notification_type_id'])
+			{
+				$sql = 'DELETE FROM ' . NOTIFICATIONS_TABLE . '
+					WHERE item_id = ' . $kb_article_info['article_id'] . '
+					AND notification_type_id = ' . $row['notification_type_id'] .' ';
+				$this->db->sql_query($sql);
+			}
 			meta_refresh(3, $redirect);
 			trigger_error($message);
 		}
