@@ -116,7 +116,7 @@ class search_module
 			// only change config if anything was actually changed
 			if ($submit && ($config[$config_name] != $config_value))
 			{
-				set_config($config_name, $config_value);
+				$config->set($config_name, $config_value, $cache = true);
 				$updated = true;
 			}
 		}
@@ -566,7 +566,7 @@ class search_module
 
 		ksort($this->state);
 
-		set_config('search_indexing_state', implode(',', $this->state), true);
+		$config->set('search_indexing_state', implode(',', $this->state), $cache = true);
 	}
 
 	/**
