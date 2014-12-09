@@ -105,6 +105,7 @@ services:
             - @template
             - @user
             - @cache
+            - @log
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
