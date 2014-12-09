@@ -272,7 +272,7 @@ class functions_kb
 		$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
 
 		delete_topics('topic_id', array($info['topic_id']), true, true, true);
-		add_log('admin', 'LOG_LIBRARY_DEL_ARTICLE', $article_title, $cat_info['category_name']);
+		$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_LIBRARY_DEL_ARTICLE', time(), array($article_title, $cat_info['category_name']));
 
 		return;
 	}
@@ -318,11 +318,8 @@ class functions_kb
 			SET number_articles = '. $to_articles_count .'
 			WHERE category_id = '.$id.'';
 		$this->db->sql_query($sql);
-
 		$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
-
-		add_log('admin', 'LOG_LIBRARY_MOVED_ARTICLE', $cat_info['category_name'], $to_cat_info['category_name']);
-
+		$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->data['user_ip'], 'LOG_LIBRARY_MOVED_ARTICLE', time(), array($cat_info['category_name'], $to_cat_info['category_name']));
 		return;
 	}
 
