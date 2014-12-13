@@ -319,7 +319,7 @@ class functions_kb
 			WHERE category_id = '.$id.'';
 		$this->db->sql_query($sql);
 		$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
-		$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->data['user_ip'], 'LOG_LIBRARY_MOVED_ARTICLE', time(), array($cat_info['category_name'], $to_cat_info['category_name']));
+		$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->data['user_ip'], 'LOG_LIBRARY_MOVED_ARTICLE', time(), array($article_title, $cat_info['category_name'], $to_cat_info['category_name']));
 		return;
 	}
 
