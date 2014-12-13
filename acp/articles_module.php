@@ -130,7 +130,7 @@ class articles_module
 
 		if ($submit)
 		{
-			$phpbb_ext_kb->kb_move_article($article_id, $info['article_category_id'], $to_id);
+			$phpbb_ext_kb->kb_move_article($article_id, $info['article_title'], $info['article_category_id'], $to_id);
 			meta_refresh(3, $this->u_action);
 			trigger_error($user->lang['ARTICLE_MOVED']);
 		}
