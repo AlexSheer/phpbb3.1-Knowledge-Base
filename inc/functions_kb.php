@@ -292,7 +292,7 @@ class functions_kb
 		return $row;
 	}
 
-	public function kb_move_article($k, $cat_id, $id)
+	public function kb_move_article($k, $article_title, $cat_id, $id)
 	{
 		// Change category id in the table of articles
 		$sql = 'UPDATE '. ARTICLES_TABLE .'
