@@ -607,7 +607,7 @@ class permissions_module
 		{
 			foreach($category_names as $key => $category_name)
 			{
-				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], $log_type, time());
+				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], $log_type, time(), array($category_name, $name));
 			}
 		}
 	}
