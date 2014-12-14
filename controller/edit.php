@@ -116,13 +116,12 @@ class edit
 			trigger_error('RULES_KB_MOD_EDIT_CANNOT');
 		}
 
-		decode_message(&$message, $row['bbcode_uid']);
-		$article_text = $message;
+		$article_text = $this->decode_message($message, $row['bbcode_uid']);
 
 		$article_title			= $this->request->variable('subject', $article_title, true);
 		$article_text			= $this->request->variable('message', $article_text, true);
 		$article_description	= $this->request->variable('descr', $article_description, true);
-		$id = $this->request->variable('to_id', 0);
+		$id						= $this->request->variable('to_id', 0);
 
 		if (!$article_title)
 		{
@@ -278,5 +277,24 @@ class edit
 
 		page_footer();
 		return new Response($this->template->return_display('body'), 200);
+	}
+
+	public function decode_message($message, $bbcode_uid = '')
+	{
+		if ($bbcode_uid)
+		{
+			$match = array('<br />', "[/*:m:$bbcode_uid]", ":u:$bbcode_uid", ":o:$bbcode_uid", ":$bbcode_uid");
+			$replace = array("\n", '', '', '', '');
+		}
+		else
+		{
+			$match = array('<br />');
+			$replace = array("\n");
+		}
+
+		$message = str_replace($match, $replace, $message);
+		$match = get_preg_expression('bbcode_htm');
+		$replace = array('\1', '\1', '\2', '\1', '', '');
+		return preg_replace($match, $replace, $message);
 	}
 }
