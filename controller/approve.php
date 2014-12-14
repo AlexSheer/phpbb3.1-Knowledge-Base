@@ -98,6 +98,7 @@ class approve
 			if (isset($kb_search))
 			{
 				// Add search index
+				$this->phpbb_cache->purge();
 				$kb_search->index('add', $art_id, $kb_article_info['article_body'], $kb_article_info['article_title'], $kb_article_info['author']);
 			}
 
