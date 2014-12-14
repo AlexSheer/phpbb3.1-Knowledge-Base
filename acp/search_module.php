@@ -116,7 +116,8 @@ class search_module
 			// only change config if anything was actually changed
 			if ($submit && ($config[$config_name] != $config_value))
 			{
-				$config->set($config_name, $config_value, $cache = true);
+				$config->set($config_name, $config_value);
+				$cache->destroy('sql', CONFIG_TABLE);
 				$updated = true;
 			}
 		}
@@ -559,6 +560,8 @@ class search_module
 
 	function save_state($state = false)
 	{
+		global $config;
+
 		if ($state)
 		{
 			$this->state = $state;
