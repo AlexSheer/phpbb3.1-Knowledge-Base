@@ -180,17 +180,21 @@ class library_search
 			if ($author && $keywords)
 			{
 				$kb_search->split_keywords($keywords, $terms);
-				$total_matches = $kb_search->keyword_search($type, $sf, 'all', $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_id_ary, $author, &$id_ary, $start, $per_page);
+				$search_result = $kb_search->keyword_search($type, $sf, 'all', $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_id_ary, $author, $id_ary, $start, $per_page);
 			}
 			else if ($author)
 			{
-				$total_matches = $kb_search->author_search($type, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_id_ary, $author, &$id_ary, &$start, $per_page);
+				$search_result = $kb_search->author_search($type, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_id_ary, $author, $id_ary, $start, $per_page);
 			}
 			else
 			{
 				$kb_search->split_keywords($keywords, $terms);
-				$total_matches = $kb_search->keyword_search($type, $sf, 'all', $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_id_ary, $author, &$id_ary, $start, $per_page);
+				$search_result = $kb_search->keyword_search($type, $sf, 'all', $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_id_ary, $author, $id_ary, $start, $per_page);
 			}
+
+			$total_matches = $search_result['total_matches'];
+			$start = $search_result['start'];
+			$id_ary = $search_result['id_ary'];
 
 			if ($total_matches)
 			{
