@@ -496,7 +496,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 	* @param	int			$per_page			number of ids each page is supposed to contain
 	* @return	boolean|int						total number of results
 	*/
-	public function keyword_search($type, $fields, $terms, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_ary, $author_name, &$id_ary, &$start, $per_page)
+	public function keyword_search($type, $fields, $terms, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_ary, $author_name, $id_ary, &$start, $per_page)
 	{
 		// No keywords? No posts.
 		if (empty($this->search_query))
@@ -509,6 +509,8 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		{
 			return false;
 		}
+
+		$search_result = array();
 
 		$must_contain_ids = $this->must_contain_ids;
 		$must_not_contain_ids = $this->must_not_contain_ids;
@@ -539,7 +541,9 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		$total_results = 0;
 		if ($this->obtain_ids($search_key, $total_results, $id_ary, $start, $per_page, $sort_dir) == 1)
 		{
-			return $total_results;
+			$search_result['total_matches'] = $total_results;
+			$search_result['start'] = $start;
+			$search_result['id_ary'] = $id_ary;
 		}
 
 		$id_ary = array();
@@ -861,9 +865,12 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 		// store the ids, from start on then delete anything that isn't on the current page because we only need ids for one page
 		$this->save_ids($search_key, $this->search_query, $author_ary, $total_results, $id_ary, $start, $sort_dir);
-		$id_ary = array_slice($id_ary, 0, (int) $per_page);
+		
+		$search_result['total_matches'] = $total_results;
+		$search_result['start'] = $start;
+		$search_result['id_ary'] = array_slice($id_ary, 0, (int) $per_page);
 
-		return $total_results;
+		return $search_result;
 	}
 
 	/**
@@ -882,7 +889,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 	* @param	int			$per_page			number of ids each page is supposed to contain
 	* @return	boolean|int						total number of results
 	*/
-	public function author_search ($type, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_ary, $author_name, &$id_ary, &$start, $per_page)
+	public function author_search ($type, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_ary, $author_name, $id_ary, $start, $per_page)
 	{
 		$firstpost_only = false;
 		$post_visibility = true;
@@ -892,6 +899,9 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		{
 			return 0;
 		}
+
+		$search_result = array();
+
 		// generate a search_key from all the options to identify the results
 		$search_key = md5(implode('#', array(
 			'',
@@ -912,7 +922,11 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		$total_results = 0;
 		if ($this->obtain_ids($search_key, $total_results, $id_ary, $start, $per_page, $sort_dir) == 1)
 		{
-			return $total_results;
+			$search_result['total_matches'] = $total_results;
+			$search_result['start'] = $start;
+			$search_result['id_ary'] = $id_ary;
+
+			return $search_result;
 		}
 
 		$id_ary = array();
@@ -1070,9 +1084,12 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		if (sizeof($id_ary))
 		{
 			$this->save_ids($search_key, '', $author_ary, $total_results, $id_ary, $start, $sort_dir);
-			$id_ary = array_slice($id_ary, 0, $per_page);
 
-			return $total_results;
+			$search_result['total_matches'] = $total_results;
+			$search_result['start'] = $start;
+			$search_result['id_ary'] = array_slice($id_ary, 0, $per_page);
+
+			return $search_result;
 		}
 		return false;
 	}
