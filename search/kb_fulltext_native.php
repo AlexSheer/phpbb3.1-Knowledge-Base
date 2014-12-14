@@ -491,12 +491,12 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 	* @param	string		$sort_days			specifies the maximum amount of days a post may be old
 	* @param	array		$author_ary			an array of author ids if the author should be ignored during the search the array is empty
 	* @param	string		$author_name		specifies the author match, when ANONYMOUS is also a search-match
-	* @param	array		&$id_ary			passed by reference, to be filled with ids for the page specified by $start and $per_page, should be ordered
+	* @param	array		$id_ary			to be filled with ids for the page specified by $start and $per_page, should be ordered
 	* @param	int			$start				indicates the first index of the page
 	* @param	int			$per_page			number of ids each page is supposed to contain
 	* @return	boolean|int						total number of results
 	*/
-	public function keyword_search($type, $fields, $terms, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_ary, $author_name, $id_ary, &$start, $per_page)
+	public function keyword_search($type, $fields, $terms, $sort_by_sql, $sort_key, $sort_dir, $sort_days, $ex_fid_ary, $category_id, $author_ary, $author_name, $id_ary, $start, $per_page)
 	{
 		// No keywords? No posts.
 		if (empty($this->search_query))
