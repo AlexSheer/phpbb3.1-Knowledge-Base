@@ -58,7 +58,10 @@ class articles_module
 		$article_count = $row['article_count'];
 		$db->sql_freeresult($result);
 
-		if (empty($per_page)) $per_page = 10;
+		if (empty($per_page))
+		{
+			$per_page = 10;
+		}
 		$sql = 'SELECT *
 			FROM '. ARTICLES_TABLE .'
 			ORDER BY '.$order_by.' '.$sql_sort.'
