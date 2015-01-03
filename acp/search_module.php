@@ -547,7 +547,10 @@ class search_module
 	{
 		global $db, $table_prefix;
 
-		if (!defined('ARTICLES_TABLE')) define('ARTICLES_TABLE', $table_prefix.'kb_articles');
+		if (!defined('ARTICLES_TABLE'))
+		{
+			define('ARTICLES_TABLE', $table_prefix.'kb_articles');
+		}
 
 		$sql = 'SELECT MAX(article_id) as max_article_id
 			FROM '. ARTICLES_TABLE;
