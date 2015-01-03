@@ -301,7 +301,10 @@ class permissions_module
 				$user_name = $users['username'];
 				$group_ids[] = $groups[$user_name] = $users['user_id'];
 			}
-			if (!$mode) $mode = 'user';
+			if (!$mode)
+			{
+				$mode = 'user';
+			}
 		}
 		else
 		{
@@ -314,7 +317,10 @@ class permissions_module
 				$group_name = $user->lang['G_'.$group['group_name']];
 				$group_ids[] = $groups[$group_name] = $group['group_id'];
 			}
-			if (!$mode) $mode = 'group';
+			if (!$mode)
+			{
+				$mode = 'group';
+			}
 		}
 		$db->sql_freeresult($result);
 
