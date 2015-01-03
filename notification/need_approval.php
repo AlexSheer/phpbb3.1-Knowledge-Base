@@ -232,9 +232,18 @@ class need_approval extends \phpbb\notification\type\base
 	{
 		global $table_prefix;
 
-		if (!defined ('KB_OPTIONS_TABLE')) define ('KB_OPTIONS_TABLE', $table_prefix.'kb_options');
-		if (!defined ('KB_GROUPS_TABLE')) define ('KB_GROUPS_TABLE', $table_prefix.'kb_groups');
-		if (!defined ('KB_USERS_TABLE')) define ('KB_USERS_TABLE', $table_prefix.'kb_users');
+		if (!defined ('KB_OPTIONS_TABLE'))
+		{
+			define ('KB_OPTIONS_TABLE', $table_prefix.'kb_options');
+		}
+		if (!defined ('KB_GROUPS_TABLE'))
+		{
+			define ('KB_GROUPS_TABLE', $table_prefix.'kb_groups');
+		}
+		if (!defined ('KB_USERS_TABLE'))
+		{
+			define ('KB_USERS_TABLE', $table_prefix.'kb_users');
+		}
 
 		$sql_where = ($category_id) ? ' AND category_id = ' . $category_id . '' : '';
 
