@@ -389,7 +389,7 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 		$search_result = array();
 
 		// generate a search_key from all the options to identify the results
-		$search_key = md5(implode('#', array(
+		$search_key = crc32(implode('#', array(
 			implode(', ', $this->split_words),
 			$type,
 			$fields,
@@ -540,7 +540,7 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 		$search_result = array();
 
 		// generate a search_key from all the options to identify the results
-		$search_key = md5(implode('#', array(
+		$search_key = crc32(implode('#', array(
 			'',
 			$type,
 			($firstpost_only) ? 'firstpost' : '',
