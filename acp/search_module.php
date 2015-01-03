@@ -475,7 +475,7 @@ class search_module
 			'S_INDEX'				=> true,
 			'U_ACTION'				=> $this->u_action,
 			'U_PROGRESS_BAR'		=> append_sid("{$phpbb_admin_path}index.$phpEx", "i=$id&amp;mode=$mode&amp;action=progress_bar"),
-			'UA_PROGRESS_BAR'		=> addslashes(append_sid("{$phpbb_admin_path}index.$phpEx", "i=$id&amp;mode=$mode&amp;action=progress_bar")),
+			'UA_PROGRESS_BAR'		=> str_replace('\\', '\\\\', append_sid("{$phpbb_admin_path}index.$phpEx", "i=$id&amp;mode=$mode&amp;action=progress_bar")),
 		));
 
 		if (isset($this->state[1]))
