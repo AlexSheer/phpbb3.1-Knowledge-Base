@@ -36,15 +36,42 @@ class functions_kb
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
-		if (!defined ('KB_CONFIG_TABLE')) define ('KB_CONFIG_TABLE', $table_prefix.'kb_config');
-		if (!defined ('KB_OPTIONS_TABLE')) define ('KB_OPTIONS_TABLE', $table_prefix.'kb_options');
-		if (!defined ('KB_GROUPS_TABLE')) define ('KB_GROUPS_TABLE', $table_prefix.'kb_groups');
-		if (!defined ('KB_USERS_TABLE')) define ('KB_USERS_TABLE', $table_prefix.'kb_users');
-		if (!defined ('ARTICLES_TABLE')) define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
-		if (!defined ('FORUMS_TABLE')) define ('FORUMS_TABLE', $this->table_prefix.'forums');
-		if (!defined ('TOPICS_TABLE')) define ('TOPICS_TABLE', $this->table_prefix.'topics');
-		if (!defined ('KB_CAT_TABLE')) define ('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
-		if (!defined('KB_LOG_TABLE')) define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		if (!defined ('KB_CONFIG_TABLE'))
+		{
+			define ('KB_CONFIG_TABLE', $table_prefix.'kb_config');
+		}
+		if (!defined ('KB_OPTIONS_TABLE'))
+		{
+			define ('KB_OPTIONS_TABLE', $table_prefix.'kb_options');
+		}
+		if (!defined ('KB_GROUPS_TABLE'))
+		{
+			define ('KB_GROUPS_TABLE', $table_prefix.'kb_groups');
+		}
+		if (!defined ('KB_USERS_TABLE'))
+		{
+			define ('KB_USERS_TABLE', $table_prefix.'kb_users');
+		}
+		if (!defined ('ARTICLES_TABLE'))
+		{
+			define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
+		}
+		if (!defined ('FORUMS_TABLE'))
+		{
+			define ('FORUMS_TABLE', $this->table_prefix.'forums');
+		}
+		if (!defined ('TOPICS_TABLE'))
+		{
+			define ('TOPICS_TABLE', $this->table_prefix.'topics');
+		}
+		if (!defined ('KB_CAT_TABLE'))
+		{
+			define ('KB_CAT_TABLE', $this->table_prefix.'kb_categories');
+		}
+		if (!defined('KB_LOG_TABLE'))
+		{
+			define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		}
 
 		$this->phpbb_log->set_log_table(KB_LOG_TABLE);
 	}
