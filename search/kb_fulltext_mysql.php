@@ -9,7 +9,7 @@
 
 namespace Sheer\knowlegebase\search;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+//use Symfony\Component\DependencyInjection\ContainerInterface;
 
 //class kb_fulltext_mysql
 class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
@@ -93,10 +93,23 @@ class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
 		}
 
 		global $table_prefix;
-		if (!defined('KB_SEARCH_WORDMATCH_TABLE')) define('KB_SEARCH_WORDMATCH_TABLE', $table_prefix.'kb_src_wrdmtch');
-		if (!defined('KB_SEARCH_WORDLIST_TABLE')) define('KB_SEARCH_WORDLIST_TABLE', $table_prefix.'kb_src_wrdlist');
-		if (!defined('KB_CAT_TABLE'))define('KB_CAT_TABLE', $table_prefix.'kb_categories');
-		if (!defined('ARTICLES_TABLE')) define('ARTICLES_TABLE', $table_prefix.'kb_articles');
+
+		if (!defined('KB_SEARCH_WORDMATCH_TABLE'))
+		{
+			define('KB_SEARCH_WORDMATCH_TABLE', $table_prefix.'kb_src_wrdmtch');
+		}
+		if (!defined('KB_SEARCH_WORDLIST_TABLE'))
+		{
+			define('KB_SEARCH_WORDLIST_TABLE', $table_prefix.'kb_src_wrdlist');
+		}
+		if (!defined('KB_CAT_TABLE'))
+		{
+			define('KB_CAT_TABLE', $table_prefix.'kb_categories');
+		}
+		if (!defined('ARTICLES_TABLE'))
+		{
+			define('ARTICLES_TABLE', $table_prefix.'kb_articles');
+		}
 
 		$error = false;
 	}
