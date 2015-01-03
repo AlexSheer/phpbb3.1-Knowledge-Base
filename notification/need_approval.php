@@ -58,7 +58,7 @@ class need_approval extends \phpbb\notification\type\base
 	{
 		$auth_approve = $this->auth->acl_get_list(false, $this->permission);
 		$has_permission = $this->check_permisson(0, 'kb_m_approve');
-		$users = array_merge($auth_approve[0]['a_manage_kb'], $has_permission);
+		$users = array_merge($has_permission, $auth_approve[0]['a_manage_kb']);
 		$users = array_unique($users);
 
 		return ((in_array($this->user->data['user_id'], $users)));
@@ -101,7 +101,7 @@ class need_approval extends \phpbb\notification\type\base
 		$auth = 'kb_m_approve';
 
 		$auth_approve = $this->auth->acl_get_list(false, $this->permission);
-		$has_permission = $this->check_permisson($need_approval_data['article_category_id'], $auth);
+		$has_permission = $this->check_permisson($auth, $need_approval_data['article_category_id']);
 		$users = array_merge($auth_approve[0]['a_manage_kb'], $has_permission);
 		$users = array_unique($users);
 		$usr = $this->check_user_notification_options($users, $options);
@@ -228,7 +228,7 @@ class need_approval extends \phpbb\notification\type\base
 		return parent::create_insert_array($need_approval_data, $pre_create_data);
 	}
 
-	public function check_permisson($category_id = 0, $auth)
+	public function check_permisson($auth, $category_id = 0)
 	{
 		global $table_prefix;
 
