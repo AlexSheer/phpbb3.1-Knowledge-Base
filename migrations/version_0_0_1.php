@@ -27,7 +27,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 			'add_tables'		=> array(
 				$this->table_prefix . 'kb_articles'	=> array(
 					'COLUMNS'		=> array(
-						'article_id'			=> array('UINT', NULL, 'auto_increment'),
+						'article_id'			=> array('UINT', null, 'auto_increment'),
 						'article_category_id'	=> array('UINT', 0),
 						'approved'				=> array('BOOL', 0),
 						'article_title'			=> array('VCHAR:255', ''),
@@ -61,7 +61,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 
 				$this->table_prefix . 'kb_categories'	=> array(
 					'COLUMNS'		=> array(
-						'category_id'		=> array('UINT', NULL, 'auto_increment'),
+						'category_id'		=> array('UINT', null, 'auto_increment'),
 						'parent_id'			=> array('UINT', 0),
 						'left_id'			=> array('UINT', 0),
 						'right_id'			=> array('UINT', 0),
@@ -79,7 +79,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 
 				$this->table_prefix . 'kb_options'	=> array(
 					'COLUMNS'	=> array(
-						'auth_option_id'=> array('UINT', NULL, 'auto_increment'),
+						'auth_option_id'=> array('UINT', null, 'auto_increment'),
 						'auth_option'	=> array('VCHAR:50', ''),
 						'is_global'		=> array('BOOL', 0),
 						'is_local'		=> array('BOOL', 1),
@@ -92,7 +92,7 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 
 				$this->table_prefix . 'kb_src_wrdlist'	=> array(
 					'COLUMNS'		=> array(
-						'word_id'			=> array('UINT', NULL, 'auto_increment'),
+						'word_id'			=> array('UINT', null, 'auto_increment'),
 						'word_text'			=> array('VCHAR_UNI', ''),
 						'word_common'		=> array('BOOL', 0),
 						'word_count'		=> array('UINT', 0),
