@@ -531,7 +531,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		sort($must_exclude_one_ids);
 
 		// generate a search_key from all the options to identify the results
-		$search_key = md5(implode('#', array(
+		$search_key = crc32(implode('#', array(
 			serialize($must_contain_ids),
 			serialize($must_not_contain_ids),
 			serialize($must_exclude_one_ids),
@@ -913,7 +913,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 		$search_result = array();
 
 		// generate a search_key from all the options to identify the results
-		$search_key = md5(implode('#', array(
+		$search_key = crc32(implode('#', array(
 			'',
 			$type,
 			($firstpost_only) ? 'firstpost' : '',
