@@ -9,7 +9,7 @@
 
 namespace Sheer\knowlegebase\inc;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+//use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class functions_kb
 {
