@@ -43,7 +43,10 @@ class category
 		$cat_id = $this->request->variable('id', 0);
 		$start = $this->request->variable('start', 0);
 
-		if (!$cat_id) redirect(append_sid("{$this->phpbb_root_path}knowlegebase"));
+		if (!$cat_id)
+		{
+			redirect(append_sid("{$this->phpbb_root_path}knowlegebase"));
+		}
 		$sql_where = ($this->auth->acl_get('a_manage_kb') || $this->kb->acl_kb_get($cat_id, 'kb_m_approve')) ? '' : 'AND approved = 1';
 
 		$kb_config = $this->kb->obtain_kb_config();
@@ -116,7 +119,11 @@ class category
 			);
 		}
 
-		if (!isset($per_page)) $per_page = 10;
+		if (!isset($per_page))
+		{
+			$per_page = 10;
+		}
+
 		$sql = 'SELECT *
 			FROM '. ARTICLES_TABLE .'
 			WHERE article_category_id = '.$cat_id.'
