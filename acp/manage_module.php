@@ -21,7 +21,10 @@ class manage_module
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
 		define ('KB_USERS_TABLE', $table_prefix.'kb_users');
 		define ('KB_GROUPS_TABLE', $table_prefix.'kb_groups');
-		if (!defined('KB_LOG_TABLE')) define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		if (!defined('KB_LOG_TABLE'))
+		{
+			define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		}
 
 		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
@@ -244,7 +247,9 @@ class manage_module
 			$navigation = $user->lang['CATEGOTY_LIST'];
 			$kb_config = $phpbb_ext_kb->obtain_kb_config();
 			if (empty($kb_config) || (!$kb_config['forum_id'] && $kb_config['anounce']))
-			$errors[] = $user->lang['WARNING_DEFAULT_CONFIG'];
+			{
+				$errors[] = $user->lang['WARNING_DEFAULT_CONFIG'];
+			}
 		}
 		else
 		{
