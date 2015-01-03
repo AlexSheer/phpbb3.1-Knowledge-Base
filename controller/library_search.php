@@ -132,7 +132,7 @@ class library_search
 		$search_url .= ($keywords) ? '&amp;keywords=' . $keywords : '';
 		if(sizeof($categories))
 		{
-			foreach($categories as $key=>$value)
+			foreach($categories as $key => $value)
 			{
 				$cat .= '&amp;cat_ids[]='.$value.'';
 			}
