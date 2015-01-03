@@ -865,7 +865,7 @@ class kb_fulltext_native extends \Sheer\knowlegebase\search\kb_base
 
 		// store the ids, from start on then delete anything that isn't on the current page because we only need ids for one page
 		$this->save_ids($search_key, $this->search_query, $author_ary, $total_results, $id_ary, $start, $sort_dir);
-		
+
 		$search_result['total_matches'] = $total_results;
 		$search_result['start'] = $start;
 		$search_result['id_ary'] = array_slice($id_ary, 0, (int) $per_page);
