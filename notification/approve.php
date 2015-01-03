@@ -190,7 +190,8 @@ class approve extends \phpbb\notification\type\base
 				'MODERATOR'			=> htmlspecialchars_decode($this->user_loader->get_username($this->get_data('moderator_id'), 'username')),
 				'ARTICLE_TITLE'		=> htmlspecialchars_decode(censor_text($this->get_data('article_title'))),
 				'U_VIEW_ARTICLE'	=> generate_board_url() . '/knowlegebase/article?k=' . $this->item_id . '',
-		);		return array();
+		);
+		return array();
 	}
 
 	/**
