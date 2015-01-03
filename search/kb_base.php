@@ -172,7 +172,10 @@ class kb_base
 	{
 		global $cache, $config, $db, $user, $table_prefix;
 
-		if (!defined('KB_SEARCH_RESULTS_TABLE')) define('KB_SEARCH_RESULTS_TABLE', $table_prefix.'kb_search_results');
+		if (!defined('KB_SEARCH_RESULTS_TABLE'))
+		{
+			define('KB_SEARCH_RESULTS_TABLE', $table_prefix.'kb_search_results');
+		}
 
 		$length = min(sizeof($id_ary), $config['search_block_size']);
 
