@@ -286,7 +286,10 @@ class kb_base
 	{
 		global $db, $cache, $config, $table_prefix;
 
-		if (!defined('KB_SEARCH_RESULTS_TABLE')) define('KB_SEARCH_RESULTS_TABLE', $table_prefix.'kb_search_results');
+		if (!defined('KB_SEARCH_RESULTS_TABLE'))
+		{
+			define('KB_SEARCH_RESULTS_TABLE', $table_prefix.'kb_search_results');
+		}
 
 		// clear all searches that searched for the specified words
 		if (sizeof($words))
