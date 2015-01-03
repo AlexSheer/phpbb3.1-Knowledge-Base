@@ -189,7 +189,8 @@ class disapprove extends \phpbb\notification\type\base
 				'USERNAME'			=> htmlspecialchars_decode($username),
 				'MODERATOR'			=> htmlspecialchars_decode($this->user_loader->get_username($this->get_data('moderator_id'), 'username')),
 				'ARTICLE_TITLE'		=> htmlspecialchars_decode(censor_text($this->get_data('article_title'))),
-		);		return array();
+		);
+		return array();
 	}
 
 	/**
