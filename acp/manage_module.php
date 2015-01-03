@@ -915,7 +915,7 @@ class manage_module
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result))
 		{
-		 	$articles++;
+			$articles++;
 		}
 		$db->sql_freeresult($result);
 
