@@ -27,7 +27,7 @@ class version_0_0_2 extends \phpbb\db\migration\migration
 			'add_tables'		=> array(
 				$this->table_prefix . 'kb_log'	=> array(
 					'COLUMNS'		=> array(
-						'log_id'			=> array('UINT', NULL, 'auto_increment'),
+						'log_id'			=> array('UINT', null, 'auto_increment'),
 						'log_type'			=> array('TINT:4', 0),
 						'user_id'			=> array('UINT', 0),
 						'forum_id'			=> array('UINT', 0),
