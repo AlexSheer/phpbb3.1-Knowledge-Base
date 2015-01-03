@@ -16,8 +16,14 @@ class config_module
 	function main($id, $mode)
 	{
 		global $db, $template, $request, $table_prefix, $user, $phpbb_log;
-		if (!defined('KB_CONFIG_TABLE')) define ('KB_CONFIG_TABLE', $table_prefix.'kb_config');
-		if (!defined('KB_LOG_TABLE')) define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		if (!defined('KB_CONFIG_TABLE'))
+		{
+			define ('KB_CONFIG_TABLE', $table_prefix.'kb_config');
+		}
+		if (!defined('KB_LOG_TABLE'))
+		{
+			define ('KB_LOG_TABLE', $table_prefix.'kb_log');
+		}
 
 		$default_config = array();
 
