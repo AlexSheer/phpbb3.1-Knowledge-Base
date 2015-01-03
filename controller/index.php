@@ -75,7 +75,6 @@ class index
 		}
 		$this->db->sql_freeresult($result);
 
-
 // Output the page
 		$this->template->assign_vars(array(
 			'LIBRARY_TITLE'	=> $this->user->lang('LIBRARY'),
