@@ -421,7 +421,7 @@ class manage_module
 					$category_data_sql['parent_id'] = $row['parent_id'];
 				}
 
-				($category_data_sql['parent_id']) ? $dest = $this->get_category_info($category_data_sql['parent_id']) : $dest['category_name'] = $user->lang['KB_ROOT'];
+				($category_data_sql['parent_id']) ? $dest = $phpbb_ext_kb->get_cat_info($category_data_sql['parent_id']) : $dest['category_name'] = $user->lang['KB_ROOT'];
 				$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_CATS_CAT_MOVED_TO', time(), array($category_data_sql['category_name'], $dest['category_name']));
 			}
 
