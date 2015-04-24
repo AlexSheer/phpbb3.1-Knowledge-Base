@@ -97,8 +97,9 @@ class category
 		}
 
 		$sql = 'SELECT *
-			FROM '. KB_CAT_TABLE .'
-			WHERE parent_id = '.$cat_id.'';
+			FROM ' . KB_CAT_TABLE . '
+			WHERE parent_id = ' . $cat_id . '
+			ORDER BY left_id ASC';
 		$result = $this->db->sql_query($sql);
 		while ($cat_row = $this->db->sql_fetchrow($result))
 		{
