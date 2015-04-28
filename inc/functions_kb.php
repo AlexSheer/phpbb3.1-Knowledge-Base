@@ -261,7 +261,8 @@ class functions_kb
 	{
 		$sql = 'SELECT *
 			FROM ' . KB_CAT_TABLE . "
-			WHERE category_id = $category_id";
+			WHERE category_id = $category_id" . '
+			ORDER BY left_id ASC';
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
