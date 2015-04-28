@@ -10,8 +10,10 @@
 			<ul class="topiclist">
 				<li class="header">
 					<dl class="icon">
-						<dt>{L_CATEGORY}</dt>
+				<!-- BEGIN par_cat_row -->
+						<dt>{L_CATEGORY}<!-- IF par_cat_row.PAR_CAT_NAME --> - {par_cat_row.PAR_CAT_NAME}<!-- ENDIF --></dt>
 						<dd class="icons">{L_ARTICLES}</dd>
+				<!-- END par_cat_row -->
 					</dl>
 				</li>
 			</ul>
@@ -20,9 +22,11 @@
 				<li class="row">
 					<dl>
 						<dt style="padding-left: 5px;">
+						<div class="list-inner">
 							<a href="{cat_row.U_CAT}" class="forumtitle">{cat_row.CAT_NAME}</a>
-							<!-- IF cat_row.CAT_DESCRIPTION --><br />{cat_row.CAT_DESCRIPTION}<!-- ENDIF -->
+							<!-- IF cat_row.CAT_DESCRIPTION --><br /><span>{cat_row.CAT_DESCRIPTION}</span><!-- ENDIF -->
 							<!-- IF cat_row.SUBCATS --><br /><span>{cat_row.SUBCATS}</span><!-- ENDIF -->
+						</div>
 						</dt>
 							<dd class="topics">{cat_row.ARTICLES}</dd>
 					</dl>
@@ -79,7 +83,7 @@
 				<tbody>
 				<!-- BEGIN art_row -->
 				<tr class="bg1">
-					<td class="name">{art_row.ARTICLE}<!-- IF not art_row.S_APPROVED --><ul class="post-buttons" style="float: left; margin-top: -4px; margin-right: 4px;"><li><span style="cursor:default" title="{L_NEED_APPROOVE}" class="button icon-button info-icon"><span>{L_NEED_APPROOVE}</span></span></li></ul>
+					<td class="name">{art_row.ARTICLE}<br />{art_row.ARTICLE_DESCRIPTION}<!-- IF not art_row.S_APPROVED --><ul class="post-buttons" style="float: left; margin-top: -4px; margin-right: 4px;"><li><span style="cursor:default" title="{L_NEED_APPROOVE}" class="button icon-button info-icon"><span>{L_NEED_APPROOVE}</span></span></li></ul>
 					</a><!-- ENDIF --></td>
 					<td class="wievs">{art_row.ARTICLE_AUTHOR}</td>
 					<td class="joned">{art_row.ARTICLE_DATE}</td>
