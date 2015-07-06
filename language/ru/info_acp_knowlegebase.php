@@ -194,7 +194,7 @@ $lang = array_merge($lang, array(
 
 	'LOG_LIBRARY_ADD_ARTICLE'			=> 'Добавлена статья &laquo;<b>%1s</b>&raquo; в категорию<br />» <b>%2s</b>',
 
-	'LOG_LIBRARY_DEL_ARTICLE'			=> 'Удалена статья &laquo;<b>%1s</b>&raquo; из категории<br />» %2s',
+	'LOG_LIBRARY_DEL_ARTICLE'			=> 'Удалена статья &laquo;<b>%1s</b>&raquo; из категории<br />» <b>%2s</b>',
 	'LOG_LIBRARY_EDIT_ARTICLE'			=> 'Отредактирована статья &laquo;<b>%1s</b>&raquo; в категории<br />» <b>%2s</b>',
 	'LOG_LIBRARY_MOVED_ARTICLE'			=> 'Перемещена статья <b>%1s</b> из категории » <b>%2s</b><br />в категорию » <b>%3s</b>',
 	'LOG_LIBRARY_APPROVED_ARTICLE'		=> 'Одобрена статья <b>%1s</b> из категории » <b>%2s</b><br />добавленая пользователем » <b>%3s</b>',
