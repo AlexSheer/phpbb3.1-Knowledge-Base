@@ -299,7 +299,7 @@ class functions_kb
 		$this->phpbb_cache->destroy('sql', KB_CAT_TABLE);
 
 		delete_topics('topic_id', array($info['topic_id']), true, true, true);
-		$phpbb_log->add('admin', $user->data['user_id'], $user->data['user_ip'], 'LOG_LIBRARY_DEL_ARTICLE', time(), array($article_title, $cat_info['category_name']));
+		$this->phpbb_log->add('admin', $this->user->data['user_id'], $this->user->data['user_ip'], 'LOG_LIBRARY_DEL_ARTICLE', time(), array($article_title, $cat_info['category_name']));
 
 		return;
 	}
