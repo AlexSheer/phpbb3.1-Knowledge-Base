@@ -43,6 +43,7 @@ class edit
 	{
 		$this->user->add_lang('posting');
 		$art_id = $this->request->variable('k', 0);
+		$to_id = $this->request->variable('to_id', $art_id);
 		$mode = $this->request->variable('mode', '');
 		$kb_search = false;
 
@@ -182,6 +183,7 @@ class edit
 			}
 
 			$sql_data = array(
+				'article_category_id'	=> $to_id,
 				'article_title'			=> $article_title,
 				'article_description'	=> $article_description,
 				'bbcode_uid'			=> $uid,
