@@ -67,10 +67,10 @@ class listener implements EventSubscriberInterface
 	public function viewonline_location($event)
 	{
 		$on_page = $event['row'];
-		if ($on_page['session_page'] == 'app.php/knowledgebase')
+		if ($on_page['session_page'] == 'app.php/knowlegebase')
 		{
 			$event['location'] = $this->user->lang['LIBRARY'];
-			$event['location_url'] = append_sid("{$this->phpbb_root_path}knowledgebase");
+			$event['location_url'] = append_sid("{$this->phpbb_root_path}knowlegebase");
 		}
 	}
 }
