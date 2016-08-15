@@ -31,6 +31,7 @@ class listener implements EventSubscriberInterface
 			'core.user_setup'						=> 'load_language_on_setup',
 			'core.page_header'						=> 'add_page_header_link',
 			'overall_header_stylesheets_after'		=> 'add_page_header_link',
+			'core.viewonline_overwrite_location'	=> 'viewonline_location',
 		);
 	}
 
@@ -61,5 +62,15 @@ class listener implements EventSubscriberInterface
 			'KB_STYLESHEET'	=> append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme/kb.css"),
 			'KB_THEME_PATH'	=> append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme"),
 		));
+	}
+
+	public function viewonline_location($event)
+	{
+		$on_page = $event['row'];
+		if ($on_page['session_page'] == 'app.php/knowledgebase')
+		{
+			$event['location'] = $this->user->lang['LIBRARY'];
+			$event['location_url'] = append_sid("{$this->phpbb_root_path}knowledgebase");
+		}
 	}
 }
