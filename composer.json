@@ -1,5 +1,5 @@
 {
-    "name": "Sheer/knowlegebase",
+    "name": "Sheer/knowledgebase",
     "type": "phpbb-extension",
     "description": "Description",
     "homepage": "http://phpbbguru.net",
@@ -20,7 +20,7 @@
       "phpbb/epv": "dev-master"
    },
     "extra": {
-        "display-name": "Knowlege base",
+        "display-name": "Knowledge base",
         "soft-require": {
             "phpbb/phpbb": "3.1.*@dev"
         }
