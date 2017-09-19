@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\controller;
+namespace sheer\knowlegebase\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +24,7 @@ class post
 	protected $php_ext;
 	protected $log;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb, $helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, \sheer\knowlegebase\inc\functions_kb $kb, $helper)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -64,10 +64,10 @@ class post
 
 		if ($this->config['kb_search_type'])
 		{
-			if (preg_match('#^\w+$#', $this->config['kb_search_type']) || file_exists($this->phpbb_root_path . 'ext/Sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext))
+			if (preg_match('#^\w+$#', $this->config['kb_search_type']) || file_exists($this->phpbb_root_path . 'ext/sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext))
 			{
-				include($this->phpbb_root_path . 'ext/Sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext);
-				$class = '\Sheer\knowlegebase\search\\' . $this->config['kb_search_type'] . '';
+				include($this->phpbb_root_path . 'ext/sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext);
+				$class = '\sheer\knowlegebase\search\\' . $this->config['kb_search_type'] . '';
 				if (class_exists($class))
 				{
 					$error = false;

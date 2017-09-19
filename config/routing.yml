@@ -1,23 +1,23 @@
-Sheer_knowlegebase_index:
+sheer_knowlegebase_index:
     pattern: /knowlegebase
-    defaults: { _controller: Sheer.knowlegebase.controller.index:main }
-Sheer_knowlegebase_category:
+    defaults: { _controller: sheer.knowlegebase.controller.index:main }
+sheer_knowlegebase_category:
     pattern: /knowlegebase/category
-    defaults: { _controller: Sheer.knowlegebase.controller.category:cat }
-Sheer_knowlegebase_article:
+    defaults: { _controller: sheer.knowlegebase.controller.category:cat }
+sheer_knowlegebase_article:
     pattern: /knowlegebase/article
-    defaults: { _controller: Sheer.knowlegebase.controller.article:show }
-Sheer_knowlegebase_edit:
+    defaults: { _controller: sheer.knowlegebase.controller.article:show }
+sheer_knowlegebase_edit:
     pattern: /knowlegebase/edit
-    defaults: { _controller: Sheer.knowlegebase.controller.edit:edit_article }
-Sheer_knowlegebase_post:
+    defaults: { _controller: sheer.knowlegebase.controller.edit:edit_article }
+sheer_knowlegebase_post:
     pattern: /knowlegebase/post
-    defaults: { _controller: Sheer.knowlegebase.controller.post:post_article }
+    defaults: { _controller: sheer.knowlegebase.controller.post:post_article }
 
-Sheer_knowlegebase_library_search:
+sheer_knowlegebase_library_search:
     pattern: /knowlegebase/library_search
-    defaults: { _controller: Sheer.knowlegebase.controller.library_search:main }
+    defaults: { _controller: sheer.knowlegebase.controller.library_search:main }
 
-Sheer_knowlegebase_approve:
+sheer_knowlegebase_approve:
     pattern: /knowlegebase/approve
-    defaults: { _controller: Sheer.knowlegebase.controller.approve:approve_article }
+    defaults: { _controller: sheer.knowlegebase.controller.approve:approve_article }

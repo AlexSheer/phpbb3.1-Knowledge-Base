@@ -8,7 +8,7 @@
 *
 */
 
-namespace Sheer\knowlegebase;
+namespace sheer\knowlegebase;
 
 /**
 * Extension class for custom enable/disable/purge actions

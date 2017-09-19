@@ -8,7 +8,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\notification;
+namespace sheer\knowlegebase\notification;
 
 /**
 
@@ -162,7 +162,7 @@ class need_approval extends \phpbb\notification\type\base
 	*/
 	public function get_email_template()
 	{
-		return '@Sheer_knowlegebase/user_need_approval';
+		return '@sheer_knowlegebase/user_need_approval';
 	}
 
 	/**

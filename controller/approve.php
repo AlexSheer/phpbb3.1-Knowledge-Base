@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\controller;
+namespace sheer\knowlegebase\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,7 +36,7 @@ class approve
 			$phpbb_root_path,
 			$php_ext,
 			$table_prefix,
-			\Sheer\knowlegebase\inc\functions_kb $kb,
+			\sheer\knowlegebase\inc\functions_kb $kb,
 			$helper
 		)
 	{
@@ -92,10 +92,10 @@ class approve
 
 			if ($this->config['kb_search_type'])
 			{
-				if (preg_match('#^\w+$#', $this->config['kb_search_type']) || file_exists($this->phpbb_root_path . 'ext/Sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext))
+				if (preg_match('#^\w+$#', $this->config['kb_search_type']) || file_exists($this->phpbb_root_path . 'ext/sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext))
 				{
-					include($this->phpbb_root_path . 'ext/Sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext);
-					$class = '\Sheer\knowlegebase\search\\' . $this->config['kb_search_type'] . '';
+					include($this->phpbb_root_path . 'ext/sheer/knowlegebase/search/' . $this->config['kb_search_type'] . '.' . $this->php_ext);
+					$class = '\sheer\knowlegebase\search\\' . $this->config['kb_search_type'] . '';
 					if (class_exists($class))
 					{
 						$error = false;

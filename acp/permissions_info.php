@@ -7,20 +7,20 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class permissions_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\Sheer\knowlegebase\acp\permissions_module',
+			'filename'	=> '\sheer\knowlegebase\acp\permissions_module',
 			'version'	=> '1.0.0',
 			'title' => 'ACP_LIBRARY_PERMISSIONS',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_PERMISSIONS',
-					'auth' => 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+					'auth' => 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 					'cat' => array('ACP_KNOWLEGE_BASE')
 				),
 			),

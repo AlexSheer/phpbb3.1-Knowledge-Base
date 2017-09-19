@@ -28,7 +28,7 @@ matrix:
 
 env:
   global:
-    - EXTNAME="Sheer/knowlegebase"  # CHANGE name of the extension HERE
+    - EXTNAME="sheer/knowlegebase"  # CHANGE name of the extension HERE
     - SNIFF="1"            # Should we run code sniffer on your code?
     - EPV="1"              # Should we run EPV (Extension Pre Validator) on your code?
     - PHPBB_BRANCH="3.1.x"

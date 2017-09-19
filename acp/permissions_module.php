@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class permissions_module
 {
@@ -25,7 +25,7 @@ class permissions_module
 
 		include_once($phpbb_root_path . 'includes/functions_user.' . $phpEx);
 
-		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
+		$phpbb_ext_kb = new \sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
 		$this->tpl_name = 'acp_permissions_body';
 		$this->page_title = $user->lang('ACP_LIBRARY_PERMISSIONS');

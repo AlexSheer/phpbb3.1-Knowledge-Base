@@ -7,12 +7,12 @@
 *
 */
 
-namespace Sheer\knowlegebase\search;
+namespace sheer\knowlegebase\search;
 
 //use Symfony\Component\DependencyInjection\ContainerInterface;
 
 //class kb_fulltext_mysql
-class kb_fulltext_mysql extends \Sheer\knowlegebase\search\kb_base
+class kb_fulltext_mysql extends \sheer\knowlegebase\search\kb_base
 {
 	/**
 	 * Associative array holding index stats

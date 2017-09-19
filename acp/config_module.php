@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class config_module
 {
@@ -57,10 +57,10 @@ class config_module
 				VALUES (\'anounce\', 1, 1)';
 			$db->sql_query($sql);
 		}
-		add_form_key('Sheer/knowlegebase');
+		add_form_key('sheer/knowlegebase');
 		if ($request->is_set_post('submit'))
 		{
-			if (!check_form_key('Sheer/knowlegebase'))
+			if (!check_form_key('sheer/knowlegebase'))
 			{
 				trigger_error('FORM_INVALID');
 			}
