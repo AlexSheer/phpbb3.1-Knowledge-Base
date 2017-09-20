@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class manage_module
 {
@@ -26,7 +26,7 @@ class manage_module
 			define ('KB_LOG_TABLE', $table_prefix.'kb_log');
 		}
 
-		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
+		$phpbb_ext_kb = new \sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
 		$this->tpl_name = 'acp_knowlegebase_body';
 		$this->page_title = $user->lang('ACP_LIBRARY_MANAGE');
@@ -75,7 +75,7 @@ class manage_module
 					if (!sizeof($errors))
 					{
 						$cache->destroy('sql', KB_CAT_TABLE);
-						$message = ($action == 'add') ? sprintf($user->lang['CATEGORY_ADDED'], '<a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=-Sheer-knowlegebase-acp-permissions_module&mode=permissions&action=setting_group_local&category_id[]='. $category_data['category_id'] .'') . '">', '</a>') : $user->lang['CATEGORY_EDITED'];
+						$message = ($action == 'add') ? sprintf($user->lang['CATEGORY_ADDED'], '<a href="' . append_sid("{$phpbb_admin_path}index.$phpEx", 'i=-sheer-knowlegebase-acp-permissions_module&mode=permissions&action=setting_group_local&category_id[]='. $category_data['category_id'] .'') . '">', '</a>') : $user->lang['CATEGORY_EDITED'];
 						meta_refresh(3, $this->u_action . '&amp;parent_id=' . $this->parent_id);
 						trigger_error($message . adm_back_link($this->u_action . '&amp;parent_id=' . $this->parent_id));
 					}

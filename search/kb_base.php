@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\search;
+namespace sheer\knowlegebase\search;
 
 /**
 * @ignore

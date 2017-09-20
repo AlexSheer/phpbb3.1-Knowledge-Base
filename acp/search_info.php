@@ -7,20 +7,20 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class search_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\Sheer\knowlegebase\acp\search_module',
+			'filename'	=> '\sheer\knowlegebase\acp\search_module',
 			'version'	=> '1.0.0',
 			'title' => 'ACP_LIBRARY_SEARCH',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_SEARCH',
-					'auth' => 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+					'auth' => 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 					'cat' => array('ACP_KNOWLEGE_BASE')
 				),
 			),

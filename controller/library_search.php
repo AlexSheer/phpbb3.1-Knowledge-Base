@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\controller;
+namespace sheer\knowlegebase\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,7 @@ class library_search
 	protected $phpbb_root_path;
 	protected $php_ext;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\pagination $pagination, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\pagination $pagination, $phpbb_root_path, $php_ext, $table_prefix, \sheer\knowlegebase\inc\functions_kb $kb)
 	{
 		$this->config = $config;
 		$this->request = $request;

@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\controller;
+namespace sheer\knowlegebase\controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ class edit
 	protected $php_ext;
 	protected $log;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, $phpbb_root_path, $php_ext, $table_prefix, \Sheer\knowlegebase\inc\functions_kb $kb)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request_interface $request, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\service $cache, \phpbb\log\log_interface $log, $phpbb_root_path, $php_ext, $table_prefix, \sheer\knowlegebase\inc\functions_kb $kb)
 	{
 		$this->config = $config;
 		$this->request = $request;

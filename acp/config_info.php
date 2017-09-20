@@ -7,20 +7,20 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class config_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\Sheer\knowlegebase\acp\config_module',
+			'filename'	=> '\sheer\knowlegebase\acp\config_module',
 			'version'	=> '1.0.0',
 			'title' => 'ACP_KNOWLEGE_BASE_CONFIGURE',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_KNOWLEGE_BASE_CONFIGURE',
-					'auth' => 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+					'auth' => 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 					'cat' => array('ACP_KNOWLEGE_BASE')
 				),
 			),

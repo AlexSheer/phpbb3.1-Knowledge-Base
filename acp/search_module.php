@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class search_module
 {
@@ -524,7 +524,7 @@ class search_module
 
 		$search_types = array();
 
-		$dp = @opendir($phpbb_root_path . 'ext/Sheer/knowlegebase/search');
+		$dp = @opendir($phpbb_root_path . 'ext/sheer/knowlegebase/search');
 
 		if ($dp)
 		{
@@ -584,14 +584,14 @@ class search_module
 	{
 		global $phpbb_root_path, $phpEx, $user, $auth, $config, $db;
 
-		if (!preg_match('#^\w+$#', $type) || !file_exists("{$phpbb_root_path}ext/Sheer/knowlegebase/search/$type.$phpEx"))
+		if (!preg_match('#^\w+$#', $type) || !file_exists("{$phpbb_root_path}ext/sheer/knowlegebase/search/$type.$phpEx"))
 		{
 			$error = $user->lang['NO_SUCH_SEARCH_MODULE'];
 			return $error;
 		}
 
-		include_once("{$phpbb_root_path}ext/Sheer/knowlegebase/search/$type.$phpEx");
-		$type = '\Sheer\knowlegebase\search\\'.$type.'';
+		include_once("{$phpbb_root_path}ext/sheer/knowlegebase/search/$type.$phpEx");
+		$type = '\sheer\knowlegebase\search\\'.$type.'';
 		if (!class_exists($type))
 		{
 			$error = $user->lang['NO_SUCH_SEARCH_MODULE'];

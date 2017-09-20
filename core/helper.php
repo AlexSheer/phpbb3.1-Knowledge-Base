@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\core;
+namespace sheer\knowlegebase\core;
 
 class helper
 {

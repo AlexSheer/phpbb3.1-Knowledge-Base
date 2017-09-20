@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\migrations;
+namespace sheer\knowlegebase\migrations;
 
 class version_0_0_2 extends \phpbb\db\migration\migration
 {
@@ -18,7 +18,7 @@ class version_0_0_2 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\Sheer\knowlegebase\migrations\version_0_0_1');
+		return array('\sheer\knowlegebase\migrations\version_0_0_1');
 	}
 
 	public function update_schema()
@@ -68,10 +68,10 @@ class version_0_0_2 extends \phpbb\db\migration\migration
 			// ACP
 
 			array('module.add', array('acp', 'KNOWLEGE_BASE', array(
-				'module_basename'	=> '\Sheer\knowlegebase\acp\kb_logs',
+				'module_basename'	=> '\sheer\knowlegebase\acp\kb_logs',
 				'module_langname'	=> 'ACP_LIBRARY_LOGS',
 				'module_mode'		=> 'view_logs',
-				'module_auth'		=> 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+				'module_auth'		=> 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 			))),
 		);
 	}

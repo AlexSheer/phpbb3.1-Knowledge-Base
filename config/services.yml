@@ -1,6 +1,6 @@
 services:
-    Sheer.knowlegebase.controller.index:
-        class: Sheer\knowlegebase\controller\index
+    sheer.knowlegebase.controller.index:
+        class: sheer\knowlegebase\controller\index
         arguments:
             - @config
             - @request
@@ -13,10 +13,10 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
+            - @sheer.knowlegebase.inc
 
-    Sheer.knowlegebase.controller.category:
-        class: Sheer\knowlegebase\controller\category
+    sheer.knowlegebase.controller.category:
+        class: sheer\knowlegebase\controller\category
         arguments:
             - @config
             - @request
@@ -29,10 +29,10 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
+            - @sheer.knowlegebase.inc
 
-    Sheer.knowlegebase.controller.article:
-        class: Sheer\knowlegebase\controller\article
+    sheer.knowlegebase.controller.article:
+        class: sheer\knowlegebase\controller\article
         arguments:
             - @config
             - @request
@@ -43,10 +43,10 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
+            - @sheer.knowlegebase.inc
 
-    Sheer.knowlegebase.controller.edit:
-        class: Sheer\knowlegebase\controller\edit
+    sheer.knowlegebase.controller.edit:
+        class: sheer\knowlegebase\controller\edit
         arguments:
             - @config
             - @request
@@ -59,10 +59,10 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
+            - @sheer.knowlegebase.inc
 
-    Sheer.knowlegebase.controller.post:
-        class: Sheer\knowlegebase\controller\post
+    sheer.knowlegebase.controller.post:
+        class: sheer\knowlegebase\controller\post
         arguments:
             - @config
             - @request
@@ -76,11 +76,11 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
-            - @Sheer.knowlegebase.helper
+            - @sheer.knowlegebase.inc
+            - @sheer.knowlegebase.helper
 
-    Sheer.knowlegebase.controller.library_search:
-        class: Sheer\knowlegebase\controller\library_search
+    sheer.knowlegebase.controller.library_search:
+        class: sheer\knowlegebase\controller\library_search
         arguments:
             - @config
             - @request
@@ -93,10 +93,10 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
+            - @sheer.knowlegebase.inc
 
-    Sheer.knowlegebase.controller.approve:
-        class: Sheer\knowlegebase\controller\approve
+    sheer.knowlegebase.controller.approve:
+        class: sheer\knowlegebase\controller\approve
         arguments:
             - @config
             - @request
@@ -109,11 +109,11 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-            - @Sheer.knowlegebase.inc
-            - @Sheer.knowlegebase.helper
+            - @sheer.knowlegebase.inc
+            - @sheer.knowlegebase.helper
 
-    Sheer.knowlegebase.listener:
-        class: Sheer\knowlegebase\event\listener
+    sheer.knowlegebase.listener:
+        class: sheer\knowlegebase\event\listener
         arguments:
             - @template
             - @user
@@ -121,8 +121,8 @@ services:
         tags:
             - { name: event.listener }
 
-    Sheer.knowlegebase.inc:
-        class: Sheer\knowlegebase\inc\functions_kb
+    sheer.knowlegebase.inc:
+        class: sheer\knowlegebase\inc\functions_kb
         arguments:
             - @config
             - @dbal.conn
@@ -135,8 +135,8 @@ services:
             - %core.php_ext%
             - %core.table_prefix%
 
-    Sheer.knowlegebase.helper:
-        class: Sheer\knowlegebase\core\helper
+    sheer.knowlegebase.helper:
+        class: sheer\knowlegebase\core\helper
         arguments:
             - @config
             - @dbal.conn
@@ -150,8 +150,8 @@ services:
             - %core.php_ext%
             - %core.table_prefix%
 
-    Sheer.knowlegebase.notification.type.need_approval:
-        class: Sheer\knowlegebase\notification\need_approval
+    sheer.knowlegebase.notification.type.need_approval:
+        class: sheer\knowlegebase\notification\need_approval
         scope: prototype # scope MUST be prototype for this to work!
         arguments:
             - @user_loader
@@ -168,8 +168,8 @@ services:
         tags:
             - { name: notification.type }
 
-    Sheer.knowlegebase.notification.type.approve:
-        class: Sheer\knowlegebase\notification\approve
+    sheer.knowlegebase.notification.type.approve:
+        class: sheer\knowlegebase\notification\approve
         scope: prototype # scope MUST be prototype for this to work!
         arguments:
             - @user_loader
@@ -186,8 +186,8 @@ services:
         tags:
             - { name: notification.type }
 
-    Sheer.knowlegebase.notification.type.disapprove:
-        class: Sheer\knowlegebase\notification\disapprove
+    sheer.knowlegebase.notification.type.disapprove:
+        class: sheer\knowlegebase\notification\disapprove
         scope: prototype # scope MUST be prototype for this to work!
         arguments:
             - @user_loader

@@ -2,12 +2,12 @@
 /**
 *
 * @package Knowlege base
-* @copyright (c) 2014 Sheer
+* @copyright (c) 2014 sheer
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
 
-namespace Sheer\knowlegebase\event;
+namespace sheer\knowlegebase\event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -49,7 +49,7 @@ class listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'Sheer/knowlegebase',
+			'ext_name' => 'sheer/knowlegebase',
 			'lang_set' => 'knowlegebase_lng',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
@@ -59,8 +59,7 @@ class listener implements EventSubscriberInterface
 	{
 		$this->template->assign_vars(array(
 			'U_LIBRARY'		=> append_sid("{$this->phpbb_root_path}knowlegebase"),
-			'KB_STYLESHEET'	=> append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme/kb.css"),
-			'KB_THEME_PATH'	=> append_sid("{$this->phpbb_root_path}ext/Sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme"),
+			'KB_THEME_PATH'	=> append_sid("{$this->phpbb_root_path}ext/sheer/knowlegebase/styles/" . rawurlencode($this->user->style['style_path']) . "/theme"),
 		));
 	}
 

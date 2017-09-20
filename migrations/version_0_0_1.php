@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\migrations;
+namespace sheer\knowlegebase\migrations;
 
 class version_0_0_1 extends \phpbb\db\migration\migration
 {
@@ -194,34 +194,34 @@ class version_0_0_1 extends \phpbb\db\migration\migration
 			// ACP
 			array('module.add', array('acp', 'ACP_CAT_DOT_MODS', 'KNOWLEGE_BASE')),
 			array('module.add', array('acp', 'KNOWLEGE_BASE', array(
-				'module_basename'	=> '\Sheer\knowlegebase\acp\config_module',
+				'module_basename'	=> '\sheer\knowlegebase\acp\config_module',
 				'module_langname'	=> 'ACP_KNOWLEGE_BASE_CONFIGURE',
 				'module_mode'		=> 'manage',
-				'module_auth'		=> 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+				'module_auth'		=> 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 			))),
 			array('module.add', array('acp', 'KNOWLEGE_BASE', array(
-				'module_basename'	=> '\Sheer\knowlegebase\acp\manage_module',
+				'module_basename'	=> '\sheer\knowlegebase\acp\manage_module',
 				'module_langname'	=> 'ACP_LIBRARY_MANAGE',
 				'module_mode'		=> 'manage',
-				'module_auth'		=> 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+				'module_auth'		=> 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 			))),
 			array('module.add', array('acp', 'KNOWLEGE_BASE', array(
-				'module_basename'	=> '\Sheer\knowlegebase\acp\articles_module',
+				'module_basename'	=> '\sheer\knowlegebase\acp\articles_module',
 				'module_langname'	=> 'ACP_LIBRARY_ARTICLES',
 				'module_mode'		=> 'articles',
-				'module_auth'		=> 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+				'module_auth'		=> 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 			))),
 			array('module.add', array('acp', 'KNOWLEGE_BASE', array(
-				'module_basename'	=> '\Sheer\knowlegebase\acp\permissions_module',
+				'module_basename'	=> '\sheer\knowlegebase\acp\permissions_module',
 				'module_langname'	=> 'ACP_LIBRARY_PERMISSIONS',
 				'module_mode'		=> 'permissions',
-				'module_auth'		=> 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+				'module_auth'		=> 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 			))),
 			array('module.add', array('acp', 'KNOWLEGE_BASE', array(
-				'module_basename'	=> '\Sheer\knowlegebase\acp\search_module',
+				'module_basename'	=> '\sheer\knowlegebase\acp\search_module',
 				'module_langname'	=> 'ACP_LIBRARY_SEARCH',
 				'module_mode'		=> 'index',
-				'module_auth'		=> 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+				'module_auth'		=> 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 			))),
 		);
 	}

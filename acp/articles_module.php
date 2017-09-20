@@ -7,7 +7,7 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class articles_module
 {
@@ -21,7 +21,7 @@ class articles_module
 		define ('ARTICLES_TABLE', $table_prefix.'kb_articles');
 		define ('KB_CAT_TABLE', $table_prefix.'kb_categories');
 
-		$phpbb_ext_kb = new \Sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
+		$phpbb_ext_kb = new \sheer\knowlegebase\inc\functions_kb($config, $db, $cache, $user, $template, $auth, $phpbb_log, $phpbb_root_path, $phpEx, $table_prefix);
 
 		$this->tpl_name = 'acp_articles_body';
 		$this->page_title = $user->lang('ACP_LIBRARY_ARTICLES');
@@ -75,7 +75,7 @@ class articles_module
 				'ARTICLE_TITLE'		=> $row['article_title'],
 				'CATEGORY_ID'		=> $row['article_category_id'],
 				'CATEGORY'			=> ($category_data['category_name']) ? : $user->lang['CAT_NO_EXISTS'],
-				'U_CATEGORY'		=> append_sid("{$phpbb_admin_path}index.$phpEx",'i=-Sheer-knowlegebase-acp-manage_module&amp;mode=manage&amp;parent_id='.$row['article_category_id'].''),
+				'U_CATEGORY'		=> append_sid("{$phpbb_admin_path}index.$phpEx",'i=-sheer-knowlegebase-acp-manage_module&amp;mode=manage&amp;parent_id='.$row['article_category_id'].''),
 				'U_ARTICLE'			=> append_sid("{$phpbb_root_path}knowlegebase/article",'k='.$row['article_id'].'"'),
 				'U_ARTICLE_EDIT'	=> append_sid("{$phpbb_root_path}knowlegebase/edit",'k='.$row['article_id'].'"'),
 				'AUTHOR'			=> $row['author'],

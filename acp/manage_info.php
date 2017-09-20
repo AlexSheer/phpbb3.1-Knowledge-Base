@@ -7,20 +7,20 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class manage_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\Sheer\knowlegebase\acp\manage_module',
+			'filename'	=> '\sheer\knowlegebase\acp\manage_module',
 			'version'	=> '1.0.0',
 			'title' => 'ACP_LIBRARY_MANAGE',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_MANAGE',
-					'auth' => 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+					'auth' => 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 					'cat' => array('ACP_KNOWLEGE_BASE')
 				),
 			),

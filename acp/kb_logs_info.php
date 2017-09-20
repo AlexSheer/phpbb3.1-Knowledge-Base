@@ -7,20 +7,20 @@
 *
 */
 
-namespace Sheer\knowlegebase\acp;
+namespace sheer\knowlegebase\acp;
 
 class kb_logs_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\Sheer\knowlegebase\acp\kb_logs_info',
+			'filename'	=> '\sheer\knowlegebase\acp\kb_logs_info',
 			'version'	=> '1.0.0',
 			'title' => 'ACP_LIBRARY_LOGS',
 			'modes'		=> array(
 				'settings'	=> array(
 					'title' => 'ACP_LIBRARY_LOGS',
-					'auth' => 'ext_Sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
+					'auth' => 'ext_sheer/knowlegebase && acl_a_board && acl_a_manage_kb',
 					'cat' => array('ACP_KNOWLEGE_BASE')
 				),
 			),
