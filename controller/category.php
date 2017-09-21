@@ -52,7 +52,7 @@ class category
 		$kb_config = $this->kb->obtain_kb_config();
 		$per_page = $kb_config['articles_per_page'];
 
-		$sql = 'SELECT category_id
+		$sql = 'SELECT category_id, category_name
 			FROM '. KB_CAT_TABLE .'
 			WHERE category_id = '.$cat_id.'';
 		$result = $this->db->sql_query($sql);
@@ -63,6 +63,8 @@ class category
 		{
 			trigger_error ('CAT_NO_EXISTS');
 		}
+
+		$this->template->assign_block_vars('par_cat_row', array( 'PAR_CAT_NAME' => $row['category_name']) );
 
 		$sql = 'SELECT COUNT(article_id) as article_count
 			FROM '. ARTICLES_TABLE .'
@@ -113,6 +115,7 @@ class category
 			$this->template->assign_block_vars('cat_row', array(
 				'CAT_ID'	=> $cat_row['category_id'],
 				'CAT_NAME'	=> $cat_row['category_name'],
+				'CAT_DESCRIPTION' => $cat_row['category_details'],
 				'U_CAT'		=> append_sid("{$this->phpbb_root_path}knowlegebase/category", "id=$cat_row[category_id]"),
 				'ARTICLES'	=> $cat_row['number_articles'],
 				'SUBCATS'	=> $this->kb->get_cat_list ($cat_row['parent_id'], $exclude_cats),

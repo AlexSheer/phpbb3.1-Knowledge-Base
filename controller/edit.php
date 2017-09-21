@@ -173,6 +173,11 @@ class edit
 			}
 		}
 
+		if ($cancel)
+		{
+			redirect(append_sid("{$this->phpbb_root_path}knowlegebase/category",'id=' . $cat_id . ''));
+		}
+
 		if ($submit and !sizeof($error))
 		{
 			$uid = $bitfield = $options = '';
